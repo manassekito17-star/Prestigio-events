@@ -1,6 +1,7 @@
 'use strict';
 // Génération du PDF de devis (PDFKit, polices standard).
 const fs = require('fs');
+const path = require('path');
 const PDFDocument = require('pdfkit');
 const db = require('../db');
 const media = require('./media');
@@ -16,9 +17,11 @@ const NAVY = '#0B1F3A';
 const GOLD = '#B8962E'; // or légèrement assombri pour la lisibilité à l'impression
 const SLATE = '#4A5568';
 
+const DEFAULT_LOGO = path.join(__dirname, '..', '..', 'public', 'img', 'logo', 'logo-horizontal-print.png');
+
 function logoPath(settings) {
   const id = Number(settings.logo_media_id);
-  if (!id) return null;
+  if (!id) return fs.existsSync(DEFAULT_LOGO) ? DEFAULT_LOGO : null;
   const m = db.get().prepare('SELECT * FROM media WHERE id = ?').get(id);
   if (!m || !['image/jpeg', 'image/png'].includes(m.mime)) return null;
   const p = media.filePath(m);
@@ -41,7 +44,7 @@ function quotePdf({ settings, request, quote, version, draft }) {
     const lp = logoPath(settings);
     let y = 36;
     if (lp) {
-      try { doc.image(lp, left, y, { fit: [120, 60] }); } catch { /* logo illisible : ignoré */ }
+      try { doc.image(lp, left, y - 4, { fit: [190, 62] }); } catch { /* logo illisible : ignoré */ }
     } else {
       doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(18).text(settings.agency_name, left, y);
     }

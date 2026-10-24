@@ -1,8 +1,5 @@
 <% if (s.logo_media_id) { %>
-  <img src="<%= h.mediaUrl(s.logo_media_id) %>" alt="<%= s.agency_name %>" class="logo-img" width="160" height="48">
+  <img src="<%= h.mediaUrl(s.logo_media_id) %>" alt="<%= s.agency_name %>" class="logo-img">
 <% } else { %>
-  <span class="logo-mark" aria-hidden="true">
-    <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="22.5" fill="none" stroke="currentColor" stroke-width="1.2"/><text x="24" y="30.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="19" font-weight="600" fill="currentColor">PE</text></svg>
-  </span>
-  <span class="logo-text"><span class="logo-name"><%= s.agency_name %></span></span>
+  <img src="/static/img/logo/logo-horizontal.png" alt="<%= s.agency_name %>" class="logo-img" width="446" height="160">
 <% } %>

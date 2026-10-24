@@ -46,7 +46,7 @@
       <div class="f"><label>Slogan</label><input name="slogan" value="<%= st.slogan %>"></div>
     </div>
     <fieldset class="a-fs"><legend>Logo</legend>
-      <% if (st.logo_media_id) { %><img src="<%= h.mediaUrl(st.logo_media_id) %>" alt="" style="max-height:60px;background:#fff;padding:4px"><label class="cb"><input type="checkbox" name="remove_logo" value="1"> Retirer (revenir au logo provisoire)</label><% } else { %><p class="help">Logo provisoire en cours d’utilisation (monogramme « PE »). Téléversez votre logo officiel (PNG transparent recommandé ; PNG ou JPEG pour qu’il apparaisse aussi sur les devis PDF).</p><% } %>
+      <% if (st.logo_media_id) { %><img src="<%= h.mediaUrl(st.logo_media_id) %>" alt="" style="max-height:60px;background:#fff;padding:4px"><label class="cb"><input type="checkbox" name="remove_logo" value="1"> Retirer (revenir au logo officiel par défaut)</label><% } else { %><p class="help">Logo officiel PRESTIGIO EVENTS utilisé par défaut (site, favicon, devis PDF). Pour le remplacer, téléversez une nouvelle version (PNG transparent recommandé ; PNG ou JPEG pour qu’il apparaisse aussi sur les devis PDF).</p><% } %>
       <input type="file" name="logo" accept="image/png,image/jpeg,image/webp"></fieldset>
     <fieldset class="a-fs"><legend>Couleurs principales</legend>
       <div class="f-row f-row-2">

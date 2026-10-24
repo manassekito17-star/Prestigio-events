@@ -18,7 +18,8 @@ h3 { font-size: 1rem; }
 .right { text-align: right; }
 
 .a-top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px; background: var(--navy); color: #fff; padding: 0 16px; height: 56px; }
-.a-brand { color: #fff; text-decoration: none; font-weight: 600; letter-spacing: .08em; font-size: .92rem; }
+.a-brand { display: inline-flex; align-items: center; gap: 8px; color: #fff; text-decoration: none; font-weight: 600; font-size: .92rem; }
+.a-brand img { height: 34px; width: auto; }
 .a-brand small { color: var(--gold); font-weight: 400; letter-spacing: 0; margin-left: 6px; }
 .a-top-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
 .a-top-right form { margin: 0; }
@@ -155,7 +156,11 @@ dl.kv dd { margin: 0; padding: 4px 0 6px; border-bottom: 1px solid #F0EDE6; whit
 @media (min-width: 800px) { .g-admin { grid-template-columns: 1fr 1fr; } }
 .g-admin .a-card { display: grid; grid-template-columns: 110px 1fr; gap: 12px; margin: 0; }
 .swatch { width: 52px; height: 38px; padding: 0; border: 1px solid var(--line); }
+.login-brand img { display: block; margin: 0 auto 6px; height: 150px; width: auto; }
+body.admin.auth-page { background: var(--navy); }
 .login-brand { text-align: center; margin-bottom: 18px; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.6rem; letter-spacing: .1em; }
 .login-brand small { display: block; font-family: 'Inter', sans-serif; font-size: .8rem; letter-spacing: 0; color: var(--muted); }
 code { background: #F1EEE6; padding: 1px 5px; border-radius: 3px; font-size: .85em; }
 h1, .stat strong, .login-brand { font-variant-numeric: lining-nums; }
+.auth-page .login-brand small { color: rgba(255,255,255,.7); }
+.auth-page .a-auth > p.small a { color: rgba(255,255,255,.8); }

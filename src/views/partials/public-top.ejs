@@ -12,16 +12,17 @@
 <meta property="og:title" content="<%= pageTitle %>">
 <meta property="og:description" content="<%= pageDesc %>">
 <meta property="og:url" content="<%= baseUrl + path %>">
-<meta property="og:image" content="<%= baseUrl %><%= s.hero_media_id ? h.mediaUrl(s.hero_media_id) : '/static/img/demo/hero.jpg' %>">
+<meta property="og:image" content="<%= baseUrl %><%= s.hero_media_id ? h.mediaUrl(s.hero_media_id) : '/static/img/logo/logo-original.jpg' %>">
 <meta property="og:locale" content="fr_CD">
 <meta name="theme-color" content="#0B1F3A">
-<link rel="icon" href="/static/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/static/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/static/img/logo/apple-touch-icon.png">
 <link rel="preload" href="/static/fonts/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/static/css/site.css">
 <link rel="stylesheet" href="/theme.css">
 <script type="application/ld+json"><%- h.jsonScript({
   '@context': 'https://schema.org', '@type': 'EventPlanner', name: s.agency_name, slogan: s.slogan,
-  url: baseUrl + '/', telephone: s.whatsapp, email: s.public_email || undefined,
+  url: baseUrl + '/', logo: baseUrl + '/static/img/logo/logo-original.jpg', image: baseUrl + '/static/img/logo/logo-original.jpg', telephone: s.whatsapp, email: s.public_email || undefined,
   areaServed: { '@type': 'City', name: 'Kinshasa' },
   address: s.address ? { '@type': 'PostalAddress', streetAddress: s.address, addressLocality: 'Kinshasa', addressCountry: 'CD' } : { '@type': 'PostalAddress', addressLocality: 'Kinshasa', addressCountry: 'CD' },
   founder: { '@type': 'Person', name: s.founder_name },

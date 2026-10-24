@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title><%= title %> — Administration <%= s.agency_name %></title>
-<link rel="icon" href="/static/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/static/img/logo/favicon-32.png" type="image/png">
 <link rel="stylesheet" href="/static/css/admin.css">
 </head>
-<body class="admin">
+<body class="admin<%= user ? "" : " auth-page" %>">
 <% if (user) { %>
 <header class="a-top">
   <button class="a-burger" data-nav-toggle aria-expanded="false" aria-controls="a-nav">☰<span class="sr">Menu</span></button>
-  <a href="/admin" class="a-brand"><%= s.agency_name %> <small>Administration</small></a>
+  <a href="/admin" class="a-brand"><img src="/static/img/logo/logo-horizontal.png" alt="<%= s.agency_name %>" height="34"> <small>Administration</small></a>
   <div class="a-top-right">
     <a href="/" target="_blank" rel="noopener" class="a-link">Voir le site ↗</a>
     <span class="a-user"><%= user.name %></span>

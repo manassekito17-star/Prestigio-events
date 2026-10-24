@@ -41,7 +41,7 @@ function createApp() {
   }));
 
   app.use('/static', express.static(path.join(__dirname, '..', 'public'), { maxAge: config.isProd ? '7d' : 0 }));
-  app.get('/favicon.ico', (req, res) => res.redirect(301, '/static/img/favicon.svg'));
+  app.get('/favicon.ico', (req, res) => res.redirect(301, '/static/img/logo/favicon-32.png'));
 
   app.use(express.urlencoded({ extended: false, limit: '200kb', parameterLimit: 2000 }));
   app.use(express.json({ limit: '100kb' }));

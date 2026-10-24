@@ -47,7 +47,6 @@ router.get('/', auth.requirePerm('dashboard'), (req, res) => {
   if (auth.can(u, 'catalog.edit')) {
     data.provisionalTariffs = n('SELECT COUNT(*) AS n FROM tariffs WHERE active = 1 AND provisional = 1');
     data.noOwnerPhoto = !res.locals.s.founder_photo_media_id;
-    data.noLogo = !res.locals.s.logo_media_id;
   }
   data.today = U.today();
   res.render('admin/dashboard', data);

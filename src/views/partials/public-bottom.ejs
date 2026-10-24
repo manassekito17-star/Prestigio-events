@@ -2,7 +2,7 @@
 <footer class="site-footer">
   <div class="container footer-grid">
     <div>
-      <a href="/" class="logo logo-light"><%- include('logo') %></a>
+      <a href="/" class="footer-logo" aria-label="<%= s.agency_name %> — accueil"><% if (s.logo_media_id) { %><img src="<%= h.mediaUrl(s.logo_media_id) %>" alt="<%= s.agency_name %>"><% } else { %><img src="/static/img/logo/logo-full.png" alt="<%= s.agency_name %>" width="387" height="300" loading="lazy"><% } %></a>
       <p class="footer-slogan"><%= s.slogan %></p>
       <p class="muted-light">Agence événementielle — <%= s.city %></p>
     </div>

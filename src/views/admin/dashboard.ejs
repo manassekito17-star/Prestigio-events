@@ -4,8 +4,8 @@
 <% if (typeof provisionalTariffs !== 'undefined' && provisionalTariffs) { %>
   <div class="a-alert a-alert-warn"><strong><%= provisionalTariffs %> tarif(s) provisoire(s)</strong> : ces montants de départ sont des estimations à vérifier sur le marché de Kinshasa. Tant qu’un tarif est provisoire ou non public, le visiteur voit « À confirmer ». <a href="/admin/tarifs">Vérifier les tarifs</a></div>
 <% } %>
-<% if (typeof noLogo !== 'undefined' && (noLogo || noOwnerPhoto)) { %>
-  <div class="a-alert a-alert-info">À compléter : <%= [noLogo ? 'logo officiel' : null, noOwnerPhoto ? 'photo et biographie du fondateur' : null].filter(Boolean).join(', ') %>. <a href="/admin/contenu/apparence">Ouvrir les paramètres</a></div>
+<% if (typeof noOwnerPhoto !== 'undefined' && noOwnerPhoto) { %>
+  <div class="a-alert a-alert-info">À compléter : photo et biographie du fondateur. <a href="/admin/contenu/apropos">Ouvrir les paramètres</a></div>
 <% } %>
 <% if (!mailConfigured && can('users.manage')) { %>
   <div class="a-alert a-alert-info">L’envoi d’e-mails n’est pas configuré : les devis validés se transmettent manuellement (PDF + WhatsApp) et doivent être marqués comme envoyés. Voir la documentation (variables SMTP_*).</div>

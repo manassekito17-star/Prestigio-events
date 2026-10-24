@@ -97,7 +97,7 @@ Sur une plate-forme, attachez un **volume persistant** monté sur `/data` (sinon
 | **WhatsApp** | Liens `wa.me` uniquement | Le site ouvre une conversation WhatsApp ; **aucun message n’est envoyé automatiquement**. Une intégration WhatsApp Business API nécessiterait un compte Meta vérifié et un développement complémentaire. |
 | **Paiement en ligne** | **Non intégré** | Les paiements sont saisis manuellement et ne sont pas des transactions vérifiées. Une intégration (mobile money, carte) serait un projet séparé. |
 | Nom de domaine + HTTPS | à faire | voir § 3 |
-| Logo officiel | logo provisoire « PE » | Administration → Textes et paramètres → Logo, nom et couleurs |
+| Logo officiel | **intégré** (en-tête, pied de page, accueil, favicon, administration, devis PDF, partage sur les réseaux) | remplaçable si besoin : Administration → Textes et paramètres → Logo, nom et couleurs |
 | Photo et biographie du fondateur | contenu provisoire neutre | Administration → Textes et paramètres → À propos et fondateur |
 | Adresse, e-mail public, réseaux sociaux | vides (rien n’est affiché) | Administration → Coordonnées et réseaux sociaux |
 | **Tarifs** | **tous PROVISOIRES et non publics** | voir § 5 |
@@ -159,3 +159,18 @@ Langues : les libellés d’interface sont centralisés dans `src/i18n/fr.js` ; 
 Vérifications manuelles (navigateur, mobile 390 px et ordinateur) : parcours complet du formulaire de devis, estimation en direct, résumé, envoi ; connexion admin ; tableau de bord ; dossier ; éditeur de devis ; PDF brouillon et final ; ouverture de toutes les pages d’administration sans erreur.
 
 Non testé ici (dépend de vos comptes) : envoi réel par un serveur SMTP, déploiement sur votre hébergeur et votre domaine.
+
+## 10. Logo
+
+Le logo officiel fourni (doré sur fond noir) est décliné dans `public/img/logo/` :
+
+| Fichier | Usage |
+|---|---|
+| `logo-original.jpg` | fichier d’origine (aperçu sur les réseaux sociaux, données structurées) |
+| `logo-horizontal.png` | en-tête du site et de l’administration (emblème à gauche, nom à droite), fond transparent |
+| `logo-full.png` | logo empilé : pied de page, page de connexion |
+| `logo-emblem.png` | couronne + « P » : page d’accueil, services sans photo |
+| `logo-horizontal-print.png` | version plus opaque pour le PDF des devis (papier blanc) |
+| `favicon-32.png`, `apple-touch-icon.png`, `icon-512.png` | icônes du navigateur et du téléphone |
+
+Les versions transparentes sont extraites du fond noir de l’original. La ligne du slogan du fichier d’origine n’est pas reprise : le slogan est affiché en texte sur le site (« L’excellence au cœur de chaque événement »). Un logo téléversé dans l’administration remplace ces fichiers partout.
