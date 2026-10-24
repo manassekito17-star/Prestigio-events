@@ -2,8 +2,10 @@
 const config = require('./src/config');
 const { createApp } = require('./src/app');
 const quotes = require('./src/lib/quotes');
+const { bootstrapOwner } = require('./src/lib/bootstrap');
 
 const app = createApp();
+bootstrapOwner(process.env);
 app.listen(config.port, () => {
   console.log(`PRESTIGIO EVENTS — serveur démarré sur ${config.baseUrl} (port ${config.port})`);
 });

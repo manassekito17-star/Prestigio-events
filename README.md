@@ -54,6 +54,22 @@ Tests : `npm test`.
 
 L’application a besoin de Node.js 20+ et d’un **disque persistant** (la base SQLite et les fichiers téléversés y sont stockés). Une seule instance suffit.
 
+### Option la plus simple — Render (quelques clics, ~7 $/mois)
+
+Le fichier `render.yaml` contient toute la configuration (serveur Node, disque persistant de 1 Go, région Francfort, secret de session généré automatiquement).
+
+1. Créez un compte sur https://render.com et connectez votre compte GitHub.
+2. **New → Blueprint**, choisissez le dépôt `Prestigio-events` (et la branche qui contient le code).
+3. Render demande trois valeurs :
+   - `ADMIN_EMAIL` : votre e-mail de connexion ;
+   - `ADMIN_INITIAL_PASSWORD` : un mot de passe provisoire (10 caractères minimum, lettres et chiffres) ;
+   - `BASE_URL` : laissez vide pour l’instant (l’adresse `…onrender.com` est détectée automatiquement) ; renseignez-la plus tard avec votre nom de domaine.
+4. Validez : le site est en ligne à l’adresse `https://<nom>.onrender.com`, l’administration à `/admin`.
+5. Connectez-vous, changez le mot de passe dans « Mon compte », puis supprimez `ADMIN_INITIAL_PASSWORD` dans Render (Environment). Le compte initial n’est créé que si aucun compte n’existe : cette variable ne peut jamais écraser un compte.
+6. Nom de domaine : Render → Settings → Custom Domains, puis mettre `BASE_URL=https://www.votre-domaine.cd`.
+
+Le plan payant « Starter » est nécessaire pour le disque persistant (sans lui, les demandes seraient effacées à chaque redémarrage).
+
 ### Option A — VPS (recommandé : contrôle total, coût faible)
 
 1. Serveur Ubuntu avec Node.js 22, Nginx et un nom de domaine.
@@ -150,7 +166,7 @@ Langues : les libellés d’interface sont centralisés dans `src/i18n/fr.js` ; 
 
 ## 9. Tests réalisés
 
-`npm test` — 31 tests automatisés, tous réussis :
+`npm test` — 32 tests automatisés, tous réussis :
 
 - **Calcul** : prix par personne vs forfait (aucune multiplication abusive), options, agents de protocole × tarif + heures supplémentaires, « À confirmer » si nombre d’agents inconnu, prix sur demande jamais inventés, prix horaire, remise conditionnelle, frais.
 - **Workflow** : enregistrement de la demande + référence unique ; devis provisoire généré et **jamais envoyé** au client ; anti double soumission ; anti-spam ; le responsable des opérations ne peut pas valider ; validation directeur → version verrouillée + PDF + envoi uniquement après acceptation SMTP ; commentaires internes absents de l’e-mail ; version envoyée non modifiable, correction = nouvelle version ; sans e-mail : « validé » mais pas « envoyé » jusqu’à l’enregistrement manuel ; acceptation impossible avant envoi et exigeant une preuve ; **modification d’un tarif sans effet sur les devis existants** ; paiements et solde.

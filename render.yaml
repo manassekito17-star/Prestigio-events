@@ -1,0 +1,32 @@
+# Déploiement sur Render (https://render.com) : New → Blueprint → choisir ce dépôt.
+# Le disque persistant conserve la base de données et les fichiers téléversés.
+services:
+  - type: web
+    name: prestigio-events
+    runtime: node
+    plan: starter
+    region: frankfurt
+    buildCommand: npm ci --omit=dev
+    startCommand: node server.js
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"
+      - key: TRUST_PROXY
+        value: "1"
+      - key: STORAGE_DIR
+        value: /var/data
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_INITIAL_PASSWORD
+        sync: false
+      - key: BASE_URL
+        sync: false
+    disk:
+      name: prestigio-data
+      mountPath: /var/data
+      sizeGB: 1

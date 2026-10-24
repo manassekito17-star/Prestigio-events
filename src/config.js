@@ -35,7 +35,8 @@ function sessionSecret() {
 module.exports = {
   isProd,
   port: Number(env.PORT || 3000),
-  baseUrl: (env.BASE_URL || `http://localhost:${env.PORT || 3000}`).replace(/\/$/, ''),
+  // RENDER_EXTERNAL_URL est fourni automatiquement par l'hébergeur Render.
+  baseUrl: (env.BASE_URL || env.RENDER_EXTERNAL_URL || `http://localhost:${env.PORT || 3000}`).replace(/\/$/, ''),
   storageDir,
   dbFile: env.DB_FILE ? path.resolve(env.DB_FILE) : path.join(storageDir, 'prestigio.db'),
   uploadsDir: path.join(storageDir, 'uploads'),
