@@ -1,0 +1,7 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Journal d’audit</h1></div>
+<div class="a-card tbl-wrap"><table class="tbl">
+  <thead><tr><th>Date</th><th>Utilisateur</th><th>Action</th><th>Objet</th><th>Détails</th><th>IP</th></tr></thead>
+  <tbody><% for (const a of rows) { %><tr><td class="nowrap small"><%= h.fmtDate(a.created_at, true) %></td><td><%= a.user_name || '—' %></td><td><code><%= a.action %></code></td><td class="small"><%= a.entity || '' %><%= a.entity_id ? ' #' + a.entity_id : '' %></td><td class="small"><%= a.details || '' %></td><td class="small"><%= a.ip || '' %></td></tr><% } %></tbody>
+</table></div>
+<%- include('../partials/admin-bottom') %>

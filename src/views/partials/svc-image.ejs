@@ -1,0 +1,8 @@
+<% if (svc.media_id) { %>
+  <img src="<%= h.mediaUrl(svc.media_id) %>" alt="<%= svc.name %>" loading="lazy">
+<% } else if (svc.demo_image) { %>
+  <img src="/static/img/demo/<%= svc.demo_image %>" alt="<%= svc.name %> — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+<% } else { %>
+  <span class="img-placeholder" aria-hidden="true"><svg viewBox="0 0 48 48" width="44" height="44"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="1"/><text x="24" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="16" fill="currentColor">PE</text></svg></span>
+<% } %>

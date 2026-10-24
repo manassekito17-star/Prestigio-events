@@ -1,0 +1,3 @@
+Photos de démonstration (dossier public/img/demo) : Unsplash (https://unsplash.com), licence Unsplash.
+Elles sont affichées avec la mention « Photo d’illustration » et ne représentent pas des réalisations de PRESTIGIO EVENTS.
+À remplacer par vos propres photos depuis l’administration.

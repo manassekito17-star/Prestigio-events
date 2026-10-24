@@ -1,0 +1,71 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Bonjour <%= user.name %></h1><span class="muted"><%= h.fmtDate(today) %></span></div>
+
+<% if (typeof provisionalTariffs !== 'undefined' && provisionalTariffs) { %>
+  <div class="a-alert a-alert-warn"><strong><%= provisionalTariffs %> tarif(s) provisoire(s)</strong> : ces montants de départ sont des estimations à vérifier sur le marché de Kinshasa. Tant qu’un tarif est provisoire ou non public, le visiteur voit « À confirmer ». <a href="/admin/tarifs">Vérifier les tarifs</a></div>
+<% } %>
+<% if (typeof noLogo !== 'undefined' && (noLogo || noOwnerPhoto)) { %>
+  <div class="a-alert a-alert-info">À compléter : <%= [noLogo ? 'logo officiel' : null, noOwnerPhoto ? 'photo et biographie du fondateur' : null].filter(Boolean).join(', ') %>. <a href="/admin/contenu/apparence">Ouvrir les paramètres</a></div>
+<% } %>
+<% if (!mailConfigured && can('users.manage')) { %>
+  <div class="a-alert a-alert-info">L’envoi d’e-mails n’est pas configuré : les devis validés se transmettent manuellement (PDF + WhatsApp) et doivent être marqués comme envoyés. Voir la documentation (variables SMTP_*).</div>
+<% } %>
+
+<% if (typeof counts !== 'undefined') { %>
+<div class="stats">
+  <a class="stat" href="/admin/demandes?status=pending_validation"><strong><%= counts.pending %></strong><span>Devis provisoires en attente de validation</span></a>
+  <a class="stat" href="/admin/demandes?status=editing"><strong><%= counts.editing %></strong><span>Devis en cours de modification</span></a>
+  <a class="stat" href="/admin/demandes?status=approved"><strong><%= counts.toSend %></strong><span>Validés, à envoyer</span></a>
+  <a class="stat" href="/admin/demandes?status=sent"><strong><%= counts.sent %></strong><span>Envoyés, en attente de réponse</span></a>
+  <a class="stat" href="/admin/demandes"><strong><%= counts.unseen %></strong><span>Nouvelles demandes non consultées</span></a>
+  <a class="stat" href="/admin/demandes?status=accepted"><strong><%= counts.accepted %></strong><span>Devis acceptés</span></a>
+  <a class="stat" href="/admin/demandes?status=refused"><strong><%= counts.refused %></strong><span>Devis refusés</span></a>
+  <% if (typeof payments !== 'undefined') { %><a class="stat" href="/admin/paiements"><strong><%= h.fmtMoney(payments.monthUsd) %></strong><span>Paiements USD enregistrés ce mois (<%= payments.count %>)</span></a><% } %>
+</div>
+
+<div class="a-grid a-grid-side">
+  <div class="a-card">
+    <div class="a-card-h"><h2>Dossiers à traiter</h2><a href="/admin/demandes" class="small">Tout voir</a></div>
+    <% if (!toValidate.length) { %><p class="muted">Aucun dossier en attente.</p><% } else { %>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Réf.</th><th>Client</th><th>Événement</th><th>Statut</th><th class="num">Total provisoire</th></tr></thead>
+      <tbody>
+      <% for (const r of toValidate) { %>
+        <tr class="<%= r.seen_at ? '' : 'unseen' %>">
+          <td><a href="/admin/demandes/<%= r.id %>"><%= r.reference %></a></td>
+          <td><%= r.client_name %></td>
+          <td><%= h.eventType(r.event_type, r.event_type_other) %><br><span class="small muted"><%= r.event_date ? h.fmtDate(r.event_date) : 'date à préciser' %></span></td>
+          <td><span class="pill pill-<%= h.statusTone(r.status) %>"><%= h.statusLabel(r.status) %></span></td>
+          <td class="num"><%= r.total_cents != null ? h.fmtMoney(r.total_cents) : '—' %><%= r.has_unconfirmed ? ' +' : '' %></td>
+        </tr>
+      <% } %>
+      </tbody>
+    </table></div>
+    <% } %>
+  </div>
+  <div>
+    <div class="a-card">
+      <h2>Événements à venir</h2>
+      <% if (!upcoming.length) { %><p class="muted small">Aucun événement confirmé ou proposé à venir.</p><% } %>
+      <ul class="timeline">
+        <% for (const e of upcoming) { %><li><strong><%= h.fmtDate(e.event_date) %></strong><%= e.start_time ? ' · ' + e.start_time : '' %><br><a href="/admin/demandes/<%= e.id %>"><%= h.eventType(e.event_type, e.event_type_other) %> — <%= e.client_name %></a> <span class="pill pill-<%= h.statusTone(e.status) %>"><%= h.statusLabel(e.status) %></span></li><% } %>
+      </ul>
+    </div>
+<% } else { %>
+<div class="a-grid a-grid-side">
+  <div class="a-card">
+    <h2>Événements qui me sont assignés</h2>
+    <% if (!mine.length) { %><p class="muted">Aucun événement assigné.</p><% } %>
+    <ul class="timeline"><% for (const e of mine) { %><li><strong><%= e.event_date ? h.fmtDate(e.event_date) : 'Date à préciser' %></strong><br><a href="/admin/demandes/<%= e.id %>"><%= h.eventType(e.event_type, e.event_type_other) %> — <%= e.client_name %></a></li><% } %></ul>
+  </div>
+  <div>
+<% } %>
+    <div class="a-card">
+      <h2>Mes tâches</h2>
+      <% if (!myTasks.length) { %><p class="muted small">Aucune tâche en cours.</p><% } %>
+      <ul class="timeline"><% for (const t of myTasks) { %><li><%= t.title %><br><span class="small muted"><%= t.due_date ? 'Échéance : ' + h.fmtDate(t.due_date) : 'Sans échéance' %><%= t.reference ? ' · ' + t.reference : '' %></span></li><% } %></ul>
+      <a href="/admin/taches" class="small">Toutes les tâches</a>
+    </div>
+  </div>
+</div>
+<%- include('../partials/admin-bottom') %>

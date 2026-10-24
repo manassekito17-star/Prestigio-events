@@ -1,0 +1,23 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><div><p class="small muted" style="margin:0"><a href="/admin/blocs">← Blocs</a></p><h1><%= title %></h1></div>
+  <% if (bl.id) { %><a class="a-btn a-btn-ghost" href="<%= PAGE_URL[bl.page] %>?apercu=1" target="_blank" rel="noopener">Prévisualiser</a><% } %></div>
+<form method="post" action="/admin/blocs/<%= bl.id || 'nouveau' %>" enctype="multipart/form-data" class="a-form a-card">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="f-row f-row-2">
+    <div class="f"><label>Page</label><select name="page"><% for (const [k, v] of Object.entries(PAGES)) { %><option value="<%= k %>"<%= bl.page === k ? ' selected' : '' %>><%= v %></option><% } %></select></div>
+    <div class="f"><label>Type</label><select name="type"><% for (const [k, v] of Object.entries({ text: 'Texte', image_text: 'Image + texte', cta: 'Appel à l’action', highlight: 'Citation / mise en avant' })) { %><option value="<%= k %>"<%= bl.type === k ? ' selected' : '' %>><%= v %></option><% } %></select></div>
+  </div>
+  <div class="f"><label>Titre</label><input name="title" value="<%= bl.title || '' %>"></div>
+  <div class="f"><label>Texte</label><textarea name="body" rows="8"><%= bl.body || '' %></textarea><p class="help">Laissez une ligne vide entre deux paragraphes. Le HTML n’est pas interprété.</p></div>
+  <div class="f-row f-row-2">
+    <div class="f"><label>Libellé du bouton</label><input name="button_label" value="<%= bl.button_label || '' %>"></div>
+    <div class="f"><label>Lien du bouton</label><input name="button_url" value="<%= bl.button_url || '' %>" placeholder="/devis ou https://…"></div>
+  </div>
+  <fieldset class="a-fs"><legend>Image (type « Image + texte »)</legend>
+    <% if (bl.media_id) { %><img class="thumb" src="<%= h.mediaUrl(bl.media_id) %>" alt=""><label class="cb"><input type="checkbox" name="remove_image" value="1"> Retirer</label><% } %>
+    <input type="file" name="image" accept="image/jpeg,image/png,image/webp"></fieldset>
+  <label class="cb"><input type="checkbox" name="published" value="1"<%= bl.published ? ' checked' : '' %>> Publié</label>
+  <button class="a-btn">Enregistrer</button>
+</form>
+<% if (bl.id) { %><form method="post" action="/admin/blocs/<%= bl.id %>/supprimer" data-confirm="Supprimer ce bloc ?"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="a-btn a-btn-danger a-btn-sm">Supprimer</button></form><% } %>
+<%- include('../partials/admin-bottom') %>

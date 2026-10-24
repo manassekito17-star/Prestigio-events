@@ -1,0 +1,22 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Tarifs</h1><div class="btns"><a class="a-btn a-btn-ghost" href="/admin/tarifs/nouveau?scope=global">+ Frais / remise globale</a><a class="a-btn" href="/admin/tarifs/nouveau">+ Tarif de service</a></div></div>
+<div class="a-alert a-alert-info small">Le calculateur public n’utilise que les tarifs <strong>actifs</strong>, <strong>valides à la date du jour</strong>, <strong>publics</strong> et <strong>non provisoires</strong>. Les autres apparaissent « À confirmer » pour le visiteur, mais sont utilisés (et signalés) dans le devis provisoire interne. Modifier un tarif n’altère jamais les devis déjà générés.</div>
+<div class="a-card tbl-wrap">
+  <table class="tbl">
+    <thead><tr><th>Tarif</th><th>Service</th><th>Méthode</th><th class="num">Montant</th><th>Validité</th><th>État</th><th></th></tr></thead>
+    <tbody>
+    <% for (const t of rows) { %>
+      <tr class="<%= t.active ? '' : 'row-off' %>">
+        <td><a href="/admin/tarifs/<%= t.id %>"><%= t.name %></a><%- t.optional ? ' <span class="pill pill-info">option</span>' : '' %></td>
+        <td><%= t.scope === 'global' ? 'Global (toute estimation)' : t.service_name %></td>
+        <td class="small"><%= h.C.TARIFF_METHODS[t.method] %><%= t.method === 'per_agent' ? ' / ' + ({ event: 'événement', hour: 'heure', day: 'jour' }[t.agent_unit || 'event']) : '' %></td>
+        <td class="num"><%= t.method === 'discount_pct' ? (t.percent != null ? t.percent + ' %' : '—') : t.amount_cents == null ? '—' : h.fmtMoney(t.amount_cents) %></td>
+        <td class="small"><%= t.valid_from || t.valid_to ? (t.valid_from || '…') + ' → ' + (t.valid_to || '…') : 'Permanente' %></td>
+        <td><%- t.provisional ? '<span class="pill pill-warn">provisoire</span>' : '' %> <%- t.public_price ? '<span class="pill pill-ok">public</span>' : '<span class="pill pill-muted">non public</span>' %> <%- t.active ? '' : '<span class="pill pill-muted">inactif</span>' %></td>
+        <td><a class="a-btn a-btn-ghost a-btn-sm" href="/admin/tarifs/<%= t.id %>">Modifier</a></td>
+      </tr>
+    <% } %>
+    </tbody>
+  </table>
+</div>
+<%- include('../partials/admin-bottom') %>

@@ -1,0 +1,25 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Services</h1><div class="btns"><a class="a-btn a-btn-ghost" href="/services?apercu=1" target="_blank" rel="noopener">Aperçu du site</a><a class="a-btn" href="/admin/services/nouveau">+ Nouveau service</a></div></div>
+<div class="a-card tbl-wrap">
+  <table class="tbl">
+    <thead><tr><th>Ordre</th><th>Service</th><th>Catégorie</th><th>Site</th><th>Formulaire de devis</th><th class="num">Tarifs</th><th></th></tr></thead>
+    <tbody>
+    <% rows.forEach((sv, i) => { %>
+      <tr class="<%= sv.published ? '' : 'row-off' %>">
+        <td class="nowrap">
+          <form method="post" action="/admin/services/<%= sv.id %>/deplacer" class="inline"><input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="a-btn a-btn-ghost a-btn-sm" name="dir" value="up"<%= i === 0 ? ' disabled' : '' %> aria-label="Monter">↑</button><button class="a-btn a-btn-ghost a-btn-sm" name="dir" value="down"<%= i === rows.length - 1 ? ' disabled' : '' %> aria-label="Descendre">↓</button></form>
+        </td>
+        <td><a href="/admin/services/<%= sv.id %>"><strong><%= sv.name %></strong></a><% if (sv.form_label) { %><br><span class="small muted">Formulaire : <%= sv.form_label %></span><% } %><% if (sv.is_protocol) { %> <span class="pill pill-gold">protocole</span><% } %></td>
+        <td><%= sv.category %></td>
+        <td><span class="pill <%= sv.published ? 'pill-ok' : 'pill-muted' %>"><%= sv.published ? 'Publié' : 'Masqué' %></span></td>
+        <td><%= sv.in_quote_form ? 'Oui' : 'Non' %></td>
+        <td class="num"><%= sv.n_tariffs %></td>
+        <td class="nowrap"><a class="a-btn a-btn-ghost a-btn-sm" href="/admin/services/<%= sv.id %>">Modifier</a></td>
+      </tr>
+    <% }) %>
+    </tbody>
+  </table>
+  <p class="small muted">« Formulaire de devis » : le service apparaît dans l’étape 3 du formulaire et dans le calculateur. Les services de la catégorie « Événements » décrivent les types d’événements et ne sont généralement pas proposés comme prestations.</p>
+</div>
+<%- include('../partials/admin-bottom') %>

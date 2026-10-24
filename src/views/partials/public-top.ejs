@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="<%= s.locale || 'fr' %>">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<% const pageTitle = typeof title !== 'undefined' && title ? title + ' — ' + s.agency_name + ' | Kinshasa' : s.agency_name + ' — Agence événementielle à Kinshasa'; %>
+<% const pageDesc = typeof description !== 'undefined' && description ? description : s.seo_description; %>
+<title><%= pageTitle %></title>
+<meta name="description" content="<%= pageDesc %>">
+<link rel="canonical" href="<%= baseUrl + path %>">
+<meta property="og:type" content="website">
+<meta property="og:title" content="<%= pageTitle %>">
+<meta property="og:description" content="<%= pageDesc %>">
+<meta property="og:url" content="<%= baseUrl + path %>">
+<meta property="og:image" content="<%= baseUrl %><%= s.hero_media_id ? h.mediaUrl(s.hero_media_id) : '/static/img/demo/hero.jpg' %>">
+<meta property="og:locale" content="fr_CD">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" href="/static/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/static/fonts/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/static/css/site.css">
+<link rel="stylesheet" href="/theme.css">
+<script type="application/ld+json"><%- h.jsonScript({
+  '@context': 'https://schema.org', '@type': 'EventPlanner', name: s.agency_name, slogan: s.slogan,
+  url: baseUrl + '/', telephone: s.whatsapp, email: s.public_email || undefined,
+  areaServed: { '@type': 'City', name: 'Kinshasa' },
+  address: s.address ? { '@type': 'PostalAddress', streetAddress: s.address, addressLocality: 'Kinshasa', addressCountry: 'CD' } : { '@type': 'PostalAddress', addressLocality: 'Kinshasa', addressCountry: 'CD' },
+  founder: { '@type': 'Person', name: s.founder_name },
+  sameAs: Object.values(s.socials || {}).filter(Boolean),
+}) %></script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<% if (typeof preview !== 'undefined' && preview) { %><div class="preview-bar">Mode aperçu : les contenus non publiés sont visibles uniquement par vous. <a href="<%= path %>">Quitter l’aperçu</a></div><% } %>
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a href="/" class="logo" aria-label="<%= s.agency_name %> — accueil"><%- include('logo') %></a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav" data-nav-toggle><span></span><span></span><span></span><span class="sr">Menu</span></button>
+    <nav id="nav" class="nav" aria-label="Navigation principale">
+      <% const links = [['/', 'nav.home'], ['/services', 'nav.services'], ['/offres', 'nav.offers'], ['/galerie', 'nav.gallery'], ['/a-propos', 'nav.about']];
+         if (typeof showPartnersNav !== 'undefined' && showPartnersNav) links.push(['/partenaires', 'nav.partners']);
+         links.push(['/contact', 'nav.contact']); %>
+      <ul>
+        <% for (const [href, key] of links) { const active = href === '/' ? path === '/' : path.startsWith(href); %>
+          <li><a href="<%= href %>"<%- active ? ' aria-current="page"' : '' %>><%= h.t(key) %></a></li>
+        <% } %>
+      </ul>
+      <a href="/devis" class="btn btn-gold btn-sm nav-cta"><%= h.t('cta.quote') %></a>
+    </nav>
+  </div>
+</header>
+<main id="contenu">

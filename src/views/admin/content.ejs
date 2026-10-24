@@ -1,0 +1,68 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Contenu du site</h1></div>
+<div class="btns" style="margin-bottom:16px">
+  <% for (const [k, v] of Object.entries(SECTIONS)) { %><a class="a-btn <%= k === section ? '' : 'a-btn-ghost' %> a-btn-sm" href="/admin/contenu/<%= k %>"><%= v %></a><% } %>
+</div>
+<% const pairRows = (prefix, items, n) => { let out = ''; const list = (items || []).concat(Array(Math.max(0, n - (items || []).length)).fill({ title: '', text: '' }));
+     list.forEach((it, i) => { out += `<div class="f-row f-row-2"><div class="f"><label>Titre ${i + 1}</label><input name="${prefix}_title" value="${h.esc(it.title)}"></div><div class="f"><label>Texte ${i + 1}</label><textarea name="${prefix}_text" rows="2">${h.esc(it.text)}</textarea></div></div>`; });
+     return out; }; %>
+<form method="post" action="/admin/contenu/<%= section %>" enctype="multipart/form-data" class="a-form a-card">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <h2><%= SECTIONS[section] %></h2>
+  <% if (section === 'accueil') { %>
+    <div class="f"><label>Titre principal</label><input name="home_hero_title" value="<%= st.home_hero_title %>"></div>
+    <div class="f"><label>Texte d’accueil (sous le slogan)</label><textarea name="home_hero_text"><%= st.home_hero_text %></textarea></div>
+    <div class="f"><label>Présentation de l’agence</label><textarea name="home_intro" rows="5"><%= st.home_intro %></textarea></div>
+    <fieldset class="a-fs"><legend>Image principale</legend>
+      <% if (st.hero_media_id) { %><img class="thumb" src="<%= h.mediaUrl(st.hero_media_id) %>" alt=""><label class="cb"><input type="checkbox" name="remove_hero" value="1"> Retirer (revenir à la photo d’illustration)</label><% } else { %><p class="help">Actuellement : photo d’illustration (mention « Photo d’illustration » affichée). Remplacez-la par une photo de vos événements.</p><% } %>
+      <input type="file" name="hero" accept="image/jpeg,image/png,image/webp"></fieldset>
+    <fieldset class="a-fs"><legend>« Pourquoi choisir … ? » (laisser un titre vide pour retirer un élément)</legend><%- pairRows('why', st.why_items, 6) %></fieldset>
+  <% } else if (section === 'apropos') { %>
+    <div class="f"><label>Mission</label><textarea name="about_mission"><%= st.about_mission %></textarea></div>
+    <div class="f"><label>Vision</label><textarea name="about_vision"><%= st.about_vision %></textarea></div>
+    <fieldset class="a-fs"><legend>Accompagnement (étapes)</legend><%- pairRows('step', st.about_approach, 6) %></fieldset>
+    <fieldset class="a-fs"><legend>Valeurs</legend><%- pairRows('value', st.values, 6) %></fieldset>
+    <fieldset class="a-fs"><legend>Fondateur</legend>
+      <div class="f-row f-row-2"><div class="f"><label>Nom</label><input name="founder_name" value="<%= st.founder_name %>"></div><div class="f"><label>Fonctions</label><input name="founder_title" value="<%= st.founder_title %>"></div></div>
+      <div class="f"><label>Biographie</label><textarea name="founder_bio" rows="6" placeholder="Rédigez votre présentation. Tant que ce champ est vide, le site affiche un texte provisoire neutre."><%= st.founder_bio %></textarea></div>
+      <% if (st.founder_photo_media_id) { %><img class="thumb" src="<%= h.mediaUrl(st.founder_photo_media_id) %>" alt=""><label class="cb"><input type="checkbox" name="remove_founder_photo" value="1"> Retirer la photo</label><% } %>
+      <div class="f"><label>Photo</label><input type="file" name="founder_photo" accept="image/jpeg,image/png,image/webp"></div>
+    </fieldset>
+  <% } else if (section === 'coordonnees') { %>
+    <div class="f-row f-row-2">
+      <div class="f"><label>Numéro WhatsApp (format international)</label><input name="whatsapp" value="<%= st.whatsapp %>" required></div>
+      <div class="f"><label>Numéro affiché</label><input name="phone_display" value="<%= st.phone_display %>"></div>
+      <div class="f"><label>E-mail public</label><input name="public_email" type="email" value="<%= st.public_email %>"><p class="help">Laissez vide pour ne pas afficher d’e-mail.</p></div>
+      <div class="f"><label>Ville</label><input name="city" value="<%= st.city %>"></div>
+    </div>
+    <div class="f"><label>Adresse vérifiée</label><input name="address" value="<%= st.address %>"><p class="help">N’est affichée que si renseignée.</p></div>
+    <div class="f"><label>Carte Google Maps (lien « intégrer », https://www.google.com/maps/embed?…)</label><input name="map_url" value="<%= st.map_url %>"><p class="help">Affichée uniquement si une adresse est renseignée.</p></div>
+    <fieldset class="a-fs"><legend>Réseaux sociaux (liens exacts — laisser vide pour masquer)</legend>
+      <div class="f-row f-row-2"><% for (const k of ['facebook', 'instagram', 'tiktok', 'linkedin', 'youtube']) { %><div class="f"><label><%= k.charAt(0).toUpperCase() + k.slice(1) %></label><input name="social_<%= k %>" type="url" value="<%= (st.socials || {})[k] || '' %>" placeholder="https://"></div><% } %></div>
+    </fieldset>
+  <% } else if (section === 'apparence') { %>
+    <div class="f-row f-row-2">
+      <div class="f"><label>Nom de l’agence</label><input name="agency_name" value="<%= st.agency_name %>"></div>
+      <div class="f"><label>Slogan</label><input name="slogan" value="<%= st.slogan %>"></div>
+    </div>
+    <fieldset class="a-fs"><legend>Logo</legend>
+      <% if (st.logo_media_id) { %><img src="<%= h.mediaUrl(st.logo_media_id) %>" alt="" style="max-height:60px;background:#fff;padding:4px"><label class="cb"><input type="checkbox" name="remove_logo" value="1"> Retirer (revenir au logo provisoire)</label><% } else { %><p class="help">Logo provisoire en cours d’utilisation (monogramme « PE »). Téléversez votre logo officiel (PNG transparent recommandé ; PNG ou JPEG pour qu’il apparaisse aussi sur les devis PDF).</p><% } %>
+      <input type="file" name="logo" accept="image/png,image/jpeg,image/webp"></fieldset>
+    <fieldset class="a-fs"><legend>Couleurs principales</legend>
+      <div class="f-row f-row-2">
+        <div class="f"><label>Couleur principale (bleu nuit)</label><input type="color" class="swatch" name="color_primary" value="<%= st.color_primary %>"></div>
+        <div class="f"><label>Couleur d’accent (or)</label><input type="color" class="swatch" name="color_accent" value="<%= st.color_accent %>"></div>
+      </div>
+      <label class="cb"><input type="checkbox" name="reset_colors" value="1"> Rétablir les couleurs d’origine (#0B1F3A / #D4AF37)</label>
+    </fieldset>
+  <% } else if (section === 'devis') { %>
+    <div class="f"><label>Conditions de paiement par défaut</label><textarea name="quote_payment_terms"><%= st.quote_payment_terms %></textarea></div>
+    <div class="f"><label>Durée de validité par défaut (jours)</label><input type="number" min="1" max="365" name="quote_validity_days" value="<%= st.quote_validity_days %>"></div>
+    <div class="f"><label>Mentions figurant sur chaque devis PDF</label><textarea name="quote_legal_mentions" rows="5"><%= st.quote_legal_mentions %></textarea></div>
+  <% } else if (section === 'seo') { %>
+    <div class="f"><label>Description pour les moteurs de recherche (≈ 155 caractères)</label><textarea name="seo_description" maxlength="300"><%= st.seo_description %></textarea></div>
+    <label class="cb"><input type="checkbox" name="show_partners_section" value="1"<%= st.show_partners_section === '1' ? ' checked' : '' %>> Activer la page publique « Partenaires » (seuls les partenaires explicitement publiés y figurent)</label>
+  <% } %>
+  <div class="btns"><button class="a-btn">Enregistrer</button><a class="a-btn a-btn-ghost" href="/" target="_blank" rel="noopener">Voir le site</a></div>
+</form>
+<%- include('../partials/admin-bottom') %>

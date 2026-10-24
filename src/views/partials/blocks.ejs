@@ -1,0 +1,31 @@
+<% for (const b of blocks) { %>
+  <section class="section block block-<%= b.type %><%= !b.published ? ' is-draft' : '' %>">
+    <div class="container">
+      <% if (!b.published) { %><p class="draft-tag">Non publié (aperçu)</p><% } %>
+      <% if (b.type === 'image_text') { %>
+        <div class="split">
+          <% if (b.media_id) { %><div class="split-media"><img src="<%= h.mediaUrl(b.media_id) %>" alt="<%= b.title || '' %>" loading="lazy"></div><% } %>
+          <div class="split-text">
+            <% if (b.title) { %><h2 class="h2"><%= b.title %></h2><% } %>
+            <div class="prose"><%- h.paras(b.body) %></div>
+            <% if (b.button_label && b.button_url) { %><a class="btn btn-navy" href="<%= b.button_url %>"><%= b.button_label %></a><% } %>
+          </div>
+        </div>
+      <% } else if (b.type === 'cta') { %>
+        <div class="cta-band">
+          <% if (b.title) { %><h2 class="h2"><%= b.title %></h2><% } %>
+          <div class="prose"><%- h.paras(b.body) %></div>
+          <% if (b.button_label && b.button_url) { %><a class="btn btn-gold" href="<%= b.button_url %>"><%= b.button_label %></a><% } %>
+        </div>
+      <% } else if (b.type === 'highlight') { %>
+        <blockquote class="highlight"><% if (b.title) { %><strong><%= b.title %></strong><% } %><%- h.paras(b.body) %></blockquote>
+      <% } else { %>
+        <div class="narrow">
+          <% if (b.title) { %><h2 class="h2"><%= b.title %></h2><% } %>
+          <div class="prose"><%- h.paras(b.body) %></div>
+          <% if (b.button_label && b.button_url) { %><a class="btn btn-navy" href="<%= b.button_url %>"><%= b.button_label %></a><% } %>
+        </div>
+      <% } %>
+    </div>
+  </section>
+<% } %>

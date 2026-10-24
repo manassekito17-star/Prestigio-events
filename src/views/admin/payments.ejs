@@ -1,0 +1,25 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Paiements</h1></div>
+<div class="a-alert a-alert-info small">Le site n’encaisse aucun paiement en ligne. Les montants ci-dessous sont saisis manuellement par l’équipe et ne constituent pas des transactions vérifiées par une banque ou un opérateur.</div>
+<div class="a-card tbl-wrap">
+  <h2>Soldes des devis envoyés ou acceptés</h2>
+  <table class="tbl">
+    <thead><tr><th>Dossier</th><th>Événement</th><th>Statut</th><th class="num">Devis</th><th class="num">Payé USD</th><th class="num">Solde USD</th></tr></thead>
+    <tbody>
+      <% for (const b of balances) { %><tr><td><a href="/admin/demandes/<%= b.id %>#paiements"><%= b.reference %></a> · <%= b.client_name %></td><td><%= b.event_date ? h.fmtDate(b.event_date) : '—' %></td><td><span class="pill pill-<%= h.statusTone(b.status) %>"><%= h.statusLabel(b.status) %></span></td>
+        <td class="num"><%= h.fmtMoney(b.total_cents) %></td><td class="num"><%= h.fmtMoney(b.paid_usd) %><%= b.paid_cdf ? ' (+ ' + h.fmtMoney(b.paid_cdf, 'CDF') + ')' : '' %></td><td class="num"><strong><%= h.fmtMoney(Math.max(0, b.total_cents - b.paid_usd)) %></strong></td></tr><% } %>
+      <% if (!balances.length) { %><tr><td colspan="6" class="muted">Aucun devis envoyé ou accepté.</td></tr><% } %>
+    </tbody>
+  </table>
+</div>
+<div class="a-card tbl-wrap">
+  <h2>Derniers paiements enregistrés</h2>
+  <table class="tbl">
+    <thead><tr><th>Date</th><th>Dossier</th><th class="num">Montant</th><th>Mode</th><th>Référence</th></tr></thead>
+    <tbody>
+      <% for (const p of rows) { %><tr><td><%= h.fmtDate(p.paid_on) %></td><td><a href="/admin/demandes/<%= p.rid %>#paiements"><%= p.reference %></a> · <%= p.client_name %></td><td class="num"><%= h.fmtMoney(p.amount_cents, p.currency) %></td><td><%= h.C.PAYMENT_METHODS[p.method] %></td><td><%= p.reference || '' %></td></tr><% } %>
+      <% if (!rows.length) { %><tr><td colspan="5" class="muted">Aucun paiement.</td></tr><% } %>
+    </tbody>
+  </table>
+</div>
+<%- include('../partials/admin-bottom') %>

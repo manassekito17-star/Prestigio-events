@@ -1,0 +1,9 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Sauvegardes</h1>
+  <form method="post" action="/admin/sauvegardes"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="a-btn">Créer une sauvegarde maintenant</button></form></div>
+<div class="a-alert a-alert-info small">La sauvegarde contient la base de données complète (demandes, devis, partenaires, paramètres…). Les fichiers téléversés (photos, PDF, documents) se trouvent dans le dossier <code>storage/uploads</code> du serveur et doivent être copiés séparément. Conservez les sauvegardes en lieu sûr : elles contiennent des données personnelles. Procédure de restauration : voir la documentation (README).</div>
+<div class="a-card"><ul>
+  <% for (const f of files) { %><li><a href="/admin/sauvegardes/<%= f.name %>"><%= f.name %></a> <span class="small muted">(<%= Math.round(f.size / 1024) %> Ko)</span></li><% } %>
+  <% if (!files.length) { %><li class="muted">Aucune sauvegarde.</li><% } %>
+</ul></div>
+<%- include('../partials/admin-bottom') %>

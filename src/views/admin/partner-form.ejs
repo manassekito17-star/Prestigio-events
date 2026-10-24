@@ -1,0 +1,63 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><div><p class="small muted" style="margin:0"><a href="/admin/partenaires">← Partenaires</a></p><h1><%= p.id ? p.trade_name : 'Nouveau partenaire' %></h1></div></div>
+<form method="post" action="/admin/partenaires/<%= p.id || 'nouveau' %>" enctype="multipart/form-data" class="a-form">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <fieldset <%- canEdit ? '' : 'disabled' %> style="border:0;padding:0;margin:0">
+  <div class="a-grid a-grid-2">
+    <div class="a-card">
+      <h2>Informations <span class="private-tag">privé</span></h2>
+      <div class="f-row f-row-2">
+        <div class="f"><label>Nom commercial *</label><input name="trade_name" required value="<%= p.trade_name || '' %>"></div>
+        <div class="f"><label>Catégorie</label><select name="category"><% for (const [k, v] of Object.entries(h.C.PARTNER_CATEGORIES)) { %><option value="<%= k %>"<%= p.category === k ? ' selected' : '' %>><%= v %></option><% } %></select></div>
+        <div class="f"><label>Nom du contact</label><input name="contact_name" value="<%= p.contact_name || '' %>"></div>
+        <div class="f"><label>Téléphone</label><input name="phone" value="<%= p.phone || '' %>"></div>
+        <div class="f"><label>WhatsApp</label><input name="whatsapp" value="<%= p.whatsapp || '' %>"></div>
+        <div class="f"><label>E-mail</label><input name="email" type="email" value="<%= p.email || '' %>"></div>
+        <div class="f"><label>Adresse</label><input name="address" value="<%= p.address || '' %>"></div>
+        <div class="f"><label>Zone d’intervention</label><input name="service_area" value="<%= p.service_area || '' %>"></div>
+      </div>
+      <div class="f"><label>Description des services</label><textarea name="services_desc"><%= p.services_desc || '' %></textarea></div>
+      <div class="f"><label>Conditions de réservation</label><textarea name="booking_terms"><%= p.booking_terms || '' %></textarea></div>
+      <div class="f-row f-row-2">
+        <div class="f"><label>Statut</label><select name="status"><% for (const [k, v] of Object.entries(h.C.PARTNER_STATUSES)) { %><option value="<%= k %>"<%= p.status === k ? ' selected' : '' %>><%= v %></option><% } %></select></div>
+        <div class="f"><label>Dernière vérification</label><input type="date" name="last_verified_at" value="<%= p.last_verified_at || '' %>"></div>
+      </div>
+      <% if (can('partners.confidential')) { %>
+      <fieldset class="a-fs"><legend>Confidentiel <span class="private-tag">propriétaire uniquement</span></legend>
+        <div class="f"><label>Tarifs habituels ou négociés</label><textarea name="negotiated_rates"><%= p.negotiated_rates || '' %></textarea></div>
+        <div class="f"><label>Commission ou marge convenue</label><input name="commission" value="<%= p.commission || '' %>"></div>
+        <div class="f"><label>Notes internes</label><textarea name="internal_notes"><%= p.internal_notes || '' %></textarea></div>
+      </fieldset>
+      <% } %>
+    </div>
+    <div class="a-card">
+      <h2>Publication sur le site</h2>
+      <label class="cb"><input type="checkbox" name="publish" value="1"<%= p.publish ? ' checked' : '' %>> <span><strong>Publier ce partenaire</strong> (désactivé par défaut ; le partenaire doit aussi être « Actif »)</span></label>
+      <p class="help">Le nom commercial est affiché si la publication est activée. Cochez ci-dessous les autres informations autorisées :</p>
+      <% for (const [k, v] of Object.entries(h.C.PARTNER_PUBLIC_FIELDS)) { %><label class="cb"><input type="checkbox" name="public_fields" value="<%= k %>"<%= fields.includes(k) ? ' checked' : '' %>> <%= v %></label><% } %>
+      <label class="cb"><input type="checkbox" name="contact_publication_authorized" value="1"<%= p.contact_publication_authorized ? ' checked' : '' %>> Le partenaire a autorisé la publication de ses coordonnées</label>
+      <label class="cb"><input type="checkbox" name="image_publication_authorized" value="1"<%= p.image_publication_authorized ? ' checked' : '' %>> Le partenaire a autorisé la publication de son logo / image</label>
+      <div class="f"><label>Description publique</label><textarea name="public_description"><%= p.public_description || '' %></textarea></div>
+      <div class="f-row f-row-2">
+        <div class="f"><label>Téléphone public</label><input name="public_phone" value="<%= p.public_phone || '' %>"></div>
+        <div class="f"><label>E-mail public</label><input name="public_email" value="<%= p.public_email || '' %>"></div>
+      </div>
+      <div class="f"><label>Site web</label><input name="public_website" type="url" value="<%= p.public_website || '' %>"></div>
+      <div class="f"><label>Logo ou photo</label><% if (p.logo_media_id) { %><img class="thumb" src="<%= h.mediaUrl(p.logo_media_id) %>" alt=""><label class="cb"><input type="checkbox" name="remove_logo" value="1"> Retirer</label><% } %><input type="file" name="logo" accept="image/jpeg,image/png,image/webp"></div>
+    </div>
+  </div>
+  <% if (canEdit) { %><button class="a-btn">Enregistrer</button><% } %>
+  </fieldset>
+</form>
+<% if (p.id && can('partners.confidential')) { %>
+<div class="a-card" id="documents" style="margin-top:18px">
+  <h2>Documents, contrats, devis, photos <span class="private-tag">propriétaire uniquement</span></h2>
+  <ul><% for (const d of docs) { %><li><a href="/media/<%= d.media_id %>?inline=1" target="_blank" rel="noopener"><%= d.label %></a> <span class="small muted">(<%= Math.round(d.size / 1024) %> Ko)</span>
+    <form method="post" action="/admin/partenaires/<%= p.id %>/documents/<%= d.id %>/supprimer" class="inline" data-confirm="Supprimer ce document ?"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="a-btn a-btn-danger a-btn-sm">×</button></form></li><% } %></ul>
+  <form method="post" action="/admin/partenaires/<%= p.id %>/documents" enctype="multipart/form-data" class="a-form btns">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input name="label" placeholder="Libellé" class="a-in" style="max-width:220px"><input type="file" name="docs" multiple accept="application/pdf,image/*"><button class="a-btn a-btn-sm">Ajouter</button>
+  </form>
+</div>
+<% } %>
+<% if (p.id && canEdit) { %><form method="post" action="/admin/partenaires/<%= p.id %>/supprimer" data-confirm="Supprimer définitivement ce partenaire et ses documents ? (Vous pouvez aussi le passer en « Archivé ».)"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="a-btn a-btn-danger a-btn-sm">Supprimer</button></form><% } %>
+<%- include('../partials/admin-bottom') %>

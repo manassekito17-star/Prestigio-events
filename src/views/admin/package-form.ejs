@@ -1,0 +1,22 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><div><p class="small muted" style="margin:0"><a href="/admin/forfaits">← Forfaits</a></p><h1><%= p.id ? p.name : 'Nouveau forfait' %></h1></div></div>
+<form method="post" action="/admin/forfaits/<%= p.id || 'nouveau' %>" class="a-form a-card">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="f-row f-row-2">
+    <div class="f"><label>Nom *</label><input name="name" required value="<%= p.name || '' %>"></div>
+    <div class="f"><label>Type d’événement</label><input name="event_type" value="<%= p.event_type || '' %>"></div>
+    <div class="f"><label>Type de prix</label><select name="price_type"><% for (const [k, v] of Object.entries(h.C.PACKAGE_PRICE_TYPES)) { %><option value="<%= k %>"<%= p.price_type === k ? ' selected' : '' %>><%= v %></option><% } %></select></div>
+    <div class="f"><label>Montant (USD)</label><input name="amount" inputmode="decimal" value="<%= h.centsToInput(p.amount_cents) %>"></div>
+  </div>
+  <div class="f"><label>Description</label><textarea name="summary"><%= p.summary || '' %></textarea></div>
+  <div class="f-row f-row-2">
+    <div class="f"><label>Inclus (une ligne par élément)</label><textarea name="includes" rows="6"><%= p.includes || '' %></textarea></div>
+    <div class="f"><label>Non inclus (une ligne par élément)</label><textarea name="excludes" rows="6"><%= p.excludes || '' %></textarea></div>
+  </div>
+  <label class="cb"><input type="checkbox" name="provisional" value="1"<%= p.provisional ? ' checked' : '' %>> Prix provisoire (affiché « Tarif sur demande » tant que coché)</label>
+  <label class="cb"><input type="checkbox" name="featured" value="1"<%= p.featured ? ' checked' : '' %>> Mettre en avant (« Recommandée »)</label>
+  <label class="cb"><input type="checkbox" name="published" value="1"<%= p.published ? ' checked' : '' %>> Publié</label>
+  <button class="a-btn">Enregistrer</button>
+</form>
+<% if (p.id) { %><form method="post" action="/admin/forfaits/<%= p.id %>/supprimer" data-confirm="Supprimer ce forfait ?"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="a-btn a-btn-danger a-btn-sm">Supprimer</button></form><% } %>
+<%- include('../partials/admin-bottom') %>

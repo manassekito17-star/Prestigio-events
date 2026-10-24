@@ -1,0 +1,37 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><div><p class="small muted" style="margin:0"><a href="/admin/tarifs">← Tarifs</a></p><h1><%= t.id ? t.name : 'Nouveau tarif' %></h1></div></div>
+<form method="post" action="/admin/tarifs/<%= t.id || 'nouveau' %>" class="a-form a-card">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="f-row f-row-2">
+    <div class="f"><label for="sc">Portée</label><select id="sc" name="scope"><option value="service">Rattaché à un service</option><option value="global"<%= t.scope === 'global' ? ' selected' : '' %>>Global (frais, transport, remise)</option></select></div>
+    <div class="f"><label for="sv">Service</label><select id="sv" name="service_id"><option value="">—</option><% for (const sv of services) { %><option value="<%= sv.id %>"<%= t.service_id === sv.id ? ' selected' : '' %>><%= sv.name %></option><% } %></select></div>
+    <div class="f"><label for="n">Nom du tarif *</label><input id="n" name="name" required value="<%= t.name || '' %>"></div>
+    <div class="f"><label for="m">Méthode de calcul</label><select id="m" name="method"><% for (const [k, v] of Object.entries(h.C.TARIFF_METHODS)) { %><option value="<%= k %>"<%= t.method === k ? ' selected' : '' %>><%= v %></option><% } %></select>
+      <p class="help">Chaque tarif a sa propre méthode : seuls les tarifs « par personne » sont multipliés par le nombre d’invités.</p></div>
+    <div class="f"><label for="a">Montant (USD)</label><input id="a" name="amount" inputmode="decimal" value="<%= h.centsToInput(t.amount_cents) %>"><p class="help">Vide = non renseigné → « À confirmer ».</p></div>
+    <div class="f"><label for="p">Pourcentage (remise en %)</label><input id="p" name="percent" inputmode="decimal" value="<%= t.percent ?? '' %>"></div>
+  </div>
+  <fieldset class="a-fs"><legend>Agents de protocole (méthode « par agent »)</legend>
+    <div class="f-row f-row-3">
+      <div class="f"><label for="au">Unité de tarification</label><select id="au" name="agent_unit"><option value="event"<%= t.agent_unit === 'event' ? ' selected' : '' %>>Par événement</option><option value="hour"<%= t.agent_unit === 'hour' ? ' selected' : '' %>>Par heure</option><option value="day"<%= t.agent_unit === 'day' ? ' selected' : '' %>>Par journée</option></select></div>
+      <div class="f"><label for="ih">Durée incluse (heures)</label><input id="ih" name="included_hours" inputmode="decimal" value="<%= t.included_hours ?? '' %>"></div>
+      <div class="f"><label for="eh">Heure supplémentaire par agent (USD)</label><input id="eh" name="extra_hour" inputmode="decimal" value="<%= h.centsToInput(t.extra_hour_cents) %>"></div>
+    </div>
+    <p class="help">Transport, repas ou autres suppléments par agent : créez des tarifs supplémentaires « par agent » sur le service protocole (cochez « option » s’ils sont facultatifs).</p>
+  </fieldset>
+  <div class="f-row f-row-3">
+    <div class="f"><label for="vf">Valable à partir du</label><input id="vf" type="date" name="valid_from" value="<%= t.valid_from || '' %>"></div>
+    <div class="f"><label for="vt">Jusqu’au</label><input id="vt" type="date" name="valid_to" value="<%= t.valid_to || '' %>"></div>
+    <div class="f"><label for="mg">Appliquer à partir de N invités</label><input id="mg" name="min_guests" type="number" min="0" value="<%= t.min_guests ?? '' %>"><p class="help">Pour les frais / remises globaux.</p></div>
+  </div>
+  <label class="cb"><input type="checkbox" name="active" value="1"<%= t.active ? ' checked' : '' %>> Actif</label>
+  <label class="cb"><input type="checkbox" name="optional" value="1"<%= t.optional ? ' checked' : '' %>> Option cochable par le client (sinon appliqué automatiquement quand le service est choisi)</label>
+  <label class="cb"><input type="checkbox" name="public_price" value="1"<%= t.public_price ? ' checked' : '' %>> Prix visible publiquement (site et calculateur)</label>
+  <label class="cb"><input type="checkbox" name="provisional" value="1"<%= t.provisional ? ' checked' : '' %>> Tarif provisoire / à confirmer (le visiteur voit « À confirmer »)</label>
+  <div class="f"><label for="co">Conditions (publiques)</label><textarea id="co" name="conditions"><%= t.conditions || '' %></textarea></div>
+  <div class="f"><label for="no">Note interne <span class="private-tag">jamais publiée</span></label><textarea id="no" name="internal_note"><%= t.internal_note || '' %></textarea></div>
+  <input type="hidden" name="back_service" value="<%= t.service_id ? '1' : '' %>">
+  <div class="btns"><button class="a-btn">Enregistrer</button></div>
+</form>
+<% if (t.id) { %><form method="post" action="/admin/tarifs/<%= t.id %>/supprimer" data-confirm="Supprimer ce tarif ? Les devis existants ne sont pas modifiés."><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="a-btn a-btn-danger a-btn-sm">Supprimer ce tarif</button></form><% } %>
+<%- include('../partials/admin-bottom') %>

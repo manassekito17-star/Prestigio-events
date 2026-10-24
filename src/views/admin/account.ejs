@@ -1,0 +1,15 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Mon compte</h1></div>
+<div class="a-card" style="max-width:520px">
+  <p><strong><%= user.name %></strong><br><span class="muted"><%= user.email %></span></p>
+  <h2>Changer mon mot de passe</h2>
+  <% if (error) { %><div class="a-alert a-alert-err"><%= error %></div><% } %>
+  <form method="post" action="/admin/compte" class="a-form">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <div class="f"><label>Mot de passe actuel</label><input type="password" name="current" required autocomplete="current-password"></div>
+    <div class="f"><label>Nouveau mot de passe</label><input type="password" name="password" required minlength="10" autocomplete="new-password"><p class="help">Au moins 10 caractères, avec des lettres et des chiffres.</p></div>
+    <div class="f"><label>Confirmer</label><input type="password" name="password2" required autocomplete="new-password"></div>
+    <button class="a-btn">Modifier</button>
+  </form>
+</div>
+<%- include('../partials/admin-bottom') %>

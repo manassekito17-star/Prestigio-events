@@ -1,0 +1,191 @@
+<% const scripts = ['/static/js/pricing-core.js', '/static/js/quote-form.js']; %>
+<%- include('../partials/public-top', { scripts }) %>
+<% const P = typeof prev !== 'undefined' && prev ? prev : {};
+   const arr = (x) => Array.isArray(x) ? x.map(String) : x == null || x === '' ? [] : [String(x)];
+   const val = (k) => P[k] == null ? '' : P[k];
+   const errs = typeof serverErrors !== 'undefined' && serverErrors ? serverErrors : null;
+   const selServices = arr(P.services).concat(preselect ? [String(preselect)] : []);
+   const selOptions = arr(P.options);
+   const selTasks = arr(P.protocol_tasks);
+   const evType = P.event_type || eventPreselect || ''; %>
+<section class="page-hero compact">
+  <div class="container">
+    <p class="eyebrow">Demande de devis</p>
+    <h1 class="h1">Parlez-nous de votre événement</h1>
+    <p class="lead">Quelques minutes suffisent. Vous obtenez une estimation indicative immédiate ; le devis définitif vous sera transmis après vérification par notre équipe.</p>
+  </div>
+</section>
+
+<section class="section quote-section">
+  <div class="container quote-layout">
+    <form method="post" action="/devis" class="form quote-form" id="quote-form" novalidate data-once>
+      <input type="hidden" name="_ft" value="<%= token %>">
+      <div class="hp" aria-hidden="true"><label>Site web <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <script type="application/json" id="catalog-data"><%- h.jsonScript(cat) %></script>
+
+      <% if (errs) { %>
+        <div class="alert alert-err" role="alert">
+          <strong>Merci de corriger les points suivants :</strong>
+          <ul><% for (const m of Object.values(errs)) { %><li><%= m %></li><% } %></ul>
+        </div>
+      <% } %>
+
+      <ol class="stepper" aria-label="Étapes" data-stepper hidden>
+        <li data-for="1">Événement</li><li data-for="2">Informations</li><li data-for="3">Services</li><li data-for="4">Protocole</li><li data-for="5">Budget</li><li data-for="6">Coordonnées</li><li data-for="7">Résumé</li>
+      </ol>
+      <p class="step-count" data-step-count hidden></p>
+
+      <!-- Étape 1 -->
+      <fieldset class="step" data-step="1">
+        <legend class="h3">1. Type d’événement</legend>
+        <div class="choice-grid" role="radiogroup">
+          <% for (const [k, label] of Object.entries(h.C.EVENT_TYPES)) { %>
+            <label class="choice"><input type="radio" name="event_type" value="<%= k %>" required<%= evType === k ? ' checked' : '' %>><span><%= label %></span></label>
+          <% } %>
+        </div>
+        <div class="field" data-show-if="event_type=autre">
+          <label for="q-other">Précisez le type d’événement *</label>
+          <input id="q-other" name="event_type_other" maxlength="120" value="<%= val('event_type_other') %>">
+        </div>
+        <p class="err" data-err="event_type"></p>
+      </fieldset>
+
+      <!-- Étape 2 -->
+      <fieldset class="step" data-step="2">
+        <legend class="h3">2. Informations sur l’événement</legend>
+        <div class="grid-2">
+          <div class="field"><label for="q-date">Date souhaitée</label><input id="q-date" type="date" name="event_date" min="<%= h.today() %>" value="<%= val('event_date') %>"><p class="err" data-err="event_date"></p></div>
+          <div class="field"><label for="q-time">Heure de début</label><input id="q-time" type="time" name="start_time" value="<%= val('start_time') %>"></div>
+          <div class="field"><label for="q-dur">Durée estimée (heures)</label><input id="q-dur" type="number" name="duration_hours" min="1" max="240" step="0.5" inputmode="decimal" value="<%= val('duration_hours') %>" placeholder="ex. 6"><p class="err" data-err="duration_hours"></p></div>
+          <div class="field"><label for="q-guests">Nombre approximatif d’invités</label><input id="q-guests" type="number" name="guests" min="1" max="100000" inputmode="numeric" value="<%= val('guests') %>" placeholder="ex. 200"><p class="err" data-err="guests"></p></div>
+        </div>
+        <div class="field"><label for="q-area">Commune ou quartier de Kinshasa</label><input id="q-area" name="location_area" maxlength="160" value="<%= val('location_area') %>" placeholder="ex. Gombe, Ngaliema, Limete…"></div>
+        <div class="field">
+          <span class="label">Le lieu est-il déjà réservé ?</span>
+          <div class="inline-choices">
+            <label class="choice sm"><input type="radio" name="venue_booked" value="oui"<%= P.venue_booked === 'oui' ? ' checked' : '' %>><span>Oui</span></label>
+            <label class="choice sm"><input type="radio" name="venue_booked" value="non"<%= P.venue_booked === 'non' ? ' checked' : '' %>><span>Non</span></label>
+          </div>
+        </div>
+        <div class="field" data-show-if="venue_booked=non">
+          <span class="label">Souhaitez-vous que nous recherchions un lieu pour vous ?</span>
+          <div class="inline-choices">
+            <label class="choice sm"><input type="radio" name="wants_venue_search" value="oui"<%= P.wants_venue_search === 'oui' ? ' checked' : '' %>><span>Oui</span></label>
+            <label class="choice sm"><input type="radio" name="wants_venue_search" value="non"<%= P.wants_venue_search === 'non' ? ' checked' : '' %>><span>Non</span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Étape 3 -->
+      <fieldset class="step" data-step="3">
+        <legend class="h3">3. Services souhaités</legend>
+        <p class="muted small">Sélectionnez une ou plusieurs prestations. Vous pourrez préciser vos besoins avec notre équipe.</p>
+        <div class="svc-choices">
+          <% for (const svc of cat.services) { %>
+            <div class="svc-choice">
+              <label class="choice wide"><input type="checkbox" name="services" value="<%= svc.id %>" data-protocol="<%= svc.is_protocol ? 1 : 0 %>"<%= selServices.includes(String(svc.id)) ? ' checked' : '' %>><span><%= svc.name %></span></label>
+              <% const opts = svc.tariffs.filter((t) => t.optional); if (opts.length) { %>
+                <div class="svc-options" data-options-for="<%= svc.id %>">
+                  <% for (const o of opts) { %>
+                    <label class="opt"><input type="checkbox" name="options" value="<%= o.id %>"<%= selOptions.includes(String(o.id)) ? ' checked' : '' %>> <%= o.name %> <span class="muted">(option)</span></label>
+                  <% } %>
+                </div>
+              <% } %>
+            </div>
+          <% } %>
+        </div>
+      </fieldset>
+
+      <!-- Étape 4 -->
+      <fieldset class="step" data-step="4" data-protocol-step>
+        <legend class="h3">4. Agents de protocole</legend>
+        <p class="no-protocol muted" data-no-protocol>Vous n’avez pas sélectionné le service « Protocole et accueil ». Vous pouvez passer cette étape ou revenir à l’étape 3 pour l’ajouter.</p>
+        <div data-protocol-fields>
+          <div class="field">
+            <label for="q-agents">Combien d’agents de protocole souhaitez-vous pour votre événement ?</label>
+            <div class="agents-row">
+              <button type="button" class="qty-btn" data-qty="-1" aria-label="Retirer un agent">−</button>
+              <input id="q-agents" type="number" name="protocol_agents_n" min="1" max="500" inputmode="numeric" value="<%= val('protocol_agents_n') %>" placeholder="ex. 6">
+              <button type="button" class="qty-btn" data-qty="1" aria-label="Ajouter un agent">+</button>
+            </div>
+            <label class="opt mt-s"><input type="checkbox" name="protocol_unknown_cb" value="1"<%= P.protocol_unknown_cb ? ' checked' : '' %>> Je ne sais pas encore</label>
+            <p class="err" data-err="protocol_agents"></p>
+          </div>
+          <div class="field">
+            <span class="label">Tâches souhaitées</span>
+            <div class="choice-grid tight">
+              <% for (const [k, label] of Object.entries(h.C.PROTOCOL_TASKS)) { %>
+                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="<%= k %>"<%= selTasks.includes(k) ? ' checked' : '' %>><span><%= label %></span></label>
+              <% } %>
+            </div>
+          </div>
+          <div class="field" data-show-if="protocol_tasks=autre"><label for="q-tasks-other">Autre tâche</label><input id="q-tasks-other" name="protocol_tasks_other" maxlength="200" value="<%= val('protocol_tasks_other') %>"></div>
+          <p class="small muted" data-protocol-tariff></p>
+        </div>
+      </fieldset>
+
+      <!-- Étape 5 -->
+      <fieldset class="step" data-step="5">
+        <legend class="h3">5. Budget</legend>
+        <div class="choice-grid tight">
+          <label class="choice"><input type="radio" name="budget_mode" value="range"<%= P.budget_mode === 'range' ? ' checked' : '' %>><span>Une fourchette</span></label>
+          <label class="choice"><input type="radio" name="budget_mode" value="exact"<%= P.budget_mode === 'exact' ? ' checked' : '' %>><span>Un montant précis</span></label>
+          <label class="choice"><input type="radio" name="budget_mode" value="unknown"<%= !P.budget_mode || P.budget_mode === 'unknown' ? ' checked' : '' %>><span>Je ne connais pas encore mon budget</span></label>
+        </div>
+        <div class="field" data-show-if="budget_mode=range">
+          <label for="q-range">Fourchette (USD)</label>
+          <select id="q-range" name="budget_range">
+            <option value="">Choisir…</option>
+            <% h.C.BUDGET_RANGES.forEach((r, i) => { %>
+              <option value="<%= i %>"<%= String(P.budget_range) === String(i) ? ' selected' : '' %>><%= r[1] == null ? 'Plus de ' + h.fmtMoney(r[0] * 100) : (r[0] === 0 ? 'Moins de ' + h.fmtMoney(r[1] * 100) : h.fmtMoney(r[0] * 100) + ' à ' + h.fmtMoney(r[1] * 100)) %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="field" data-show-if="budget_mode=exact">
+          <label for="q-budget">Budget (USD)</label>
+          <input id="q-budget" name="budget_amount" inputmode="decimal" value="<%= val('budget_amount') %>" placeholder="ex. 3000">
+        </div>
+        <p class="err" data-err="budget"></p>
+      </fieldset>
+
+      <!-- Étape 6 -->
+      <fieldset class="step" data-step="6">
+        <legend class="h3">6. Vos coordonnées</legend>
+        <div class="field"><label for="q-name">Nom complet *</label><input id="q-name" name="client_name" maxlength="120" required autocomplete="name" value="<%= val('client_name') %>"><p class="err" data-err="client_name"></p></div>
+        <div class="grid-2">
+          <div class="field"><label for="q-phone">Téléphone ou WhatsApp *</label><input id="q-phone" name="client_phone" type="tel" maxlength="40" required autocomplete="tel" placeholder="+243 ..." value="<%= val('client_phone') %>"><p class="err" data-err="client_phone"></p></div>
+          <div class="field"><label for="q-email">E-mail (facultatif)</label><input id="q-email" name="client_email" type="email" maxlength="160" autocomplete="email" value="<%= val('client_email') %>"><p class="err" data-err="client_email"></p></div>
+        </div>
+        <div class="field"><label for="q-notes">Notes ou précisions</label><textarea id="q-notes" name="client_notes" rows="4" maxlength="3000" placeholder="Thème, contraintes, souhaits particuliers…"><%= val('client_notes') %></textarea></div>
+        <label class="opt consent"><input type="checkbox" name="consent" value="oui" required<%= P.consent === 'oui' ? ' checked' : '' %>> J’accepte d’être contacté(e) par <%= s.agency_name %> au sujet de cette demande. *</label>
+        <p class="err" data-err="consent"></p>
+      </fieldset>
+
+      <!-- Étape 7 -->
+      <fieldset class="step" data-step="7">
+        <legend class="h3">7. Résumé de votre demande</legend>
+        <div class="summary" data-summary><p class="muted">Le résumé s’affiche ici.</p></div>
+        <p class="disclaimer"><%= h.t('estimate.disclaimer') %></p>
+        <p class="small muted">L’envoi de cette demande ne constitue pas une réservation confirmée.</p>
+      </fieldset>
+
+      <div class="step-nav">
+        <button type="button" class="btn btn-outline" data-prev hidden>Retour</button>
+        <button type="button" class="btn btn-navy" data-next hidden>Continuer</button>
+        <button type="submit" class="btn btn-gold" data-submit>Envoyer ma demande</button>
+      </div>
+    </form>
+
+    <aside class="estimate" aria-live="polite" data-estimate>
+      <div class="estimate-head" data-estimate-toggle>
+        <span>Estimation indicative</span>
+        <strong data-est-total>—</strong>
+      </div>
+      <div class="estimate-body">
+        <div data-est-lines><p class="muted small">Sélectionnez des services pour voir l’estimation.</p></div>
+        <p class="disclaimer small"><%= h.t('estimate.disclaimer') %></p>
+      </div>
+    </aside>
+  </div>
+</section>
+<%- include('../partials/public-bottom', { scripts }) %>

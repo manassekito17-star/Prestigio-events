@@ -1,0 +1,17 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Blocs de contenu</h1><a class="a-btn" href="/admin/blocs/nouveau">+ Nouveau bloc</a></div>
+<p class="muted small">Ajoutez des sections (texte, image + texte, appel à l’action, citation) en bas des pages Accueil, Services, Offres et À propos. Un bloc non publié n’est visible qu’en mode aperçu.</p>
+<% for (const [pg, label] of Object.entries(PAGES)) { const list = rows.filter((b) => b.page === pg); %>
+  <div class="a-card">
+    <div class="a-card-h"><h2><%= label %></h2><div class="btns"><a class="a-btn a-btn-ghost a-btn-sm" href="<%= PAGE_URL[pg] %>?apercu=1" target="_blank" rel="noopener">Aperçu</a><a class="a-btn a-btn-sm" href="/admin/blocs/nouveau?page=<%= pg %>">+ Bloc</a></div></div>
+    <% if (!list.length) { %><p class="small muted">Aucun bloc.</p><% } %>
+    <% list.forEach((b, i) => { %>
+      <div class="btns" style="border-top:1px solid var(--line);padding:8px 0">
+        <form method="post" action="/admin/blocs/<%= b.id %>/deplacer" class="inline"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="a-btn a-btn-ghost a-btn-sm" name="dir" value="up"<%= i === 0 ? ' disabled' : '' %>>↑</button><button class="a-btn a-btn-ghost a-btn-sm" name="dir" value="down"<%= i === list.length - 1 ? ' disabled' : '' %>>↓</button></form>
+        <a href="/admin/blocs/<%= b.id %>"><strong><%= b.title || '(sans titre)' %></strong></a> <span class="small muted"><%= b.type %></span>
+        <%- b.published ? '<span class="pill pill-ok">publié</span>' : '<span class="pill pill-muted">brouillon</span>' %>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+<%- include('../partials/admin-bottom') %>

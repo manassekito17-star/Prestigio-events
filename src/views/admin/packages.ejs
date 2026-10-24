@@ -1,0 +1,12 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Forfaits</h1><div class="btns"><a class="a-btn a-btn-ghost" href="/offres?apercu=1" target="_blank" rel="noopener">Aperçu</a><a class="a-btn" href="/admin/forfaits/nouveau">+ Nouveau forfait</a></div></div>
+<div class="a-card tbl-wrap"><table class="tbl">
+  <thead><tr><th>Ordre</th><th>Forfait</th><th>Prix affiché</th><th>État</th><th></th></tr></thead>
+  <tbody><% rows.forEach((p, i) => { %><tr class="<%= p.published ? '' : 'row-off' %>">
+    <td class="nowrap"><form method="post" action="/admin/forfaits/<%= p.id %>/deplacer" class="inline"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="a-btn a-btn-ghost a-btn-sm" name="dir" value="up"<%= i === 0 ? ' disabled' : '' %>>↑</button><button class="a-btn a-btn-ghost a-btn-sm" name="dir" value="down"<%= i === rows.length - 1 ? ' disabled' : '' %>>↓</button></form></td>
+    <td><a href="/admin/forfaits/<%= p.id %>"><%= p.name %></a><br><span class="small muted"><%= p.event_type || '' %></span></td>
+    <td><%= h.packagePrice(p) %></td>
+    <td><%- p.published ? '<span class="pill pill-ok">publié</span>' : '<span class="pill pill-muted">brouillon</span>' %> <%- p.provisional ? '<span class="pill pill-warn">prix provisoire</span>' : '' %> <%- p.featured ? '<span class="pill pill-gold">mis en avant</span>' : '' %></td>
+    <td><a class="a-btn a-btn-ghost a-btn-sm" href="/admin/forfaits/<%= p.id %>">Modifier</a></td></tr><% }) %></tbody>
+</table></div>
+<%- include('../partials/admin-bottom') %>

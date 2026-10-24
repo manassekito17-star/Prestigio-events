@@ -1,0 +1,37 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Galerie</h1><a class="a-btn a-btn-ghost" href="/galerie" target="_blank" rel="noopener">Voir la galerie</a></div>
+<form method="post" action="/admin/galerie" enctype="multipart/form-data" class="a-form a-card" data-once>
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <h2>Ajouter des photos ou vidéos</h2>
+  <div class="f-row f-row-2">
+    <div class="f"><label>Fichiers (JPEG, PNG, WebP, MP4, WebM)</label><input type="file" name="files" multiple accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"></div>
+    <div class="f"><label>ou lien vidéo YouTube / Vimeo</label><input name="video_url" type="url" placeholder="https://"></div>
+    <div class="f"><label>Légende</label><input name="caption"></div>
+    <div class="f"><label>Texte alternatif (description de l’image)</label><input name="alt"></div>
+    <div class="f"><label>Type d’événement</label><select name="event_type"><option value="">—</option><% for (const [k, v] of Object.entries(EVENT_TYPES)) { %><option value="<%= k %>"><%= v %></option><% } %></select></div>
+  </div>
+  <label class="cb"><input type="checkbox" name="is_public" value="1"> Public (visible sur le site). Sinon privé : visible uniquement par l’équipe connectée.</label>
+  <label class="cb"><input type="checkbox" name="is_illustration" value="1"> Image d’illustration (pas une réalisation de l’agence) — sera signalée comme telle</label>
+  <button class="a-btn">Ajouter</button>
+</form>
+<div class="g-admin">
+  <% for (const g of rows) { %>
+    <form method="post" action="/admin/galerie/<%= g.id %>" class="a-card a-form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div>
+        <% if (g.kind === 'image') { %><img class="thumb" src="<%= h.mediaUrl(g.media_id) %>" alt=""><% } else if (g.media_id) { %><video class="thumb" src="<%= h.mediaUrl(g.media_id) %>" preload="metadata"></video><% } else { %><a href="<%= g.video_url %>" target="_blank" rel="noopener" class="small">Vidéo en ligne</a><% } %>
+        <div class="btns" style="margin-top:6px"><button class="a-btn a-btn-ghost a-btn-sm" name="dir" value="up">↑</button><button class="a-btn a-btn-ghost a-btn-sm" name="dir" value="down">↓</button></div>
+      </div>
+      <div>
+        <div class="f"><input name="caption" value="<%= g.caption || '' %>" placeholder="Légende" aria-label="Légende"></div>
+        <div class="f"><input name="alt" value="<%= g.alt_text || '' %>" placeholder="Texte alternatif" aria-label="Texte alternatif"></div>
+        <div class="f"><select name="event_type" aria-label="Type"><option value="">Type d’événement…</option><% for (const [k, v] of Object.entries(EVENT_TYPES)) { %><option value="<%= k %>"<%= g.event_type === k ? ' selected' : '' %>><%= v %></option><% } %></select></div>
+        <label class="cb"><input type="checkbox" name="is_public" value="1"<%= g.is_public ? ' checked' : '' %>> Public</label>
+        <label class="cb"><input type="checkbox" name="is_illustration" value="1"<%= g.is_illustration ? ' checked' : '' %>> Illustration (pas une réalisation)</label>
+        <div class="btns"><button class="a-btn a-btn-sm">Enregistrer</button><button class="a-btn a-btn-danger a-btn-sm" name="delete" value="1" data-confirm="Supprimer définitivement cet élément ?">Supprimer</button></div>
+      </div>
+    </form>
+  <% } %>
+</div>
+<% if (!rows.length) { %><p class="muted">La galerie est vide. Ajoutez vos propres photos de réalisations.</p><% } %>
+<%- include('../partials/admin-bottom') %>

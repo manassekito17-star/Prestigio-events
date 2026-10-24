@@ -1,0 +1,61 @@
+<%- include('../partials/public-top') %>
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Offres et tarifs</p>
+    <h1 class="h1">Des formules adaptées à votre événement</h1>
+    <p class="lead">Choisissez une formule ou composez votre événement à la carte. Toutes nos offres sont personnalisables.</p>
+    <div class="btn-row"><a href="/devis" class="btn btn-gold"><%= h.t('cta.estimate') %></a></div>
+  </div>
+</section>
+
+<% if (packages.length) { %>
+<section class="section">
+  <div class="container">
+    <div class="section-head"><p class="eyebrow">Forfaits</p><h2 class="h2">Nos formules</h2></div>
+    <div class="pkg-grid">
+      <% for (const p of packages) { %>
+        <article class="pkg<%= p.featured ? ' pkg-featured' : '' %><%= !p.published ? ' is-draft' : '' %>">
+          <% if (!p.published) { %><p class="draft-tag">Non publié (aperçu)</p><% } %>
+          <% if (p.featured) { %><span class="pkg-badge">Recommandée</span><% } %>
+          <h3 class="h3"><%= p.name %></h3>
+          <% if (p.event_type) { %><p class="pkg-type"><%= p.event_type %></p><% } %>
+          <p class="pkg-price"><%= h.packagePrice(p) %></p>
+          <p><%= p.summary %></p>
+          <% const inc = h.lines(p.includes), exc = h.lines(p.excludes); %>
+          <% if (inc.length) { %><h4 class="pkg-h">Inclus</h4><ul class="check-list small"><% for (const i of inc) { %><li><%= i %></li><% } %></ul><% } %>
+          <% if (exc.length) { %><h4 class="pkg-h">Non inclus</h4><ul class="x-list small"><% for (const i of exc) { %><li><%= i %></li><% } %></ul><% } %>
+          <a href="/devis" class="btn <%= p.featured ? 'btn-gold' : 'btn-navy' %> btn-block"><%= h.t('cta.quote') %></a>
+        </article>
+      <% } %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<section class="section section-ivory">
+  <div class="container">
+    <div class="section-head"><p class="eyebrow">À la carte</p><h2 class="h2">Services et tarifs indicatifs</h2>
+      <p class="muted">Les prix sont exprimés en dollars américains (USD). « Sur devis » signifie que le prix dépend du lieu, de la date ou des prestataires et sera confirmé dans votre devis.</p></div>
+    <div class="carte">
+      <% for (const svc of cat.services) { %>
+        <div class="carte-item">
+          <h3 class="h4"><%= svc.name %></h3>
+          <table class="price-table">
+            <% for (const t of svc.tariffs) { %>
+              <tr><td><%= t.name %><% if (t.optional) { %> <span class="tag">option</span><% } %></td><td class="num"><%= h.tariffPrice(t) %></td></tr>
+            <% } %>
+            <% if (!svc.tariffs.length) { %><tr><td>Prestation</td><td class="num">Sur devis</td></tr><% } %>
+          </table>
+        </div>
+      <% } %>
+    </div>
+    <% const fees = cat.globals.filter((t) => t.method.indexOf('discount') !== 0); if (fees.length) { %>
+      <div class="carte-item mt"><h3 class="h4">Frais éventuels</h3>
+        <table class="price-table"><% for (const t of fees) { %><tr><td><%= t.name %></td><td class="num"><%= h.tariffPrice(t) %></td></tr><% } %></table></div>
+    <% } %>
+    <p class="disclaimer mt"><%= h.t('estimate.disclaimer') %></p>
+  </div>
+</section>
+<%- include('../partials/blocks') %>
+<%- include('../partials/cta') %>
+<%- include('../partials/public-bottom') %>

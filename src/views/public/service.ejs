@@ -1,0 +1,34 @@
+<%- include('../partials/public-top') %>
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="/services">Services</a> · <%= svc.category %></p>
+    <h1 class="h1"><%= svc.name %></h1>
+    <p class="lead"><%= svc.summary %></p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img"><%- include('../partials/svc-image', { svc }) %></div>
+    <div class="split-text">
+      <div class="prose"><%- h.paras(svc.description) %></div>
+      <% const inc = h.lines(svc.includes); if (inc.length) { %>
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><% for (const i of inc) { %><li><%= i %></li><% } %></ul>
+      <% } %>
+      <% const tl = tariffs.filter((t) => t.method.indexOf('discount') !== 0); if (tl.length) { %>
+        <h2 class="h3">Tarifs indicatifs</h2>
+        <table class="price-table">
+          <% for (const t of tl) { %>
+            <tr><td><%= t.name %><% if (t.optional) { %> <span class="tag">option</span><% } %><% if (t.conditions) { %><br><small class="muted"><%= t.conditions %></small><% } %></td><td class="num"><%= h.tariffPrice(t) %></td></tr>
+          <% } %>
+        </table>
+        <p class="small muted">Tarifs indicatifs en dollars américains, susceptibles de varier selon la date, le lieu et les disponibilités. Le devis définitif est confirmé par PRESTIGIO EVENTS.</p>
+      <% } %>
+      <div class="btn-row mt">
+        <a href="/devis<%= svc.category === 'Prestations' ? '?service=' + svc.id : '' %>" class="btn btn-gold"><%= h.t('cta.quote') %></a>
+        <a href="<%= h.waLink(s.whatsapp, 'Bonjour, je souhaite des informations sur : ' + svc.name) %>" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+<%- include('../partials/public-bottom') %>

@@ -1,0 +1,33 @@
+<%- include('../partials/public-top') %>
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Partenaires et prestataires</p>
+    <h1 class="h1">Des professionnels avec qui nous travaillons</h1>
+    <p class="lead">Une sélection de prestataires recommandés par <%= s.agency_name %>.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <% if (!partners.length) { %>
+      <div class="empty-state"><p>Notre sélection de partenaires sera publiée prochainement.</p></div>
+    <% } else { %>
+      <div class="partner-grid">
+        <% for (const p of partners) { %>
+          <article class="partner">
+            <% if (p.logo) { %><img src="<%= h.mediaUrl(p.logo) %>" alt="<%= p.name %>" loading="lazy" class="partner-logo"><% } %>
+            <h2 class="h4"><%= p.name %></h2>
+            <% if (p.category) { %><p class="tag"><%= p.category %></p><% } %>
+            <% if (p.description) { %><p><%= p.description %></p><% } %>
+            <% if (p.area) { %><p class="small muted">Zone : <%= p.area %></p><% } %>
+            <ul class="partner-contact small">
+              <% if (p.phone) { %><li><a href="tel:<%= p.phone.replace(/\s/g, '') %>"><%= p.phone %></a></li><% } %>
+              <% if (p.email) { %><li><a href="mailto:<%= p.email %>"><%= p.email %></a></li><% } %>
+              <% if (p.website) { %><li><a href="<%= p.website %>" target="_blank" rel="noopener nofollow">Site web</a></li><% } %>
+            </ul>
+          </article>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+</section>
+<%- include('../partials/public-bottom') %>

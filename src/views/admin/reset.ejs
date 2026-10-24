@@ -1,0 +1,17 @@
+<%- include('../partials/admin-top') %>
+<div class="login-brand"><%= s.agency_name %><small>Espace d’administration</small></div>
+<div class="a-card">
+  <h1 style="font-size:1.4rem">Nouveau mot de passe</h1>
+  <% if (!valid) { %>
+    <div class="a-alert a-alert-err">Ce lien est invalide ou a expiré.</div><a href="/admin/mot-de-passe-oublie">Demander un nouveau lien</a>
+  <% } else { %>
+    <% if (error) { %><div class="a-alert a-alert-err"><%= error %></div><% } %>
+    <form method="post" class="a-form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="f"><label for="pw">Nouveau mot de passe</label><input id="pw" name="password" type="password" required minlength="10" autocomplete="new-password"><p class="help">Au moins 10 caractères, avec des lettres et des chiffres.</p></div>
+      <div class="f"><label for="pw2">Confirmer</label><input id="pw2" name="password2" type="password" required autocomplete="new-password"></div>
+      <button class="a-btn" type="submit">Enregistrer</button>
+    </form>
+  <% } %>
+</div>
+<%- include('../partials/admin-bottom') %>

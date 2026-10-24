@@ -1,0 +1,37 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Demandes et devis</h1>
+  <% if (can('requests.export')) { %><a class="a-btn a-btn-ghost" href="/admin/demandes/export.csv?<%= new URLSearchParams(Object.entries(f).filter(([, v]) => v && v !== true).map(([k, v]) => [k, String(v)])).toString() %>">Exporter (CSV)</a><% } %>
+</div>
+<form method="get" class="a-form filters-bar a-card">
+  <div class="f"><label for="q">Recherche</label><input id="q" name="q" value="<%= f.q %>" placeholder="Référence, client, téléphone…"></div>
+  <div class="f"><label for="st">Statut</label><select id="st" name="status"><option value="">Tous (hors archivés)</option><% for (const [k, v] of Object.entries(h.C.STATUSES)) { %><option value="<%= k %>"<%= f.status === k ? ' selected' : '' %>><%= v.label %></option><% } %></select></div>
+  <div class="f"><label for="df">Date</label><select id="df" name="datefield"><option value="created">de réception</option><option value="event"<%= f.datefield === 'event' ? ' selected' : '' %>>de l’événement</option></select></div>
+  <div class="f"><label for="from">Du</label><input id="from" type="date" name="from" value="<%= f.from %>"></div>
+  <div class="f"><label for="to">Au</label><input id="to" type="date" name="to" value="<%= f.to %>"></div>
+  <div class="f"><label for="sort">Tri</label><select id="sort" name="sort">
+    <% for (const [k, v] of [['created_desc', 'Plus récentes'], ['created_asc', 'Plus anciennes'], ['event_asc', 'Date d’événement ↑'], ['event_desc', 'Date d’événement ↓'], ['name', 'Client (A→Z)']]) { %><option value="<%= k %>"<%= f.sort === k ? ' selected' : '' %>><%= v %></option><% } %>
+  </select></div>
+  <button class="a-btn">Filtrer</button> <a href="/admin/demandes" class="small">Réinitialiser</a>
+</form>
+<div class="a-card tbl-wrap">
+  <p class="small muted"><%= rows.length %> résultat(s)<%= rows.length >= 500 ? ' (500 premiers)' : '' %></p>
+  <table class="tbl">
+    <thead><tr><th>Demande</th><th>Devis</th><th>Reçue le</th><th>Client</th><th>Événement</th><th>Statut</th><% if (can('quotes.view')) { %><th class="num">Montant</th><% } %><th>Responsable</th></tr></thead>
+    <tbody>
+    <% for (const r of rows) { %>
+      <tr class="<%= r.seen_at ? '' : 'unseen' %>">
+        <td><a href="/admin/demandes/<%= r.id %>"><%= r.reference %></a></td>
+        <td class="nowrap"><%= r.quote_reference || '—' %><% if (r.version_no > 1) { %> <span class="small muted">v<%= r.version_no %></span><% } %></td>
+        <td class="nowrap small"><%= h.fmtDate(r.created_at) %></td>
+        <td><%= r.client_name %><br><span class="small muted"><%= r.client_phone %></span></td>
+        <td><%= h.eventType(r.event_type, r.event_type_other) %><br><span class="small muted"><%= r.event_date ? h.fmtDate(r.event_date) : 'Date à préciser' %><%= r.guests ? ' · ' + r.guests + ' inv.' : '' %></span></td>
+        <td><span class="pill pill-<%= h.statusTone(r.status) %>"><%= h.statusLabel(r.status) %></span></td>
+        <% if (can('quotes.view')) { %><td class="num"><%= r.total_cents != null ? h.fmtMoney(r.total_cents) : '—' %><%= r.has_unconfirmed ? ' +' : '' %></td><% } %>
+        <td class="small"><%= r.assignee_name || '—' %></td>
+      </tr>
+    <% } %>
+    <% if (!rows.length) { %><tr><td colspan="8" class="muted">Aucune demande.</td></tr><% } %>
+    </tbody>
+  </table>
+</div>
+<%- include('../partials/admin-bottom') %>

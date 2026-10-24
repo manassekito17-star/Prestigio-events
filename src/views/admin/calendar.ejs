@@ -1,0 +1,22 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Calendrier</h1>
+  <div class="btns"><a class="a-btn a-btn-ghost a-btn-sm" href="?mois=<%= prevKey %>">← Précédent</a><strong style="text-transform:capitalize"><%= monthLabel %></strong><a class="a-btn a-btn-ghost a-btn-sm" href="?mois=<%= nextKey %>">Suivant →</a></div></div>
+<% const startDow = (first.getUTCDay() + 6) % 7; const days = last.getUTCDate(); const cells = Math.ceil((startDow + days) / 7) * 7; const todayIso = h.today(); %>
+<div class="a-card tbl-wrap">
+<table class="cal">
+  <thead><tr><% for (const d of ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim']) { %><th><%= d %></th><% } %></tr></thead>
+  <tbody>
+  <% for (let i = 0; i < cells; i++) { if (i % 7 === 0) { %><tr><% } const day = i - startDow + 1; const inMonth = day >= 1 && day <= days;
+       const iso = inMonth ? `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}` : ''; %>
+    <td class="<%= inMonth ? '' : 'off' %><%= iso === todayIso ? ' today' : '' %>">
+      <% if (inMonth) { %><span class="d"><%= day %></span>
+        <% for (const e of events.filter((x) => x.event_date === iso)) { %><a class="ev st-<%= e.status %>" href="/admin/demandes/<%= e.id %>" title="<%= h.statusLabel(e.status) %>"><%= e.start_time ? e.start_time + ' ' : '' %><%= h.eventType(e.event_type, e.event_type_other) %> · <%= e.client_name %></a><% } %>
+        <% for (const t of tasks.filter((x) => x.due_date === iso)) { %><span class="tk">☐ <%= t.title %></span><% } %>
+      <% } %>
+    </td>
+  <% if (i % 7 === 6) { %></tr><% } } %>
+  </tbody>
+</table>
+<p class="small muted">Couleurs : <span class="pill pill-ok">accepté</span> <span class="pill pill-info">devis envoyé / validé</span> <span class="pill pill-warn">devis en préparation</span>. Les demandes annulées et archivées ne sont pas affichées.</p>
+</div>
+<%- include('../partials/admin-bottom') %>

@@ -1,0 +1,16 @@
+<%- include('../partials/admin-top') %>
+<div class="login-brand"><%= s.agency_name %><small>Espace d’administration</small></div>
+<div class="a-card">
+  <h1 style="font-size:1.4rem">Connexion</h1>
+  <% if (error) { %><div class="a-alert a-alert-err" role="alert"><%= error %></div><% } %>
+  <form method="post" action="/admin/connexion" class="a-form" data-once>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input type="hidden" name="next" value="<%= next %>">
+    <div class="f"><label for="email">E-mail</label><input id="email" name="email" type="email" required autocomplete="username" value="<%= email %>" autofocus></div>
+    <div class="f"><label for="password">Mot de passe</label><input id="password" name="password" type="password" required autocomplete="current-password"></div>
+    <button class="a-btn" type="submit" style="width:100%">Se connecter</button>
+  </form>
+  <p class="small"><a href="/admin/mot-de-passe-oublie">Mot de passe oublié ?</a></p>
+</div>
+<p class="small muted" style="text-align:center"><a href="/">← Retour au site</a></p>
+<%- include('../partials/admin-bottom') %>

@@ -1,0 +1,40 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Utilisateurs</h1></div>
+<div class="a-grid a-grid-side">
+<div class="a-card tbl-wrap">
+  <table class="tbl">
+    <thead><tr><th>Utilisateur</th><th>Rôle / état</th><th>Dernière connexion</th></tr></thead>
+    <tbody>
+    <% for (const u of rows) { %>
+      <tr class="<%= u.active ? '' : 'row-off' %>"><td><strong><%= u.name %></strong><br><span class="small muted"><%= u.email %></span></td>
+        <td><form method="post" action="/admin/utilisateurs/<%= u.id %>" class="a-form">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="f-row f-row-2"><div class="f"><input name="name" value="<%= u.name %>" aria-label="Nom"></div>
+          <div class="f"><select name="role" aria-label="Rôle"><% for (const [k, v] of Object.entries(ROLE_LABELS)) { %><option value="<%= k %>"<%= u.role === k ? ' selected' : '' %>><%= v %></option><% } %></select></div></div>
+          <div class="f"><input type="password" name="password" placeholder="Nouveau mot de passe (facultatif)" autocomplete="new-password" aria-label="Nouveau mot de passe"></div>
+          <label class="cb"><input type="checkbox" name="active" value="1"<%= u.active ? ' checked' : '' %>> Compte actif</label>
+          <button class="a-btn a-btn-sm">Enregistrer</button></form></td>
+        <td class="small"><%= u.last_login_at ? h.fmtDate(u.last_login_at, true) : 'Jamais' %></td></tr>
+    <% } %>
+    </tbody>
+  </table>
+</div>
+<div>
+  <form method="post" action="/admin/utilisateurs" class="a-form a-card">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <h2>Nouveau compte</h2>
+    <div class="f"><label>Nom</label><input name="name" required></div>
+    <div class="f"><label>E-mail</label><input name="email" type="email" required></div>
+    <div class="f"><label>Rôle</label><select name="role"><% for (const [k, v] of Object.entries(ROLE_LABELS)) { %><option value="<%= k %>"<%= k === 'staff' ? ' selected' : '' %>><%= v %></option><% } %></select></div>
+    <div class="f"><label>Mot de passe provisoire</label><input name="password" type="password" required minlength="10" autocomplete="new-password"></div>
+    <button class="a-btn">Créer</button>
+  </form>
+  <div class="a-card small">
+    <h2>Rôles</h2>
+    <p><strong>Propriétaire</strong> : accès complet ; seul habilité à valider et envoyer les devis, gérer les tarifs, le contenu, les comptes, les informations confidentielles des partenaires et les sauvegardes.</p>
+    <p><strong>Responsable des opérations</strong> : demandes, devis (préparation sans validation), calendrier, tâches, paiements, répertoire des partenaires (sans tarifs négociés, commissions, notes internes ni documents).</p>
+    <p><strong>Collaborateur</strong> : uniquement les dossiers qui lui sont assignés (sans budget, devis ni paiements) et ses tâches.</p>
+  </div>
+</div>
+</div>
+<%- include('../partials/admin-bottom') %>

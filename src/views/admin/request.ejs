@@ -1,0 +1,326 @@
+<%- include('../partials/admin-top') %>
+<% const tok = csrfToken; %>
+<div class="a-head">
+  <div>
+    <p class="small muted" style="margin:0"><a href="/admin/demandes">← Demandes</a></p>
+    <h1><%= r.reference %> — <%= r.client_name %></h1>
+    <span class="pill pill-<%= h.statusTone(r.status) %>"><%= h.statusLabel(r.status) %></span>
+    <span class="small muted">Reçue le <%= h.fmtDate(r.created_at, true) %></span>
+  </div>
+  <div class="btns">
+    <a class="a-btn a-btn-ghost" href="<%= h.waLink(r.client_phone, 'Bonjour ' + r.client_name + ', ' + s.agency_name + ' vous contacte au sujet de votre demande ' + r.reference + '.') %>" target="_blank" rel="noopener">WhatsApp client</a>
+    <a class="a-btn a-btn-ghost" href="tel:<%= h.normalizePhone(r.client_phone) %>">Appeler</a>
+  </div>
+</div>
+
+<div class="a-grid a-grid-side">
+<div>
+  <!-- Informations -->
+  <div class="a-card">
+    <h2>Client et événement</h2>
+    <dl class="kv">
+      <dt>Client</dt><dd><%= r.client_name %></dd>
+      <dt>Téléphone / WhatsApp</dt><dd><%= r.client_phone %></dd>
+      <dt>E-mail</dt><dd><%= r.client_email || '—' %></dd>
+      <dt>Type d’événement</dt><dd><%= h.eventType(r.event_type, r.event_type_other) %></dd>
+      <dt>Date</dt><dd><%= r.event_date ? h.fmtDate(r.event_date) : 'À préciser' %><%= r.start_time ? ' à ' + r.start_time : '' %></dd>
+      <dt>Durée estimée</dt><dd><%= r.duration_hours ? r.duration_hours + ' h' : '—' %></dd>
+      <dt>Invités</dt><dd><%= r.guests || '—' %></dd>
+      <dt>Commune / quartier</dt><dd><%= r.location_area || '—' %></dd>
+      <dt>Lieu réservé</dt><dd><%= r.venue_booked === 1 ? 'Oui' : r.venue_booked === 0 ? 'Non' + (r.wants_venue_search ? ' — souhaite que l’agence recherche un lieu' : ' — ne souhaite pas de recherche') : '—' %></dd>
+      <dt>Services demandés</dt><dd><%= services.map((x) => x.form_label || x.name).join('\n') || '—' %></dd>
+      <% if (options.length) { %><dt>Options</dt><dd><%= options.map((o) => o.name).join('\n') %></dd><% } %>
+      <dt>Agents de protocole</dt><dd><strong><%= r.protocol_unknown ? 'Je ne sais pas encore' : (r.protocol_agents || '—') %></strong><% if (ptasks.tasks && ptasks.tasks.length) { %>
+        — tâches : <%= ptasks.tasks.map((k) => h.C.PROTOCOL_TASKS[k]).join(', ') %><%= ptasks.other ? ' (' + ptasks.other + ')' : '' %><% } %></dd>
+      <% if (can('quotes.view')) { %>
+        <dt>Budget</dt><dd><%= r.budget_mode === 'unknown' || !r.budget_mode ? 'Non défini' : r.budget_mode === 'exact' ? h.fmtMoney(r.budget_min_cents) : h.fmtMoney(r.budget_min_cents) + ' – ' + (r.budget_max_cents == null ? 'plus' : h.fmtMoney(r.budget_max_cents)) %></dd>
+      <% } %>
+      <dt>Notes du client</dt><dd><%= r.client_notes || '—' %></dd>
+      <dt>Consentement</dt><dd><%= r.consent ? 'Accepte d’être contacté au sujet de la demande' : 'Non' %></dd>
+    </dl>
+  </div>
+
+</div>
+
+<div>
+  <% if (can('requests.edit')) { %>
+  <div class="a-card">
+    <h2>Statut du dossier</h2>
+    <form method="post" action="/admin/demandes/<%= r.id %>/statut" class="a-form">
+      <input type="hidden" name="_csrf" value="<%= tok %>">
+      <div class="f"><select name="status" aria-label="Statut">
+        <% for (const k of h.C.MANUAL_STATUSES) { %><option value="<%= k %>"<%= r.status === k ? ' selected' : '' %>><%= h.statusLabel(k) %></option><% } %>
+      </select><p class="help">« Validé », « Envoyé », « Accepté » et « Refusé » s’obtiennent uniquement via les actions du devis.</p></div>
+      <div class="f"><input name="comment" placeholder="Commentaire (facultatif)"></div>
+      <button class="a-btn a-btn-sm">Mettre à jour</button>
+    </form>
+  </div>
+  <% } %>
+  <% if (can('requests.assign')) { %>
+  <div class="a-card">
+    <h2>Responsable</h2>
+    <form method="post" action="/admin/demandes/<%= r.id %>/assigner" class="a-form">
+      <input type="hidden" name="_csrf" value="<%= tok %>">
+      <div class="f"><select name="assigned_to" aria-label="Responsable"><option value="">— Personne —</option><% for (const u of users) { %><option value="<%= u.id %>"<%= r.assigned_to === u.id ? ' selected' : '' %>><%= u.name %></option><% } %></select></div>
+      <button class="a-btn a-btn-sm">Assigner</button>
+    </form>
+  </div>
+  <% } %>
+
+  <div class="a-card" id="notes">
+    <h2>Notes internes <span class="private-tag">privé</span></h2>
+    <% if (can('requests.notes')) { %>
+    <form method="post" action="/admin/demandes/<%= r.id %>/notes" class="a-form">
+      <input type="hidden" name="_csrf" value="<%= tok %>">
+      <div class="f"><textarea name="body" placeholder="Note visible uniquement par l’équipe" required></textarea></div>
+      <button class="a-btn a-btn-sm">Ajouter</button>
+    </form>
+    <% } %>
+    <% for (const n of notes) { %><div class="note"><%= n.body %><small><%= n.author || '—' %> · <%= h.fmtDate(n.created_at, true) %></small></div><% } %>
+  </div>
+
+  <div class="a-card" id="taches">
+    <h2>Tâches et préparation</h2>
+    <ul class="timeline">
+      <% for (const t of tasks) { %>
+        <li>
+          <form method="post" action="/admin/taches/<%= t.id %>" class="inline">
+            <input type="hidden" name="_csrf" value="<%= tok %>"><input type="hidden" name="back" value="/admin/demandes/<%= r.id %>#taches">
+            <select name="status" class="a-in" style="width:auto;min-height:28px;padding:2px 4px;font-size:.78rem" aria-label="Statut de la tâche"><% for (const [k, v] of Object.entries(h.C.TASK_STATUSES)) { %><option value="<%= k %>"<%= t.status === k ? ' selected' : '' %>><%= v %></option><% } %></select>
+            <button class="a-btn a-btn-ghost a-btn-sm">OK</button>
+          </form>
+          <span<%- t.status === 'done' ? ' style="text-decoration:line-through;color:#999"' : '' %>><%= t.title %></span>
+          <br><span class="small muted"><%= t.assignee || 'Non assignée' %><%= t.due_date ? ' · ' + h.fmtDate(t.due_date) : '' %></span>
+        </li>
+      <% } %>
+    </ul>
+    <% if (can('tasks.manage')) { %>
+      <form method="post" action="/admin/taches" class="a-form" style="margin-top:10px">
+        <input type="hidden" name="_csrf" value="<%= tok %>"><input type="hidden" name="request_id" value="<%= r.id %>"><input type="hidden" name="back" value="/admin/demandes/<%= r.id %>#taches">
+        <div class="f"><input name="title" placeholder="Nouvelle tâche" required></div>
+        <div class="f-row f-row-2"><div class="f"><input type="date" name="due_date" aria-label="Échéance"></div>
+          <div class="f"><select name="assignee_id" aria-label="Responsable"><option value="">Responsable…</option><% for (const u of users) { %><option value="<%= u.id %>"><%= u.name %></option><% } %></select></div></div>
+        <button class="a-btn a-btn-sm">Ajouter la tâche</button>
+      </form>
+      <form method="post" action="/admin/taches/checklist" class="inline"><input type="hidden" name="_csrf" value="<%= tok %>"><input type="hidden" name="request_id" value="<%= r.id %>"><input type="hidden" name="back" value="/admin/demandes/<%= r.id %>#taches"><button class="a-btn a-btn-ghost a-btn-sm" style="margin-top:8px">+ Liste de contrôle standard</button></form>
+    <% } %>
+  </div>
+
+  <div class="a-card">
+    <h2>Historique</h2>
+    <ul class="timeline">
+      <% for (const ev of history) { %><li><strong><%= h.statusLabel(ev.status) %></strong><br><span class="small"><%= ev.comment || '' %></span><br><span class="small muted"><%= h.fmtDate(ev.created_at, true) %> · <%= ev.author || 'Système' %></span></li><% } %>
+    </ul>
+  </div>
+
+  <% if (can('requests.delete')) { %>
+  <div class="a-card">
+    <h2>Suppression définitive</h2>
+    <p class="small muted">Supprime la demande, ses devis, notes, tâches et paiements. Préférez l’archivage. Action irréversible.</p>
+    <form method="post" action="/admin/demandes/<%= r.id %>/supprimer" class="a-form" data-confirm="Supprimer définitivement ce dossier ?">
+      <input type="hidden" name="_csrf" value="<%= tok %>">
+      <div class="f"><input name="confirm" placeholder="Saisir <%= r.reference %>" aria-label="Confirmer la référence"></div>
+      <button class="a-btn a-btn-danger a-btn-sm">Supprimer</button>
+    </form>
+  </div>
+  <% } %>
+</div>
+</div>
+
+  <% if (typeof bundle !== 'undefined' && bundle) { const cur = bundle.current; const lines = JSON.parse(cur.lines || '[]'); %>
+  <!-- Devis -->
+  <div class="a-card" id="devis">
+    <div class="a-card-h">
+      <h2>Devis <%= bundle.quote.reference %> — version <%= cur.version_no %></h2>
+      <span class="pill <%= cur.state === 'draft' ? 'pill-warn' : cur.state === 'sent' ? 'pill-ok' : 'pill-info' %>"><%= h.C.VERSION_STATES[cur.state] %></span>
+    </div>
+    <% if (cur.state === 'draft') { %>
+      <div class="a-alert a-alert-warn small"><strong>Devis provisoire — non transmis au client.</strong> <%= cur.auto_generated ? 'Généré automatiquement à partir du catalogue. ' : '' %>Vérifiez, modifiez puis validez. Rien n’est envoyé tant que vous n’avez pas cliqué sur « Valider et envoyer au client ».</div>
+      <% if (cur.internal_comment) { %><div class="q-locked small"><span class="private-tag">Interne</span> <%= cur.internal_comment %></div><% } %>
+
+      <form method="post" action="/admin/demandes/<%= r.id %>/devis/<%= cur.id %>" class="a-form" data-quote-editor <%- can('quotes.edit') ? '' : 'inert' %>>
+        <input type="hidden" name="_csrf" value="<%= tok %>">
+        <div class="tbl-wrap">
+          <table class="q-lines">
+            <thead><tr><th class="w-kind">Type</th><th>Prestation / description</th><th class="w-qty">Qté</th><th class="w-unit">Unité</th><th class="w-price">Prix unit. ($)</th><th class="w-conf">Montant</th><th class="w-amt">Total ligne</th><th class="w-del"></th></tr></thead>
+            <tbody data-lines>
+              <% for (const l of lines) { %>
+                <tr class="<%= l.provisional ? 'flag-prov' : '' %>">
+                  <td class="w-kind"><select name="l_kind"><option value="service">Prestation</option><option value="fee"<%= l.kind === 'fee' ? ' selected' : '' %>>Frais</option><option value="discount"<%= l.kind === 'discount' ? ' selected' : '' %>>Remise</option></select></td>
+                  <td><input name="l_label" value="<%= l.label %>" aria-label="Libellé"><textarea name="l_desc" aria-label="Description" placeholder="Détail (visible sur le PDF)"><%= l.description %></textarea>
+                    <% if (l.provisional) { %><span class="small" style="color:#975A16">⚠ Tarif provisoire à vérifier</span><% } %></td>
+                  <td class="w-qty"><input name="l_qty" value="<%= l.qty %>" inputmode="decimal"></td>
+                  <td class="w-unit"><input name="l_unit" value="<%= l.unit %>"></td>
+                  <td class="w-price"><input name="l_price" value="<%= h.centsToInput(l.unit_price_cents) %>" inputmode="decimal"></td>
+                  <td class="w-conf"><select name="l_confirm"><option value="0">Chiffré</option><option value="1"<%= l.to_confirm ? ' selected' : '' %>>À confirmer</option></select></td>
+                  <td class="w-amt" data-amt></td>
+                  <td class="w-del"><input type="hidden" name="l_tariff" value="<%= l.tariff_id || '' %>"><input type="hidden" name="l_prov" value="<%= l.provisional ? 1 : 0 %>"><button class="a-btn a-btn-danger a-btn-sm" data-del-line title="Retirer la ligne" aria-label="Retirer la ligne">×</button></td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+        <template data-line-template><tr>
+          <td class="w-kind"><select name="l_kind"><option value="service">Prestation</option><option value="fee">Frais</option><option value="discount">Remise</option></select></td>
+          <td><input name="l_label" aria-label="Libellé" placeholder="Libellé"><textarea name="l_desc" aria-label="Description" placeholder="Détail (visible sur le PDF)"></textarea></td>
+          <td class="w-qty"><input name="l_qty" value="1" inputmode="decimal"></td>
+          <td class="w-unit"><input name="l_unit" value="forfait"></td>
+          <td class="w-price"><input name="l_price" inputmode="decimal"></td>
+          <td class="w-conf"><select name="l_confirm"><option value="0">Chiffré</option><option value="1">À confirmer</option></select></td>
+          <td class="w-amt" data-amt></td>
+          <td class="w-del"><input type="hidden" name="l_tariff" value=""><input type="hidden" name="l_prov" value="0"><button class="a-btn a-btn-danger a-btn-sm" data-del-line aria-label="Retirer la ligne">×</button></td>
+        </tr></template>
+        <div class="btns" style="margin:10px 0 16px">
+          <button class="a-btn a-btn-ghost a-btn-sm" data-add-line>+ Ligne libre</button>
+          <select class="a-in" data-tariff-select style="max-width:340px" aria-label="Ajouter depuis le catalogue">
+            <option value="">Ajouter un tarif du catalogue…</option>
+            <% for (const t of tariffs) { %><option value="<%= t.id %>" data-label="<%= t.service ? t.service + ' — ' : '' %><%= t.name %>" data-price="<%= h.centsToInput(t.amount_cents) %>" data-unit="<%= { per_person: 'invité', per_agent: 'agent', per_hour: 'heure', per_day: 'jour', rental: 'location' }[t.method] || 'forfait' %>" data-prov="<%= t.provisional %>"><%= t.service ? t.service + ' — ' : '' %><%= t.name %> (<%= t.amount_cents == null ? 'sur demande' : h.fmtMoney(t.amount_cents) %>)</option><% } %>
+          </select>
+          <button class="a-btn a-btn-ghost a-btn-sm" data-add-tariff>Ajouter</button>
+        </div>
+        <div class="q-totals">
+          <div><span>Sous-total prestations</span><strong data-t-sub></strong></div>
+          <div><span>Frais</span><strong data-t-fees></strong></div>
+          <div><span>Remises</span><strong data-t-disc></strong></div>
+          <div class="grand"><span>Total</span><span data-t-total></span></div>
+        </div>
+        <div class="f-row f-row-2" style="margin-top:16px">
+          <div class="f"><label for="pt">Conditions de paiement</label><textarea id="pt" name="payment_terms"><%= cur.payment_terms %></textarea></div>
+          <div class="f"><label for="cd">Conditions particulières</label><textarea id="cd" name="conditions"><%= cur.conditions || '' %></textarea></div>
+          <div class="f"><label for="cm">Message destiné au client (PDF et e-mail)</label><textarea id="cm" name="client_message"><%= cur.client_message || '' %></textarea></div>
+          <div class="f"><label for="ic">Commentaire interne <span class="private-tag">jamais transmis</span></label><textarea id="ic" name="internal_comment"><%= cur.internal_comment || '' %></textarea></div>
+          <div class="f"><label for="vd">Validité (jours)</label><input id="vd" name="validity_days" type="number" min="1" max="365" value="<%= cur.validity_days %>"></div>
+        </div>
+        <div class="btns">
+          <button class="a-btn" name="action" value="save">Enregistrer sans envoyer</button>
+          <a class="a-btn a-btn-ghost" href="/admin/demandes/<%= r.id %>/devis/<%= cur.id %>/pdf" target="_blank" rel="noopener">Prévisualiser le PDF (brouillon)</a>
+        </div>
+        <% if (can('quotes.approve')) { %>
+          <div class="approve-box">
+            <h3 style="margin-top:0">Validation du directeur</h3>
+            <p class="small">En validant, cette version est <strong>verrouillée</strong> (toute correction ultérieure créera une nouvelle version) et le PDF officiel est généré.
+              <%= mailConfigured ? (r.client_email ? 'Le devis sera envoyé par e-mail à ' + r.client_email + ' ; il ne sera marqué « envoyé » que si le serveur e-mail accepte le message.' : 'Le client n’a pas d’e-mail : vous transmettrez le PDF manuellement puis enregistrerez l’envoi.') : 'L’e-mail n’étant pas configuré, vous transmettrez le PDF manuellement (ex. WhatsApp) puis enregistrerez l’envoi.' %></p>
+            <button class="a-btn a-btn-gold" name="action" value="approve" data-confirm="Valider définitivement cette version du devis<%= mailConfigured && r.client_email ? ' et l’envoyer au client par e-mail' : '' %> ?">Valider et envoyer au client</button>
+          </div>
+        <% } else { %>
+          <p class="small muted">La validation et l’envoi sont réservés au directeur.</p>
+        <% } %>
+      </form>
+      <form method="post" action="/admin/demandes/<%= r.id %>/devis/regenerer" class="inline" style="display:block;margin-top:10px" data-confirm="Recalculer les lignes à partir du catalogue actuel ? Vos modifications de lignes seront remplacées.">
+        <input type="hidden" name="_csrf" value="<%= tok %>"><button class="a-btn a-btn-ghost a-btn-sm">Recalculer depuis le catalogue actuel</button>
+      </form>
+    <% } else { %>
+      <!-- Version verrouillée -->
+      <div class="q-locked small">Version verrouillée — validée le <%= h.fmtDate(cur.approved_at, true) %>. Son contenu et son montant ne seront plus modifiés.</div>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>Prestation</th><th class="num">Qté</th><th>Unité</th><th class="num">Prix unit.</th><th class="num">Montant</th></tr></thead>
+        <tbody><% for (const l of lines) { %><tr><td><%= l.label %><% if (l.description) { %><br><span class="small muted"><%= l.description %></span><% } %></td><td class="num"><%= l.qty %></td><td><%= l.unit %></td><td class="num"><%= l.unit_price_cents == null ? '—' : h.fmtMoney(l.unit_price_cents) %></td><td class="num"><%= l.kind === 'discount' && l.amount_cents != null ? '− ' : '' %><%= h.fmtMoney(l.amount_cents) %></td></tr><% } %></tbody>
+      </table></div>
+      <div class="q-totals">
+        <div><span>Sous-total</span><strong><%= h.fmtMoney(cur.subtotal_cents) %></strong></div>
+        <% if (cur.fees_cents) { %><div><span>Frais</span><strong><%= h.fmtMoney(cur.fees_cents) %></strong></div><% } %>
+        <% if (cur.discount_cents) { %><div><span>Remises</span><strong>− <%= h.fmtMoney(cur.discount_cents) %></strong></div><% } %>
+        <div class="grand"><span>Total approuvé</span><span><%= h.fmtMoney(cur.total_cents) %><%= cur.has_unconfirmed ? ' + à confirmer' : '' %></span></div>
+      </div>
+      <dl class="kv" style="margin-top:14px">
+        <dt>Validé le</dt><dd><%= h.fmtDate(cur.approved_at, true) %></dd>
+        <dt>Envoyé le</dt><dd><%= cur.sent_at ? h.fmtDate(cur.sent_at, true) + ' — ' + ({ email: 'par e-mail', whatsapp_manual: 'manuellement via WhatsApp', other_manual: 'manuellement' }[cur.sent_channel] || cur.sent_channel) + (cur.sent_note ? ' (' + cur.sent_note + ')' : '') : 'Pas encore envoyé' %></dd>
+        <dt>Validité</dt><dd><%= cur.validity_days %> jours</dd>
+        <dt>Paiement</dt><dd><%= cur.payment_terms || '—' %></dd>
+        <% if (cur.accepted_at) { %><dt>Acceptation</dt><dd><%= h.fmtDate(cur.accepted_at) %> — <%= cur.acceptance_note %></dd><% } %>
+      </dl>
+      <div class="btns" style="margin-top:14px">
+        <a class="a-btn a-btn-ghost" href="/admin/demandes/<%= r.id %>/devis/<%= cur.id %>/pdf" target="_blank" rel="noopener">Voir le PDF</a>
+        <a class="a-btn a-btn-ghost" href="/admin/demandes/<%= r.id %>/devis/<%= cur.id %>/pdf?dl=1">Télécharger le PDF</a>
+      </div>
+
+      <% if (cur.state === 'approved' && can('quotes.approve')) { %>
+        <div class="approve-box">
+          <h3 style="margin-top:0">Transmettre le devis validé</h3>
+          <p class="small">Ce devis est validé mais <strong>n’est pas encore marqué comme envoyé</strong>.</p>
+          <% if (mailConfigured && r.client_email) { %>
+            <form method="post" action="/admin/demandes/<%= r.id %>/devis/<%= cur.id %>/envoyer-email" class="inline"><input type="hidden" name="_csrf" value="<%= tok %>"><button class="a-btn a-btn-gold" data-confirm="Envoyer le devis à <%= r.client_email %> ?">Envoyer par e-mail à <%= r.client_email %></button></form>
+          <% } %>
+          <p class="small">Envoi manuel : téléchargez le PDF, ouvrez la conversation WhatsApp du client et joignez-le, puis enregistrez l’envoi ci-dessous.
+            <a href="<%= h.waLink(r.client_phone, 'Bonjour ' + r.client_name + ', veuillez trouver ci-joint notre devis ' + bundle.quote.reference + ' pour votre événement. ' + s.agency_name) %>" target="_blank" rel="noopener">Ouvrir WhatsApp</a></p>
+          <form method="post" action="/admin/demandes/<%= r.id %>/devis/<%= cur.id %>/envoi-manuel" class="a-form f-row f-row-3">
+            <input type="hidden" name="_csrf" value="<%= tok %>">
+            <div class="f"><label>Canal</label><select name="channel"><option value="whatsapp_manual">WhatsApp</option><option value="other_manual">Autre (remise en main propre…)</option></select></div>
+            <div class="f"><label>Date d’envoi</label><input type="date" name="sent_on" value="<%= h.today() %>" max="<%= h.today() %>"></div>
+            <div class="f"><label>Note</label><input name="note" placeholder="facultatif"></div>
+            <div><button class="a-btn">J’ai envoyé le devis — enregistrer l’envoi</button></div>
+          </form>
+        </div>
+      <% } %>
+
+      <% if (cur.state === 'sent' && r.status === 'sent' && can('quotes.record_response')) { %>
+        <div class="approve-box">
+          <h3 style="margin-top:0">Réponse du client</h3>
+          <p class="small">N’enregistrez une acceptation que lorsque le client a réellement confirmé (message écrit, signature, etc.).</p>
+          <form method="post" action="/admin/demandes/<%= r.id %>/devis/<%= cur.id %>/reponse" class="a-form f-row f-row-3">
+            <input type="hidden" name="_csrf" value="<%= tok %>">
+            <div class="f"><label>Réponse</label><select name="response"><option value="accepted">Devis accepté</option><option value="refused">Devis refusé</option></select></div>
+            <div class="f"><label>Date</label><input type="date" name="date" value="<%= h.today() %>"></div>
+            <div class="f"><label>Preuve / précision *</label><input name="note" placeholder="ex. Accord écrit par WhatsApp le …"></div>
+            <div><button class="a-btn" data-confirm="Enregistrer cette réponse du client ?">Enregistrer la réponse</button></div>
+          </form>
+        </div>
+      <% } %>
+
+      <% if (can('quotes.edit') && ['sent', 'approved'].includes(cur.state)) { %>
+        <form method="post" action="/admin/demandes/<%= r.id %>/devis/nouvelle-version" style="margin-top:14px" data-confirm="Créer une nouvelle version (brouillon) ? La version actuelle reste conservée telle quelle. La nouvelle version devra être validée avant envoi.">
+          <input type="hidden" name="_csrf" value="<%= tok %>"><button class="a-btn a-btn-ghost">Corriger : créer une nouvelle version</button>
+        </form>
+      <% } %>
+    <% } %>
+
+    <% if (bundle.versions.length > 1) { %>
+      <h3 style="margin-top:20px">Historique des versions</h3>
+      <ul class="versions small">
+        <% for (const v of bundle.versions) { %>
+          <li>v<%= v.version_no %> — <%= h.C.VERSION_STATES[v.state] %> — <%= h.fmtMoney(v.total_cents) %> — créée le <%= h.fmtDate(v.created_at) %><%= v.approved_at ? ', validée le ' + h.fmtDate(v.approved_at) : '' %><%= v.sent_at ? ', envoyée le ' + h.fmtDate(v.sent_at) : '' %>
+            · <a href="/admin/demandes/<%= r.id %>/devis/<%= v.id %>/pdf" target="_blank" rel="noopener">PDF</a></li>
+        <% } %>
+      </ul>
+    <% } %>
+  </div>
+  <% } %>
+
+  <% if (typeof payments !== 'undefined') { %>
+  <div class="a-card" id="paiements">
+    <h2>Paiements</h2>
+    <p class="small muted">Enregistrement manuel des acomptes et paiements reçus. Ces saisies ne sont pas des transactions vérifiées par une banque ou un opérateur.</p>
+    <% if (payments.length) { %>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Date</th><th class="num">Montant</th><th>Mode</th><th>Référence</th><th>Justificatif</th><th>Saisi par</th><th></th></tr></thead>
+      <tbody><% for (const p of payments) { %><tr>
+        <td><%= h.fmtDate(p.paid_on) %></td><td class="num"><%= h.fmtMoney(p.amount_cents, p.currency) %></td><td><%= h.C.PAYMENT_METHODS[p.method] %></td>
+        <td><%= p.reference || '—' %><%= p.note ? ' · ' + p.note : '' %></td><td><%= p.proof_media_id ? '' : '—' %><% if (p.proof_media_id) { %><a href="/media/<%= p.proof_media_id %>?inline=1" target="_blank" rel="noopener">Voir</a><% } %></td><td class="small"><%= p.recorder || '—' %></td>
+        <td><% if (can('payments.delete')) { %><form method="post" action="/admin/demandes/<%= r.id %>/paiements/<%= p.id %>/supprimer" class="inline" data-confirm="Supprimer ce paiement ?"><input type="hidden" name="_csrf" value="<%= tok %>"><button class="a-btn a-btn-danger a-btn-sm">Suppr.</button></form><% } %></td>
+      </tr><% } %></tbody>
+    </table></div>
+    <% } %>
+    <dl class="kv">
+      <dt>Montant du devis</dt><dd><%= approvedTotal != null ? h.fmtMoney(approvedTotal) : 'Aucun devis validé' %></dd>
+      <dt>Payé (USD)</dt><dd><%= h.fmtMoney(paidUsd) %></dd>
+      <% if (paidCdf) { %><dt>Payé (CDF)</dt><dd><%= h.fmtMoney(paidCdf, 'CDF') %> <span class="small muted">(non converti)</span></dd><% } %>
+      <dt>Solde restant (USD)</dt><dd><strong><%= approvedTotal != null ? h.fmtMoney(Math.max(0, approvedTotal - paidUsd)) : '—' %></strong><%= paidCdf ? ' (hors paiements en CDF)' : '' %></dd>
+    </dl>
+    <% if (can('payments.record')) { %>
+      <form method="post" action="/admin/demandes/<%= r.id %>/paiements" enctype="multipart/form-data" class="a-form" style="margin-top:14px" data-once>
+        <input type="hidden" name="_csrf" value="<%= tok %>">
+        <div class="f-row f-row-4">
+          <div class="f"><label>Date *</label><input type="date" name="paid_on" value="<%= h.today() %>" required></div>
+          <div class="f"><label>Montant *</label><input name="amount" inputmode="decimal" required></div>
+          <div class="f"><label>Devise</label><select name="currency"><option>USD</option><option>CDF</option></select></div>
+          <div class="f"><label>Mode *</label><select name="method"><% for (const [k, v] of Object.entries(h.C.PAYMENT_METHODS)) { %><option value="<%= k %>"><%= v %></option><% } %></select></div>
+          <div class="f"><label>Référence</label><input name="reference"></div>
+          <div class="f"><label>Note</label><input name="note"></div>
+          <div class="f"><label>Justificatif (PDF/image)</label><input type="file" name="proof" accept="application/pdf,image/*"></div>
+        </div>
+        <button class="a-btn">Enregistrer le paiement</button>
+      </form>
+    <% } %>
+  </div>
+  <% } %>
+<%- include('../partials/admin-bottom') %>

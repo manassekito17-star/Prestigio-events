@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title><%= title %> — Administration <%= s.agency_name %></title>
+<link rel="icon" href="/static/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body class="admin">
+<% if (user) { %>
+<header class="a-top">
+  <button class="a-burger" data-nav-toggle aria-expanded="false" aria-controls="a-nav">☰<span class="sr">Menu</span></button>
+  <a href="/admin" class="a-brand"><%= s.agency_name %> <small>Administration</small></a>
+  <div class="a-top-right">
+    <a href="/" target="_blank" rel="noopener" class="a-link">Voir le site ↗</a>
+    <span class="a-user"><%= user.name %></span>
+    <form method="post" action="/admin/deconnexion"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="a-btn a-btn-ghost a-btn-sm">Déconnexion</button></form>
+  </div>
+</header>
+<div class="a-shell">
+<nav class="a-nav" id="a-nav" aria-label="Administration">
+  <% const navs = [
+    ['Pilotage', [
+      ['/admin', 'Tableau de bord', 'dashboard'],
+      ['/admin/demandes', 'Demandes et devis', ['requests.view_all', 'requests.view_assigned'], badge.pending],
+      ['/admin/calendrier', 'Calendrier', 'calendar'],
+      ['/admin/taches', 'Tâches', ['tasks.manage', 'tasks.own']],
+      ['/admin/paiements', 'Paiements', 'payments.view'],
+      ['/admin/messages', 'Messages', 'messages.view', badge.messages],
+    ]],
+    ['Catalogue', [
+      ['/admin/services', 'Services', 'catalog.edit'],
+      ['/admin/tarifs', 'Tarifs', 'catalog.edit'],
+      ['/admin/forfaits', 'Forfaits', 'catalog.edit'],
+    ]],
+    ['Site', [
+      ['/admin/contenu', 'Textes et paramètres', 'content.edit'],
+      ['/admin/blocs', 'Blocs de contenu', 'content.edit'],
+      ['/admin/galerie', 'Galerie', 'content.edit'],
+      ['/admin/partenaires', 'Partenaires', 'partners.view'],
+    ]],
+    ['Système', [
+      ['/admin/utilisateurs', 'Utilisateurs', 'users.manage'],
+      ['/admin/journal', 'Journal d’audit', 'audit.view'],
+      ['/admin/sauvegardes', 'Sauvegardes', 'backups.manage'],
+      ['/admin/compte', 'Mon compte', null],
+    ]],
+  ]; %>
+  <% for (const [group, items] of navs) { const vis = items.filter(([, , p]) => !p || [].concat(p).some((x) => can(x))); if (!vis.length) continue; %>
+    <p class="a-nav-h"><%= group %></p>
+    <ul>
+      <% for (const [href, label, , count] of vis) { const active = href === '/admin' ? path === '/admin' || path === '/admin/' : path.startsWith(href); %>
+        <li><a href="<%= href %>"<%- active ? ' aria-current="page"' : '' %>><%= label %><% if (count) { %> <span class="a-count"><%= count %></span><% } %></a></li>
+      <% } %>
+    </ul>
+  <% } %>
+</nav>
+<main class="a-main" id="contenu">
+<% } else { %>
+<main class="a-auth">
+<% } %>
+<% if (flash) { %><div class="a-alert a-alert-<%= flash.type %>" role="status"><%= flash.msg %></div><% } %>

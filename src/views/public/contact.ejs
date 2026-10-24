@@ -1,0 +1,47 @@
+<%- include('../partials/public-top') %>
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Contact</p>
+    <h1 class="h1">Parlons de votre événement</h1>
+  </div>
+</section>
+<section class="section">
+  <div class="container contact-grid">
+    <div>
+      <h2 class="h3">Nous joindre</h2>
+      <p>Le moyen le plus rapide de nous joindre est WhatsApp.</p>
+      <a class="btn btn-wa" href="<%= h.waLink(s.whatsapp, 'Bonjour PRESTIGIO EVENTS, je souhaite des informations pour un événement.') %>" target="_blank" rel="noopener">WhatsApp : <%= s.phone_display %></a>
+      <ul class="contact-list">
+        <li><strong>Ville :</strong> <%= s.city %></li>
+        <% if (s.address) { %><li><strong>Adresse :</strong> <%= s.address %></li><% } %>
+        <% if (s.public_email) { %><li><strong>E-mail :</strong> <a href="mailto:<%= s.public_email %>"><%= s.public_email %></a></li><% } %>
+      </ul>
+      <% const soc = Object.entries(s.socials || {}).filter(([, v]) => v); if (soc.length) { %>
+        <h3 class="h4">Réseaux sociaux</h3>
+        <ul class="socials dark"><% for (const [k, v] of soc) { %><li><a href="<%= v %>" target="_blank" rel="noopener"><%= k.charAt(0).toUpperCase() + k.slice(1) %></a></li><% } %></ul>
+      <% } %>
+      <% if (s.address && s.map_url && /^https:\/\/www\.google\.com\/maps\/embed/.test(s.map_url)) { %>
+        <iframe class="map" src="<%= s.map_url %>" title="Carte" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      <% } %>
+      <p class="mt"><a href="/devis" class="link-arrow">Vous préparez un événement ? Demandez un devis détaillé</a></p>
+    </div>
+    <div class="card">
+      <h2 class="h3">Envoyer un message</h2>
+      <% if (sent) { %>
+        <div class="alert alert-ok" role="status">Merci, votre message a bien été enregistré. Nous vous répondrons dans les meilleurs délais.</div>
+      <% } %>
+      <% if (errors._form) { %><div class="alert alert-err" role="alert"><%= errors._form %></div><% } %>
+      <form method="post" action="/contact" novalidate class="form" data-once>
+        <input type="hidden" name="_ft" value="<%= token %>">
+        <div class="hp" aria-hidden="true"><label>Site web <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div class="field<%= errors.name ? ' has-err' : '' %>"><label for="c-name">Nom *</label><input id="c-name" name="name" required maxlength="120" value="<%= form.name || '' %>" autocomplete="name"><% if (errors.name) { %><p class="err"><%= errors.name %></p><% } %></div>
+        <div class="field<%= errors.phone ? ' has-err' : '' %>"><label for="c-phone">Téléphone ou WhatsApp</label><input id="c-phone" name="phone" type="tel" maxlength="40" value="<%= form.phone || '' %>" autocomplete="tel" placeholder="+243 ..."><% if (errors.phone) { %><p class="err"><%= errors.phone %></p><% } %></div>
+        <div class="field<%= errors.email ? ' has-err' : '' %>"><label for="c-email">E-mail</label><input id="c-email" name="email" type="email" maxlength="160" value="<%= form.email || '' %>" autocomplete="email"><% if (errors.email) { %><p class="err"><%= errors.email %></p><% } %></div>
+        <div class="field<%= errors.message ? ' has-err' : '' %>"><label for="c-msg">Message *</label><textarea id="c-msg" name="message" rows="5" maxlength="3000" required><%= form.message || '' %></textarea><% if (errors.message) { %><p class="err"><%= errors.message %></p><% } %></div>
+        <p class="small muted">Vos coordonnées sont utilisées uniquement pour répondre à votre message.</p>
+        <button class="btn btn-navy" type="submit">Envoyer</button>
+      </form>
+    </div>
+  </div>
+</section>
+<%- include('../partials/public-bottom') %>

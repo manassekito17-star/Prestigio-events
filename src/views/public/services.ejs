@@ -1,0 +1,42 @@
+<%- include('../partials/public-top') %>
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Nos services</p>
+    <h1 class="h1">Des prestations complètes pour chaque occasion</h1>
+    <p class="lead">Choisissez une organisation complète ou uniquement les prestations dont vous avez besoin. Chaque devis est établi sur mesure.</p>
+  </div>
+</section>
+<% const cats = [...new Set(services.map((x) => x.category))]; %>
+<% for (const cat of cats) { %>
+<section class="section<%= cat === 'Prestations' ? ' section-ivory' : '' %>">
+  <div class="container">
+    <div class="section-head left">
+      <h2 class="h2"><%= cat === 'Événements' ? 'Les événements que nous organisons' : cat === 'Prestations' ? 'Nos prestations' : cat %></h2>
+    </div>
+    <div class="card-grid">
+      <% for (const svc of services.filter((x) => x.category === cat)) { const tl = tariffs.filter((t) => t.service_id === svc.id); %>
+        <article class="svc-card<%= !svc.published ? ' is-draft' : '' %>" id="<%= svc.slug %>">
+          <div class="svc-card-img"><%- include('../partials/svc-image', { svc }) %></div>
+          <div class="svc-card-body">
+            <% if (!svc.published) { %><p class="draft-tag">Masqué (aperçu)</p><% } %>
+            <h3 class="h3"><a href="/services/<%= svc.slug %>"><%= svc.name %></a></h3>
+            <p><%= svc.summary %></p>
+            <% const inc = h.lines(svc.includes); if (inc.length) { %>
+              <ul class="check-list small"><% for (const i of inc.slice(0, 5)) { %><li><%= i %></li><% } %></ul>
+            <% } %>
+            <% const priced = tl.filter((t) => !t.to_confirm && t.method.indexOf('discount') !== 0 && !t.optional); %>
+            <p class="price-hint"><%= priced.length ? 'Indication : ' + h.tariffPrice(priced[0]) : 'Tarif sur devis' %></p>
+            <div class="btn-row">
+              <a href="/services/<%= svc.slug %>" class="link-arrow">Détails</a>
+              <a href="/devis<%= svc.category === 'Prestations' ? '?service=' + svc.id : '' %>" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      <% } %>
+    </div>
+  </div>
+</section>
+<% } %>
+<%- include('../partials/blocks') %>
+<%- include('../partials/cta') %>
+<%- include('../partials/public-bottom') %>

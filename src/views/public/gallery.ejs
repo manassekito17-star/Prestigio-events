@@ -1,0 +1,41 @@
+<%- include('../partials/public-top') %>
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Galerie</p>
+    <h1 class="h1">Nos événements en images</h1>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <% if (!items.length) { %>
+      <div class="empty-state">
+        <h2 class="h3">Nos réalisations seront bientôt publiées ici</h2>
+        <p>En attendant, n’hésitez pas à nous contacter pour échanger sur votre projet.</p>
+        <a href="/devis" class="btn btn-gold"><%= h.t('cta.quote') %></a>
+      </div>
+    <% } else { %>
+      <% if (types.length > 1) { %>
+        <div class="filters" role="toolbar" aria-label="Filtrer par type d’événement" data-filters>
+          <button type="button" class="chip is-active" data-filter="*">Tout</button>
+          <% for (const ty of types) { %><button type="button" class="chip" data-filter="<%= ty %>"><%= h.eventType(ty) %></button><% } %>
+        </div>
+      <% } %>
+      <div class="gallery-grid" data-gallery>
+        <% for (const g of items) { %>
+          <figure class="g-item" data-type="<%= g.event_type || '' %>">
+            <% if (g.kind === 'image') { %>
+              <img src="<%= h.mediaUrl(g.media_id) %>" alt="<%= g.alt_text || g.caption || 'Photo' %>" loading="lazy">
+            <% } else if (g.media_id) { %>
+              <video src="<%= h.mediaUrl(g.media_id) %>" controls preload="none"></video>
+            <% } else if (h.videoEmbed(g.video_url)) { %>
+              <iframe src="<%= h.videoEmbed(g.video_url) %>" title="<%= g.caption || 'Vidéo' %>" loading="lazy" allowfullscreen></iframe>
+            <% } %>
+            <% if (g.is_illustration) { %><span class="illus-tag">Image d’illustration — pas une réalisation</span><% } %>
+            <% if (g.caption) { %><figcaption><%= g.caption %></figcaption><% } %>
+          </figure>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+</section>
+<%- include('../partials/public-bottom') %>

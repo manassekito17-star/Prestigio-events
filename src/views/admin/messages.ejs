@@ -1,0 +1,15 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Messages de contact</h1></div>
+<% for (const m of rows) { %>
+  <div class="a-card" style="<%= m.handled ? 'opacity:.6' : '' %>">
+    <div class="a-card-h"><h2><%= m.name %></h2><span class="small muted"><%= h.fmtDate(m.created_at, true) %></span></div>
+    <p class="small"><%= m.phone || '' %> <%= m.email || '' %>
+      <% if (m.phone) { %> · <a href="<%= h.waLink(m.phone) %>" target="_blank" rel="noopener">WhatsApp</a><% } %></p>
+    <p style="white-space:pre-line"><%= m.message %></p>
+    <form method="post" action="/admin/messages/<%= m.id %>" class="btns"><input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button class="a-btn a-btn-sm" name="handled" value="<%= m.handled ? 0 : 1 %>"><%= m.handled ? 'Marquer non traité' : 'Marquer comme traité' %></button>
+      <% if (can('messages.delete')) { %><button class="a-btn a-btn-danger a-btn-sm" name="delete" value="1" data-confirm="Supprimer ce message ?">Supprimer</button><% } %></form>
+  </div>
+<% } %>
+<% if (!rows.length) { %><p class="muted">Aucun message.</p><% } %>
+<%- include('../partials/admin-bottom') %>

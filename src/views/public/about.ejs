@@ -1,0 +1,54 @@
+<%- include('../partials/public-top') %>
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">À propos</p>
+    <h1 class="h1"><%= s.agency_name %></h1>
+    <p class="lead"><%= s.slogan %></p>
+  </div>
+</section>
+<section class="section">
+  <div class="container mv-grid">
+    <div class="mv"><p class="eyebrow">Notre mission</p><div class="prose"><%- h.paras(s.about_mission) %></div></div>
+    <div class="mv"><p class="eyebrow">Notre vision</p><div class="prose"><%- h.paras(s.about_vision) %></div></div>
+  </div>
+</section>
+<section class="section section-ivory">
+  <div class="container">
+    <div class="section-head"><p class="eyebrow">Notre accompagnement</p><h2 class="h2">Comment nous travaillons avec vous</h2></div>
+    <ol class="steps">
+      <% for (const st of (s.about_approach || [])) { %><li><h3 class="h4"><%= st.title %></h3><p><%= st.text %></p></li><% } %>
+    </ol>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="section-head"><p class="eyebrow">Nos valeurs</p><h2 class="h2">Ce qui nous guide</h2></div>
+    <div class="why-grid">
+      <% for (const v of (s.values || [])) { %><div class="why-item"><h3 class="h3"><%= v.title %></h3><p><%= v.text %></p></div><% } %>
+    </div>
+  </div>
+</section>
+<section class="section section-navy">
+  <div class="container founder">
+    <div class="founder-photo">
+      <% if (s.founder_photo_media_id) { %>
+        <img src="<%= h.mediaUrl(s.founder_photo_media_id) %>" alt="<%= s.founder_name %>, <%= s.founder_title %>" loading="lazy">
+      <% } else { %>
+        <div class="founder-placeholder" aria-label="Photo à venir"><span><%= s.founder_name.split(' ').map((p) => p[0]).join('') %></span><small>Photo à venir</small></div>
+      <% } %>
+    </div>
+    <div>
+      <p class="eyebrow">Le fondateur</p>
+      <h2 class="h2 light"><%= s.founder_name %></h2>
+      <p class="founder-title"><%= s.founder_title %></p>
+      <% if (s.founder_bio) { %>
+        <div class="prose light"><%- h.paras(s.founder_bio) %></div>
+      <% } else { %>
+        <p class="muted-light"><%= s.founder_name %> est le fondateur et directeur général de <%= s.agency_name %>. Sa présentation détaillée sera publiée prochainement.</p>
+      <% } %>
+    </div>
+  </div>
+</section>
+<%- include('../partials/blocks') %>
+<%- include('../partials/cta') %>
+<%- include('../partials/public-bottom') %>

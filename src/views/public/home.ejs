@@ -1,0 +1,105 @@
+<%- include('../partials/public-top') %>
+<section class="hero">
+  <div class="hero-media">
+    <% if (s.hero_media_id) { %>
+      <img src="<%= h.mediaUrl(s.hero_media_id) %>" alt="Événement organisé par <%= s.agency_name %>" fetchpriority="high">
+    <% } else { %>
+      <img src="/static/img/demo/hero.jpg" alt="Bouquet de mariée — photo d’illustration" fetchpriority="high">
+      <span class="illus-tag illus-tag-hero">Photo d’illustration</span>
+    <% } %>
+  </div>
+  <div class="container hero-content">
+    <p class="eyebrow">Agence événementielle · Kinshasa</p>
+    <h1 class="hero-title"><%= s.home_hero_title || s.agency_name %></h1>
+    <p class="hero-slogan"><%= s.slogan %></p>
+    <p class="hero-text"><%= s.home_hero_text %></p>
+    <div class="btn-row">
+      <a href="/devis" class="btn btn-gold"><%= h.t('cta.quote') %></a>
+      <a href="/services" class="btn btn-ghost-light"><%= h.t('cta.discover') %></a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container narrow center">
+    <p class="eyebrow">Bienvenue</p>
+    <h2 class="h2">Votre événement, organisé avec exigence</h2>
+    <div class="prose lead"><%- h.paras(s.home_intro) %></div>
+  </div>
+</section>
+
+<section class="section section-ivory">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Nos services</p>
+      <h2 class="h2">Ce que nous organisons pour vous</h2>
+    </div>
+    <div class="card-grid">
+      <% for (const svc of services) { %>
+        <a class="svc-card" href="/services/<%= svc.slug %>">
+          <div class="svc-card-img"><%- include('../partials/svc-image', { svc }) %></div>
+          <div class="svc-card-body">
+            <h3 class="h3"><%= svc.name %></h3>
+            <p><%= svc.summary %></p>
+            <span class="link-arrow">En savoir plus</span>
+          </div>
+        </a>
+      <% } %>
+    </div>
+    <div class="center mt"><a href="/services" class="btn btn-navy">Voir tous les services</a></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Notre engagement</p>
+      <h2 class="h2">Pourquoi choisir <%= s.agency_name %> ?</h2>
+    </div>
+    <div class="why-grid">
+      <% (s.why_items || []).forEach((w, i) => { %>
+        <div class="why-item">
+          <span class="why-num"><%= String(i + 1).padStart(2, '0') %></span>
+          <h3 class="h3"><%= w.title %></h3>
+          <p><%= w.text %></p>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<% if (gallery.length) { %>
+<section class="section section-ivory">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Réalisations</p>
+      <h2 class="h2">Quelques événements récents</h2>
+    </div>
+    <div class="gallery-grid">
+      <% for (const g of gallery) { %>
+        <figure class="g-item">
+          <% if (g.kind === 'image') { %><img src="<%= h.mediaUrl(g.media_id) %>" alt="<%= g.alt_text || g.caption || 'Réalisation' %>" loading="lazy"><% } else if (g.media_id) { %><video src="<%= h.mediaUrl(g.media_id) %>" controls preload="none"></video><% } else if (h.videoEmbed(g.video_url)) { %><iframe src="<%= h.videoEmbed(g.video_url) %>" title="<%= g.caption || 'Vidéo' %>" loading="lazy" allowfullscreen></iframe><% } %>
+          <% if (g.caption) { %><figcaption><%= g.caption %></figcaption><% } %>
+        </figure>
+      <% } %>
+    </div>
+    <div class="center mt"><a href="/galerie" class="btn btn-navy">Voir la galerie</a></div>
+  </div>
+</section>
+<% } %>
+
+<%- include('../partials/blocks') %>
+
+<section class="section cta-section">
+  <div class="container cta-inner">
+    <div>
+      <h2 class="h2 light">Parlons de votre événement</h2>
+      <p class="muted-light">Remplissez notre formulaire en quelques minutes et obtenez une estimation indicative, ou écrivez-nous directement sur WhatsApp.</p>
+    </div>
+    <div class="btn-row">
+      <a href="/devis" class="btn btn-gold"><%= h.t('cta.quote') %></a>
+      <a href="<%= h.waLink(s.whatsapp, 'Bonjour PRESTIGIO EVENTS, je souhaite organiser un événement.') %>" class="btn btn-ghost-light" target="_blank" rel="noopener"><%= h.t('cta.whatsapp') %></a>
+    </div>
+  </div>
+</section>
+<%- include('../partials/public-bottom') %>

@@ -1,0 +1,19 @@
+<%- include('../partials/admin-top') %>
+<div class="login-brand"><%= s.agency_name %><small>Espace d’administration</small></div>
+<div class="a-card">
+  <h1 style="font-size:1.4rem">Mot de passe oublié</h1>
+  <% if (!mailOk) { %>
+    <div class="a-alert a-alert-warn">L’envoi d’e-mails n’est pas encore configuré sur ce serveur : la réinitialisation par e-mail est indisponible.
+      Demandez au propriétaire de réinitialiser votre mot de passe depuis « Utilisateurs », ou utilisez la commande <code>npm run reset-password</code> sur le serveur (voir la documentation).</div>
+  <% } else if (sent) { %>
+    <div class="a-alert a-alert-ok">Si un compte actif correspond à cette adresse, un lien de réinitialisation valable 1 heure vient d’être envoyé.</div>
+  <% } else { %>
+    <form method="post" action="/admin/mot-de-passe-oublie" class="a-form" data-once>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="f"><label for="email">E-mail du compte</label><input id="email" name="email" type="email" required></div>
+      <button class="a-btn" type="submit">Recevoir un lien</button>
+    </form>
+  <% } %>
+  <p class="small"><a href="/admin/connexion">← Connexion</a></p>
+</div>
+<%- include('../partials/admin-bottom') %>

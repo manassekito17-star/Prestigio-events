@@ -1,0 +1,15 @@
+<%- include('../partials/public-top') %>
+<section class="section">
+  <div class="container narrow center">
+    <div class="success-mark" aria-hidden="true">✓</div>
+    <h1 class="h1">Demande reçue</h1>
+    <p class="ref">Référence : <strong><%= reference %></strong></p>
+    <p class="lead"><%= h.t('quote.received') %></p>
+    <p>Conservez votre référence : elle vous sera demandée lors de nos échanges.</p>
+    <div class="btn-row center-row">
+      <a href="<%= h.waLink(s.whatsapp, 'Bonjour PRESTIGIO EVENTS, je viens d’envoyer ma demande de devis (référence ' + reference + ').') %>" class="btn btn-wa" target="_blank" rel="noopener">Nous écrire sur WhatsApp</a>
+      <a href="/" class="btn btn-outline">Retour à l’accueil</a>
+    </div>
+  </div>
+</section>
+<%- include('../partials/public-bottom') %>

@@ -1,0 +1,44 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><div><p class="small muted" style="margin:0"><a href="/admin/services">← Services</a></p><h1><%= svc.id ? svc.name : 'Nouveau service' %></h1></div>
+  <% if (svc.id) { %><a class="a-btn a-btn-ghost" href="/services/<%= svc.slug %>?apercu=1" target="_blank" rel="noopener">Prévisualiser</a><% } %></div>
+<div class="a-grid a-grid-side">
+<form method="post" action="/admin/services/<%= svc.id || 'nouveau' %>" enctype="multipart/form-data" class="a-form a-card">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="f-row f-row-2">
+    <div class="f"><label for="n">Nom *</label><input id="n" name="name" required value="<%= svc.name || '' %>"></div>
+    <div class="f"><label for="fl">Libellé dans le formulaire de devis</label><input id="fl" name="form_label" value="<%= svc.form_label || '' %>"><p class="help">Laisser vide pour utiliser le nom.</p></div>
+    <div class="f"><label for="c">Catégorie</label><input id="c" name="category" list="cats" value="<%= svc.category || '' %>"><datalist id="cats"><% for (const c of cats) { %><option value="<%= c %>"><% } %></datalist></div>
+    <div class="f"><label for="sl">Adresse de la page (slug)</label><input id="sl" name="slug" value="<%= svc.slug || '' %>" pattern="[a-z0-9-]*"><p class="help">ex. decoration → /services/decoration</p></div>
+  </div>
+  <div class="f"><label for="su">Résumé (cartes et référencement)</label><textarea id="su" name="summary" maxlength="400"><%= svc.summary || '' %></textarea></div>
+  <div class="f"><label for="d">Description détaillée</label><textarea id="d" name="description" rows="6"><%= svc.description || '' %></textarea><p class="help">Laissez une ligne vide entre deux paragraphes.</p></div>
+  <div class="f"><label for="i">Prestations incluses (une par ligne)</label><textarea id="i" name="includes" rows="5"><%= svc.includes || '' %></textarea></div>
+  <fieldset class="a-fs"><legend>Photo</legend>
+    <% if (svc.media_id) { %><img class="thumb" src="<%= h.mediaUrl(svc.media_id) %>" alt=""><label class="cb"><input type="checkbox" name="remove_image" value="1"> Retirer la photo</label>
+    <% } else if (svc.demo_image) { %><img class="thumb" src="/static/img/demo/<%= svc.demo_image %>" alt=""><p class="help">Photo d’illustration fournie par défaut (affichée avec la mention « Photo d’illustration »).</p><label class="cb"><input type="checkbox" name="remove_demo" value="1"> Ne plus afficher la photo d’illustration</label><% } %>
+    <div class="f"><label for="img">Téléverser votre photo (JPEG, PNG, WebP)</label><input id="img" type="file" name="image" accept="image/jpeg,image/png,image/webp"></div>
+  </fieldset>
+  <label class="cb"><input type="checkbox" name="published" value="1"<%= svc.published ? ' checked' : '' %>> Publié sur le site</label>
+  <label class="cb"><input type="checkbox" name="in_quote_form" value="1"<%= svc.in_quote_form ? ' checked' : '' %>> Proposé dans le formulaire de devis et le calculateur</label>
+  <label class="cb"><input type="checkbox" name="is_protocol" value="1"<%= svc.is_protocol ? ' checked' : '' %>> Service de protocole (déclenche la question « Combien d’agents de protocole ? »)</label>
+  <button class="a-btn">Enregistrer</button>
+</form>
+<div>
+  <% if (svc.id) { %>
+  <div class="a-card">
+    <div class="a-card-h"><h2>Tarifs de ce service</h2><a class="a-btn a-btn-sm" href="/admin/tarifs/nouveau?service=<%= svc.id %>">+ Tarif</a></div>
+    <% if (!tariffs.length) { %><p class="small muted">Aucun tarif : le calculateur affichera « À confirmer ».</p><% } %>
+    <ul class="timeline">
+      <% for (const t of tariffs) { %><li><a href="/admin/tarifs/<%= t.id %>"><%= t.name %></a><br><span class="small"><%= h.C.TARIFF_METHODS[t.method] %> · <%= t.amount_cents == null ? 'non renseigné' : h.fmtMoney(t.amount_cents) %></span>
+        <%- t.provisional ? '<span class="pill pill-warn">provisoire</span>' : '' %> <%- t.public_price ? '<span class="pill pill-ok">public</span>' : '<span class="pill pill-muted">non public</span>' %> <%- t.active ? '' : '<span class="pill pill-muted">inactif</span>' %> <%- t.optional ? '<span class="pill pill-info">option</span>' : '' %></li><% } %>
+    </ul>
+  </div>
+  <div class="a-card">
+    <h2>Supprimer</h2>
+    <p class="small muted">Pour retirer temporairement un service, décochez plutôt « Publié ». La suppression efface aussi ses tarifs (les devis existants restent inchangés).</p>
+    <form method="post" action="/admin/services/<%= svc.id %>/supprimer" data-confirm="Supprimer définitivement ce service et ses tarifs ?"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="a-btn a-btn-danger a-btn-sm">Supprimer le service</button></form>
+  </div>
+  <% } %>
+</div>
+</div>
+<%- include('../partials/admin-bottom') %>

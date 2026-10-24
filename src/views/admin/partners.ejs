@@ -1,0 +1,20 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Partenaires et prestataires</h1><% if (can('partners.edit')) { %><a class="a-btn" href="/admin/partenaires/nouveau">+ Nouveau partenaire</a><% } %></div>
+<div class="a-alert a-alert-info small">Répertoire <strong>privé</strong>. Un partenaire n’apparaît sur le site que si sa publication est activée, et seuls les champs que vous avez cochés (et dont la publication est autorisée) sont affichés. Tarifs négociés, commissions, contrats, coordonnées privées et notes internes ne sont jamais publiés.</div>
+<form method="get" class="a-form filters-bar a-card">
+  <div class="f"><label>Recherche</label><input name="q" value="<%= q %>"></div>
+  <div class="f"><label>Catégorie</label><select name="cat"><option value="">Toutes</option><% for (const [k, v] of Object.entries(h.C.PARTNER_CATEGORIES)) { %><option value="<%= k %>"<%= cat === k ? ' selected' : '' %>><%= v %></option><% } %></select></div>
+  <div class="f"><label>Statut</label><select name="status"><option value="">Tous (hors archivés)</option><% for (const [k, v] of Object.entries(h.C.PARTNER_STATUSES)) { %><option value="<%= k %>"<%= status === k ? ' selected' : '' %>><%= v %></option><% } %></select></div>
+  <button class="a-btn">Filtrer</button>
+</form>
+<div class="a-card tbl-wrap"><table class="tbl">
+  <thead><tr><th>Nom commercial</th><th>Catégorie</th><th>Contact</th><th>Statut</th><th>Vérifié le</th><th>Site public</th></tr></thead>
+  <tbody>
+    <% for (const p of rows) { %><tr><td><a href="/admin/partenaires/<%= p.id %>"><%= p.trade_name %></a></td><td><%= h.C.PARTNER_CATEGORIES[p.category] %></td><td><%= p.contact_name || '' %><br><span class="small muted"><%= p.phone || p.whatsapp || '' %></span></td>
+      <td><span class="pill <%= p.status === 'active' ? 'pill-ok' : p.status === 'to_verify' ? 'pill-warn' : 'pill-muted' %>"><%= h.C.PARTNER_STATUSES[p.status] %></span></td>
+      <td class="small"><%= p.last_verified_at ? h.fmtDate(p.last_verified_at) : '—' %></td>
+      <td><%- p.publish ? '<span class="pill pill-gold">publié</span>' : '<span class="pill pill-muted">privé</span>' %></td></tr><% } %>
+    <% if (!rows.length) { %><tr><td colspan="6" class="muted">Aucun partenaire.</td></tr><% } %>
+  </tbody>
+</table></div>
+<%- include('../partials/admin-bottom') %>

@@ -1,0 +1,42 @@
+<%- include('../partials/admin-top') %>
+<div class="a-head"><h1>Tâches</h1>
+  <div class="btns"><a href="/admin/taches" class="a-btn a-btn-ghost a-btn-sm">En cours</a><% for (const [k, v] of Object.entries(h.C.TASK_STATUSES)) { %><a href="?status=<%= k %>" class="a-btn a-btn-ghost a-btn-sm"><%= v %></a><% } %></div></div>
+<% if (all) { %>
+<div class="a-card">
+  <h2>Nouvelle tâche</h2>
+  <form method="post" action="/admin/taches" class="a-form f-row f-row-4">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <div class="f"><label>Tâche *</label><input name="title" required></div>
+    <div class="f"><label>Événement</label><select name="request_id"><option value="">— Aucun —</option><% for (const e of events) { %><option value="<%= e.id %>"><%= e.reference %> · <%= e.client_name %><%= e.event_date ? ' · ' + e.event_date : '' %></option><% } %></select></div>
+    <div class="f"><label>Échéance</label><input type="date" name="due_date"></div>
+    <div class="f"><label>Responsable</label><select name="assignee_id"><option value="">—</option><% for (const u of users) { %><option value="<%= u.id %>"><%= u.name %></option><% } %></select></div>
+    <div><button class="a-btn">Ajouter</button></div>
+  </form>
+</div>
+<% } %>
+<div class="a-card tbl-wrap">
+  <table class="tbl">
+    <thead><tr><th>Tâche</th><th>Événement</th><th>Échéance</th><th>Responsable</th><th>Statut</th></tr></thead>
+    <tbody>
+      <% for (const t of rows) { %>
+        <tr>
+          <td><%= t.title %></td>
+          <td><%= t.reference ? '' : '—' %><% if (t.reference) { %><a href="/admin/demandes/<%= t.request_id %>"><%= t.reference %></a><% } %></td>
+          <td class="nowrap"><%= t.due_date ? h.fmtDate(t.due_date) : '—' %><%= t.due_date && t.due_date < h.today() && t.status !== 'done' ? ' ⚠' : '' %></td>
+          <td><%= t.assignee || '—' %></td>
+          <td>
+            <form method="post" action="/admin/taches/<%= t.id %>" class="btns">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="back" value="/admin/taches">
+              <select name="status" class="a-in" style="width:auto" aria-label="Statut"><% for (const [k, v] of Object.entries(h.C.TASK_STATUSES)) { %><option value="<%= k %>"<%= t.status === k ? ' selected' : '' %>><%= v %></option><% } %></select>
+              <% if (all) { %><select name="assignee_id" class="a-in" style="width:auto" aria-label="Responsable"><option value="">—</option><% for (const u of users) { %><option value="<%= u.id %>"<%= t.assignee_id === u.id ? ' selected' : '' %>><%= u.name %></option><% } %></select><% } %>
+              <button class="a-btn a-btn-sm">OK</button>
+              <% if (all) { %><button class="a-btn a-btn-danger a-btn-sm" name="delete" value="1" data-confirm="Supprimer cette tâche ?">Suppr.</button><% } %>
+            </form>
+          </td>
+        </tr>
+      <% } %>
+      <% if (!rows.length) { %><tr><td colspan="5" class="muted">Aucune tâche.</td></tr><% } %>
+    </tbody>
+  </table>
+</div>
+<%- include('../partials/admin-bottom') %>
