@@ -190,3 +190,16 @@ Le logo officiel fourni (doré sur fond noir) est décliné dans `public/img/log
 | `favicon-32.png`, `apple-touch-icon.png`, `icon-512.png` | icônes du navigateur et du téléphone |
 
 Les versions transparentes sont extraites du fond noir de l’original. La ligne du slogan du fichier d’origine n’est pas reprise : le slogan est affiché en texte sur le site (« L’excellence au cœur de chaque événement »). Un logo téléversé dans l’administration remplace ces fichiers partout.
+
+## 11. Firebase Hosting (version de démonstration)
+
+Projet Firebase : `prestigioevent-1bdde` — adresse : https://prestigioevent-1bdde.web.app
+
+Firebase Hosting ne sert que des fichiers statiques : on y publie la **démonstration** (`firebase/public/`), qui montre les pages et le calculateur mais **n’enregistre aucune demande**. Elle n’est pas indexée par les moteurs de recherche (les tarifs affichés sont provisoires). Le vrai site, avec base de données, se déploie sur Render (voir § 3).
+
+**Publication automatique depuis GitHub (aucune commande à taper)** — à faire une seule fois :
+1. Console Firebase → roue dentée → **Paramètres du projet** → onglet **Comptes de service** → **Générer une nouvelle clé privée** → un fichier `.json` est téléchargé. Ce fichier donne accès au projet : ne le partagez avec personne et ne l’envoyez pas par message.
+2. GitHub → dépôt `Prestigio-events` → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**. Nom : `FIREBASE_SERVICE_ACCOUNT` ; valeur : tout le contenu du fichier `.json` (ouvert avec le Bloc-notes, copier-coller). Enregistrer, puis supprimer le fichier de l’ordinateur.
+3. GitHub → onglet **Actions** → « Firebase Hosting (démonstration) » → **Run workflow**. Après 1 à 2 minutes, le site est en ligne.
+
+**Ou en ligne de commande** (ordinateur avec Node.js) : `npm install -g firebase-tools`, `firebase login`, puis `firebase deploy --only hosting` dans le dossier du projet.

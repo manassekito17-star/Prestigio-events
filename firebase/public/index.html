@@ -1,0 +1,1748 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Version de démonstration : ne pas indexer (les tarifs affichés sont provisoires). -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" href="static/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="static/img/logo/apple-touch-icon.png">
+<title>PRESTIGIO EVENTS — Démonstration</title>
+<link rel="stylesheet" href="static/css/site.css">
+<style>
+:root { --navy: #0B1F3A; --gold: #D4AF37; color-scheme: light; }
+html, body { background: #FFFFFF; color: #0B1F3A; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: #0B1F3A; }
+.site-header { top: env(safe-area-inset-top, 0px); }
+.demo-bar { background: #F8F5EF; color: #0B1F3A; border-bottom: 1px solid #E6E0D2; font-size: .84rem; padding-block: 9px; }
+.demo-bar .container { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; justify-content: space-between; }
+.demo-bar a { color: #244A78; font-weight: 600; }
+.demo-note { background: #FFF8E1; border: 1px solid #F1DFA6; color: #5C4A10; padding: 12px 14px; font-size: .88rem; margin-bottom: 18px; }
+.admin-shots { display: grid; gap: 40px; }
+.shot { margin: 0; display: grid; gap: 14px; }
+.shot img { width: 100%; height: auto; border: 1px solid #E6E0D2; box-shadow: 0 10px 30px rgba(11, 31, 58, .08); background: #F4F2EC; }
+.shot figcaption { display: grid; gap: 4px; max-width: 70ch; }
+.shot figcaption strong { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.4rem; font-weight: 600; }
+.shot figcaption span { color: #4A5568; }
+@media (min-width: 900px) { .shot { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; } .shot figcaption { padding-top: 8px; } }
+.wa-float { right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+</style>
+</head>
+<body>
+
+<div class="demo-bar"><div class="container"><span><strong>Aperçu du site</strong> — version de démonstration : les formulaires ne sont pas enregistrés.</span><a href="#administration">Voir l’administration →</a></div></div>
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a href="#accueil" class="logo" aria-label="PRESTIGIO EVENTS — accueil">
+  <img src="static/img/logo/logo-horizontal.png" alt="PRESTIGIO EVENTS" class="logo-img" width="446" height="160">
+
+</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav" data-nav-toggle><span></span><span></span><span></span><span class="sr">Menu</span></button>
+    <nav id="nav" class="nav" aria-label="Navigation principale">
+      
+      <ul>
+        
+          <li><a href="#accueil" aria-current="page">Accueil</a></li>
+        
+          <li><a href="#services">Services</a></li>
+        
+          <li><a href="#offres">Offres et tarifs</a></li>
+        
+          <li><a href="#galerie">Galerie</a></li>
+        
+          <li><a href="#a-propos">À propos</a></li>
+        
+          <li><a href="#contact">Contact</a></li>
+        
+      </ul>
+      <a href="#devis" class="btn btn-gold btn-sm nav-cta">Demander un devis</a>
+    </nav>
+  </div>
+</header>
+<main id="contenu">
+<section class="pg" id="pg-accueil" data-page="accueil" data-title="Accueil" hidden>
+
+<section class="hero">
+  <div class="hero-media">
+    
+      <img src="static/img/demo/hero.jpg" alt="Bouquet de mariée — photo d’illustration" fetchpriority="high">
+      <span class="illus-tag illus-tag-hero">Photo d’illustration</span>
+    
+  </div>
+  <div class="container hero-content">
+    <img class="hero-emblem" src="static/img/logo/logo-emblem.png" alt="" width="169" height="220">
+    <p class="eyebrow">Agence événementielle · Kinshasa</p>
+    <h1 class="hero-title">PRESTIGIO EVENTS</h1>
+    <p class="hero-slogan">L’excellence au cœur de chaque événement</p>
+    <p class="hero-text">Agence d’organisation d’événements à Kinshasa. Mariages, cérémonies, événements d’entreprise et réceptions : nous concevons, planifions et coordonnons votre événement avec soin.</p>
+    <div class="btn-row">
+      <a href="#devis" class="btn btn-gold">Demander un devis</a>
+      <a href="#services" class="btn btn-ghost-light">Découvrir nos services</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container narrow center">
+    <p class="eyebrow">Bienvenue</p>
+    <h2 class="h2">Votre événement, organisé avec exigence</h2>
+    <div class="prose lead"><p>De la première idée au jour J, PRESTIGIO EVENTS vous accompagne pour organiser un événement à votre image, dans le respect de votre budget. Nous coordonnons les prestataires, le protocole et la logistique pour que vous puissiez profiter pleinement du moment.</p></div>
+  </div>
+</section>
+
+<section class="section section-ivory">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Nos services</p>
+      <h2 class="h2">Ce que nous organisons pour vous</h2>
+    </div>
+    <div class="card-grid">
+      
+        <a class="svc-card" href="#service-mariages-ceremonies">
+          <div class="svc-card-img">
+  <img src="static/img/demo/wedding.jpg" alt="Mariages et cérémonies traditionnelles — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+          <div class="svc-card-body">
+            <h3 class="h3">Mariages et cérémonies traditionnelles</h3>
+            <p>Mariage civil, religieux, coutumier ou dot : nous orchestrons chaque étape de votre union.</p>
+            <span class="link-arrow">En savoir plus</span>
+          </div>
+        </a>
+      
+        <a class="svc-card" href="#service-anniversaires-fetes-privees">
+          <div class="svc-card-img">
+  <img src="static/img/demo/birthday.jpg" alt="Anniversaires et fêtes privées — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+          <div class="svc-card-body">
+            <h3 class="h3">Anniversaires et fêtes privées</h3>
+            <p>Des célébrations personnalisées pour marquer les moments importants de votre vie.</p>
+            <span class="link-arrow">En savoir plus</span>
+          </div>
+        </a>
+      
+        <a class="svc-card" href="#service-evenements-entreprise">
+          <div class="svc-card-img">
+  <img src="static/img/demo/conference.jpg" alt="Conférences, séminaires et événements d’entreprise — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+          <div class="svc-card-body">
+            <h3 class="h3">Conférences, séminaires et événements d’entreprise</h3>
+            <p>Conférences, séminaires, réunions, lancements et soirées d’entreprise organisés avec rigueur.</p>
+            <span class="link-arrow">En savoir plus</span>
+          </div>
+        </a>
+      
+        <a class="svc-card" href="#service-concerts-soirees">
+          <div class="svc-card-img">
+  <img src="static/img/demo/party.jpg" alt="Concerts, soirées et événements festifs — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+          <div class="svc-card-body">
+            <h3 class="h3">Concerts, soirées et événements festifs</h3>
+            <p>Soirées, concerts et événements festifs : ambiance, technique et logistique maîtrisées.</p>
+            <span class="link-arrow">En savoir plus</span>
+          </div>
+        </a>
+      
+        <a class="svc-card" href="#service-ceremonies-deuil">
+          <div class="svc-card-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+          <div class="svc-card-body">
+            <h3 class="h3">Cérémonies de deuil et réceptions funéraires</h3>
+            <p>Un accompagnement discret et respectueux pour organiser les cérémonies de deuil et les réceptions.</p>
+            <span class="link-arrow">En savoir plus</span>
+          </div>
+        </a>
+      
+        <a class="svc-card" href="#service-conception-coordination">
+          <div class="svc-card-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+          <div class="svc-card-body">
+            <h3 class="h3">Conception, planification et coordination générale</h3>
+            <p>Nous prenons en charge l’organisation de A à Z : conception, budget, prestataires, planning et jour J.</p>
+            <span class="link-arrow">En savoir plus</span>
+          </div>
+        </a>
+      
+    </div>
+    <div class="center mt"><a href="#services" class="btn btn-navy">Voir tous les services</a></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Notre engagement</p>
+      <h2 class="h2">Pourquoi choisir PRESTIGIO EVENTS ?</h2>
+    </div>
+    <div class="why-grid">
+      
+        <div class="why-item">
+          <span class="why-num">01</span>
+          <h3 class="h3">Un interlocuteur unique</h3>
+          <p>Une seule équipe pour coordonner vos prestataires, vos invités et le déroulement de votre événement.</p>
+        </div>
+      
+        <div class="why-item">
+          <span class="why-num">02</span>
+          <h3 class="h3">Des solutions adaptées à votre budget</h3>
+          <p>Nous construisons une proposition claire, ligne par ligne, en fonction de vos priorités et de vos moyens.</p>
+        </div>
+      
+        <div class="why-item">
+          <span class="why-num">03</span>
+          <h3 class="h3">Une organisation rigoureuse</h3>
+          <p>Planning, listes de contrôle et coordination le jour J pour un déroulement maîtrisé.</p>
+        </div>
+      
+        <div class="why-item">
+          <span class="why-num">04</span>
+          <h3 class="h3">Un devis transparent</h3>
+          <p>Chaque devis est vérifié et validé par la direction avant de vous être transmis.</p>
+        </div>
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<section class="section cta-section">
+  <div class="container cta-inner">
+    <div>
+      <h2 class="h2 light">Parlons de votre événement</h2>
+      <p class="muted-light">Remplissez notre formulaire en quelques minutes et obtenez une estimation indicative, ou écrivez-nous directement sur WhatsApp.</p>
+    </div>
+    <div class="btn-row">
+      <a href="#devis" class="btn btn-gold">Demander un devis</a>
+      <a href="https://wa.me/243813583732?text=Bonjour%20PRESTIGIO%20EVENTS%2C%20je%20souhaite%20organiser%20un%20%C3%A9v%C3%A9nement." class="btn btn-ghost-light" target="_blank" rel="noopener">Écrire sur WhatsApp</a>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-services" data-page="services" data-title="Nos services" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Nos services</p>
+    <h1 class="h1">Des prestations complètes pour chaque occasion</h1>
+    <p class="lead">Choisissez une organisation complète ou uniquement les prestations dont vous avez besoin. Chaque devis est établi sur mesure.</p>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container">
+    <div class="section-head left">
+      <h2 class="h2">Les événements que nous organisons</h2>
+    </div>
+    <div class="card-grid">
+      
+        <article class="svc-card" id="mariages-ceremonies">
+          <div class="svc-card-img">
+  <img src="static/img/demo/wedding.jpg" alt="Mariages et cérémonies traditionnelles — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-mariages-ceremonies">Mariages et cérémonies traditionnelles</a></h3>
+            <p>Mariage civil, religieux, coutumier ou dot : nous orchestrons chaque étape de votre union.</p>
+            
+              <ul class="check-list small"><li>Conception du déroulé</li><li>Coordination des prestataires</li><li>Décoration et mise en scène</li><li>Protocole et accueil des invités</li><li>Coordination le jour J</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-mariages-ceremonies" class="link-arrow">Détails</a>
+              <a href="#devis" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+        <article class="svc-card" id="anniversaires-fetes-privees">
+          <div class="svc-card-img">
+  <img src="static/img/demo/birthday.jpg" alt="Anniversaires et fêtes privées — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-anniversaires-fetes-privees">Anniversaires et fêtes privées</a></h3>
+            <p>Des célébrations personnalisées pour marquer les moments importants de votre vie.</p>
+            
+              <ul class="check-list small"><li>Thème et décoration</li><li>Animation et musique</li><li>Restauration</li><li>Coordination</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-anniversaires-fetes-privees" class="link-arrow">Détails</a>
+              <a href="#devis" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+        <article class="svc-card" id="evenements-entreprise">
+          <div class="svc-card-img">
+  <img src="static/img/demo/conference.jpg" alt="Conférences, séminaires et événements d’entreprise — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-evenements-entreprise">Conférences, séminaires et événements d’entreprise</a></h3>
+            <p>Conférences, séminaires, réunions, lancements et soirées d’entreprise organisés avec rigueur.</p>
+            
+              <ul class="check-list small"><li>Recherche de salle</li><li>Sonorisation et matériel technique</li><li>Accueil et enregistrement des participants</li><li>Pauses et restauration</li><li>Coordination</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-evenements-entreprise" class="link-arrow">Détails</a>
+              <a href="#devis" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+        <article class="svc-card" id="concerts-soirees">
+          <div class="svc-card-img">
+  <img src="static/img/demo/party.jpg" alt="Concerts, soirées et événements festifs — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-concerts-soirees">Concerts, soirées et événements festifs</a></h3>
+            <p>Soirées, concerts et événements festifs : ambiance, technique et logistique maîtrisées.</p>
+            
+              <ul class="check-list small"><li>Sonorisation et éclairage</li><li>DJ et animation</li><li>Gestion des entrées</li><li>Coordination</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-concerts-soirees" class="link-arrow">Détails</a>
+              <a href="#devis" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+        <article class="svc-card" id="ceremonies-deuil">
+          <div class="svc-card-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-ceremonies-deuil">Cérémonies de deuil et réceptions funéraires</a></h3>
+            <p>Un accompagnement discret et respectueux pour organiser les cérémonies de deuil et les réceptions.</p>
+            
+              <ul class="check-list small"><li>Organisation de la veillée et de la réception</li><li>Décoration sobre</li><li>Accueil et placement des invités</li><li>Restauration</li><li>Coordination</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-ceremonies-deuil" class="link-arrow">Détails</a>
+              <a href="#devis" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+    </div>
+  </div>
+</section>
+
+<section class="section section-ivory">
+  <div class="container">
+    <div class="section-head left">
+      <h2 class="h2">Nos prestations</h2>
+    </div>
+    <div class="card-grid">
+      
+        <article class="svc-card" id="conception-coordination">
+          <div class="svc-card-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-conception-coordination">Conception, planification et coordination générale</a></h3>
+            <p>Nous prenons en charge l’organisation de A à Z : conception, budget, prestataires, planning et jour J.</p>
+            
+              <ul class="check-list small"><li>Rendez-vous de conception</li><li>Planning et budget prévisionnel</li><li>Sélection et coordination des prestataires</li><li>Coordination le jour J</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-conception-coordination" class="link-arrow">Détails</a>
+              <a href="#devis" data-service="6" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+        <article class="svc-card" id="coordination-jour-j">
+          <div class="svc-card-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-coordination-jour-j">Coordination le jour de l’événement</a></h3>
+            <p>Vous avez organisé votre événement ; nous coordonnons son déroulement le jour J.</p>
+            
+              <ul class="check-list small"><li>Réunion de préparation</li><li>Déroulé minute par minute</li><li>Coordination des prestataires sur place</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-coordination-jour-j" class="link-arrow">Détails</a>
+              <a href="#devis" data-service="7" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+        <article class="svc-card" id="decoration">
+          <div class="svc-card-img">
+  <img src="static/img/demo/decoration.jpg" alt="Décoration de salles et espaces — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-decoration">Décoration de salles et espaces</a></h3>
+            <p>Mise en scène, décoration florale, nappage, centres de table et ambiance lumineuse.</p>
+            
+              <ul class="check-list small"><li>Proposition de thème</li><li>Installation et démontage</li><li>Centres de table et nappage</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-decoration" class="link-arrow">Détails</a>
+              <a href="#devis" data-service="8" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+        <article class="svc-card" id="salles-lieux">
+          <div class="svc-card-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-salles-lieux">Recherche et location de salles ou lieux de réception</a></h3>
+            <p>Nous identifions et réservons le lieu adapté à votre événement, à votre nombre d’invités et à votre budget.</p>
+            
+              <ul class="check-list small"><li>Recherche selon vos critères</li><li>Visites</li><li>Négociation et réservation</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-salles-lieux" class="link-arrow">Détails</a>
+              <a href="#devis" data-service="9" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+        <article class="svc-card" id="catering">
+          <div class="svc-card-img">
+  <img src="static/img/demo/reception.jpg" alt="Catering, repas, boissons et service — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-catering">Catering, repas, boissons et service</a></h3>
+            <p>Repas, buffets, cocktails, boissons et personnel de service.</p>
+            
+              <ul class="check-list small"><li>Proposition de menu</li><li>Boissons</li><li>Personnel de service</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-catering" class="link-arrow">Détails</a>
+              <a href="#devis" data-service="10" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+        <article class="svc-card" id="sonorisation-eclairage">
+          <div class="svc-card-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-sonorisation-eclairage">Sonorisation, éclairage et matériel technique</a></h3>
+            <p>Matériel de sonorisation, micros, éclairage d’ambiance et technique pour conférences.</p>
+            
+              <ul class="check-list small"><li>Installation et réglages</li><li>Technicien sur place</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-sonorisation-eclairage" class="link-arrow">Détails</a>
+              <a href="#devis" data-service="11" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+        <article class="svc-card" id="dj-animation">
+          <div class="svc-card-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-dj-animation">DJ, animation et présentateur</a></h3>
+            <p>DJ, maître de cérémonie, présentateur et animations pour rythmer votre événement.</p>
+            
+              <ul class="check-list small"><li>Programme musical</li><li>Animation</li><li>Maître de cérémonie</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-dj-animation" class="link-arrow">Détails</a>
+              <a href="#devis" data-service="12" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+        <article class="svc-card" id="photo-video">
+          <div class="svc-card-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-photo-video">Photographie et vidéo</a></h3>
+            <p>Photographes et vidéastes pour immortaliser votre événement.</p>
+            
+              <ul class="check-list small"><li>Couverture photo</li><li>Vidéo (en option)</li><li>Retouche et livraison numérique</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-photo-video" class="link-arrow">Détails</a>
+              <a href="#devis" data-service="13" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+        <article class="svc-card" id="protocole-accueil">
+          <div class="svc-card-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+          <div class="svc-card-body">
+            
+            <h3 class="h3"><a href="#service-protocole-accueil">Protocole, accueil des invités et coordination</a></h3>
+            <p>Agents de protocole pour l’accueil, l’orientation, le placement des invités, la gestion des entrées et l’assistance aux VIP.</p>
+            
+              <ul class="check-list small"><li>Accueil et orientation</li><li>Placement des invités</li><li>Gestion des entrées</li><li>Assistance aux VIP</li></ul>
+            
+            
+            <p class="price-hint">Tarif sur devis</p>
+            <div class="btn-row">
+              <a href="#service-protocole-accueil" class="link-arrow">Détails</a>
+              <a href="#devis" data-service="14" class="link-arrow">Demander un devis</a>
+            </div>
+          </div>
+        </article>
+      
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section cta-section">
+  <div class="container cta-inner">
+    <div>
+      <h2 class="h2 light">Un projet d’événement ?</h2>
+      <p class="muted-light">Décrivez votre événement et recevez une estimation indicative immédiate. Le devis définitif vous sera transmis après vérification.</p>
+    </div>
+    <div class="btn-row">
+      <a href="#devis" class="btn btn-gold">Demander un devis</a>
+      <a href="https://wa.me/243813583732?text=Bonjour%20PRESTIGIO%20EVENTS%2C%20je%20souhaite%20organiser%20un%20%C3%A9v%C3%A9nement." class="btn btn-ghost-light" target="_blank" rel="noopener">Écrire sur WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+</section>
+<section class="pg" id="pg-offres" data-page="offres" data-title="Offres et tarifs" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Offres et tarifs</p>
+    <h1 class="h1">Des formules adaptées à votre événement</h1>
+    <p class="lead">Choisissez une formule ou composez votre événement à la carte. Toutes nos offres sont personnalisables.</p>
+    <div class="btn-row"><a href="#devis" class="btn btn-gold">Estimer mon événement</a></div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container">
+    <div class="section-head"><p class="eyebrow">Forfaits</p><h2 class="h2">Nos formules</h2></div>
+    <div class="pkg-grid">
+      
+        <article class="pkg">
+          
+          
+          <h3 class="h3">Formule Essentielle</h3>
+          <p class="pkg-type">Tous événements</p>
+          <p class="pkg-price">Tarif sur demande</p>
+          <p>Coordination le jour J et protocole pour un événement déjà préparé.</p>
+          
+          <h4 class="pkg-h">Inclus</h4><ul class="check-list small"><li>Réunion de préparation</li><li>Coordination le jour J</li><li>Agents de protocole (nombre à définir)</li></ul>
+          <h4 class="pkg-h">Non inclus</h4><ul class="x-list small"><li>Salle</li><li>Restauration</li><li>Décoration</li></ul>
+          <a href="#devis" class="btn btn-navy btn-block">Demander un devis</a>
+        </article>
+      
+        <article class="pkg pkg-featured">
+          
+          <span class="pkg-badge">Recommandée</span>
+          <h3 class="h3">Formule Prestige</h3>
+          <p class="pkg-type">Mariages et réceptions</p>
+          <p class="pkg-price">Tarif sur demande</p>
+          <p>Organisation complète avec décoration, protocole et coordination.</p>
+          
+          <h4 class="pkg-h">Inclus</h4><ul class="check-list small"><li>Conception et planification</li><li>Décoration</li><li>Protocole et accueil</li><li>Coordination le jour J</li></ul>
+          <h4 class="pkg-h">Non inclus</h4><ul class="x-list small"><li>Location de salle (sur devis)</li><li>Restauration (sur devis)</li></ul>
+          <a href="#devis" class="btn btn-gold btn-block">Demander un devis</a>
+        </article>
+      
+        <article class="pkg">
+          
+          
+          <h3 class="h3">Formule Entreprise</h3>
+          <p class="pkg-type">Conférences et séminaires</p>
+          <p class="pkg-price">Tarif sur demande</p>
+          <p>Logistique, technique et accueil pour vos événements professionnels.</p>
+          
+          <h4 class="pkg-h">Inclus</h4><ul class="check-list small"><li>Recherche de salle</li><li>Sonorisation</li><li>Accueil des participants</li><li>Coordination</li></ul>
+          <h4 class="pkg-h">Non inclus</h4><ul class="x-list small"><li>Restauration (sur devis)</li></ul>
+          <a href="#devis" class="btn btn-navy btn-block">Demander un devis</a>
+        </article>
+      
+    </div>
+  </div>
+</section>
+
+
+<section class="section section-ivory">
+  <div class="container">
+    <div class="section-head"><p class="eyebrow">À la carte</p><h2 class="h2">Services et tarifs indicatifs</h2>
+      <p class="muted">Les prix sont exprimés en dollars américains (USD). « Sur devis » signifie que le prix dépend du lieu, de la date ou des prestataires et sera confirmé dans votre devis.</p></div>
+    <div class="carte">
+      
+        <div class="carte-item">
+          <h3 class="h4">Organisation complète</h3>
+          <table class="price-table">
+            
+              <tr><td>Organisation complète — honoraires de conception et coordination</td><td class="num">Sur devis</td></tr>
+            
+            
+          </table>
+        </div>
+      
+        <div class="carte-item">
+          <h3 class="h4">Coordination uniquement</h3>
+          <table class="price-table">
+            
+              <tr><td>Coordination le jour J</td><td class="num">Sur devis</td></tr>
+            
+            
+          </table>
+        </div>
+      
+        <div class="carte-item">
+          <h3 class="h4">Décoration</h3>
+          <table class="price-table">
+            
+              <tr><td>Décoration (par invité)</td><td class="num">Sur devis</td></tr>
+            
+              <tr><td>Arche ou décor de scène <span class="tag">option</span></td><td class="num">Sur devis</td></tr>
+            
+            
+          </table>
+        </div>
+      
+        <div class="carte-item">
+          <h3 class="h4">Salle ou lieu de réception</h3>
+          <table class="price-table">
+            
+              <tr><td>Location de salle</td><td class="num">Sur devis</td></tr>
+            
+              <tr><td>Frais de recherche et de réservation du lieu</td><td class="num">Sur devis</td></tr>
+            
+            
+          </table>
+        </div>
+      
+        <div class="carte-item">
+          <h3 class="h4">Catering et boissons</h3>
+          <table class="price-table">
+            
+              <tr><td>Repas (par invité)</td><td class="num">Sur devis</td></tr>
+            
+              <tr><td>Boissons (par invité) <span class="tag">option</span></td><td class="num">Sur devis</td></tr>
+            
+            
+          </table>
+        </div>
+      
+        <div class="carte-item">
+          <h3 class="h4">Sonorisation et éclairage</h3>
+          <table class="price-table">
+            
+              <tr><td>Location sonorisation</td><td class="num">Sur devis</td></tr>
+            
+              <tr><td>Éclairage d’ambiance <span class="tag">option</span></td><td class="num">Sur devis</td></tr>
+            
+            
+          </table>
+        </div>
+      
+        <div class="carte-item">
+          <h3 class="h4">DJ, animation ou présentateur</h3>
+          <table class="price-table">
+            
+              <tr><td>DJ (prestation)</td><td class="num">Sur devis</td></tr>
+            
+              <tr><td>Maître de cérémonie / présentateur <span class="tag">option</span></td><td class="num">Sur devis</td></tr>
+            
+            
+          </table>
+        </div>
+      
+        <div class="carte-item">
+          <h3 class="h4">Photo et vidéo</h3>
+          <table class="price-table">
+            
+              <tr><td>Photographe</td><td class="num">Sur devis</td></tr>
+            
+              <tr><td>Vidéaste <span class="tag">option</span></td><td class="num">Sur devis</td></tr>
+            
+            
+          </table>
+        </div>
+      
+        <div class="carte-item">
+          <h3 class="h4">Protocole et accueil</h3>
+          <table class="price-table">
+            
+              <tr><td>Agent de protocole</td><td class="num">Sur devis</td></tr>
+            
+              <tr><td>Repas des agents de protocole <span class="tag">option</span></td><td class="num">Sur devis</td></tr>
+            
+            
+          </table>
+        </div>
+      
+    </div>
+    
+      <div class="carte-item mt"><h3 class="h4">Frais éventuels</h3>
+        <table class="price-table"><tr><td>Frais de déplacement et logistique (Kinshasa)</td><td class="num">Sur devis</td></tr></table></div>
+    
+    <p class="disclaimer mt">Cette estimation est indicative. Le devis définitif sera confirmé par PRESTIGIO EVENTS après vérification des besoins, des disponibilités et des coûts auprès des prestataires.</p>
+  </div>
+</section>
+
+
+<section class="section cta-section">
+  <div class="container cta-inner">
+    <div>
+      <h2 class="h2 light">Un projet d’événement ?</h2>
+      <p class="muted-light">Décrivez votre événement et recevez une estimation indicative immédiate. Le devis définitif vous sera transmis après vérification.</p>
+    </div>
+    <div class="btn-row">
+      <a href="#devis" class="btn btn-gold">Demander un devis</a>
+      <a href="https://wa.me/243813583732?text=Bonjour%20PRESTIGIO%20EVENTS%2C%20je%20souhaite%20organiser%20un%20%C3%A9v%C3%A9nement." class="btn btn-ghost-light" target="_blank" rel="noopener">Écrire sur WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+</section>
+<section class="pg" id="pg-galerie" data-page="galerie" data-title="Galerie" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Galerie</p>
+    <h1 class="h1">Nos événements en images</h1>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    
+      <div class="empty-state">
+        <h2 class="h3">Nos réalisations seront bientôt publiées ici</h2>
+        <p>En attendant, n’hésitez pas à nous contacter pour échanger sur votre projet.</p>
+        <a href="#devis" class="btn btn-gold">Demander un devis</a>
+      </div>
+    
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-a-propos" data-page="a-propos" data-title="À propos" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">À propos</p>
+    <h1 class="h1">PRESTIGIO EVENTS</h1>
+    <p class="lead">L’excellence au cœur de chaque événement</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container mv-grid">
+    <div class="mv"><p class="eyebrow">Notre mission</p><div class="prose"><p>Concevoir et organiser des événements élégants et bien coordonnés à Kinshasa, en accompagnant chaque client avec écoute, rigueur et transparence.</p></div></div>
+    <div class="mv"><p class="eyebrow">Notre vision</p><div class="prose"><p>Devenir une référence de l’organisation événementielle à Kinshasa, reconnue pour la qualité de son accompagnement et le soin apporté à chaque détail.</p></div></div>
+  </div>
+</section>
+<section class="section section-ivory">
+  <div class="container">
+    <div class="section-head"><p class="eyebrow">Notre accompagnement</p><h2 class="h2">Comment nous travaillons avec vous</h2></div>
+    <ol class="steps">
+      <li><h3 class="h4">Écoute</h3><p>Nous échangeons avec vous pour comprendre l’événement, vos invités, vos attentes et votre budget.</p></li><li><h3 class="h4">Proposition</h3><p>Nous établissons un devis détaillé, vérifié et validé par la direction.</p></li><li><h3 class="h4">Préparation</h3><p>Nous coordonnons les prestataires, le lieu, la décoration et la logistique.</p></li><li><h3 class="h4">Jour J</h3><p>Notre équipe et nos agents de protocole veillent au bon déroulement de l’événement.</p></li>
+    </ol>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="section-head"><p class="eyebrow">Nos valeurs</p><h2 class="h2">Ce qui nous guide</h2></div>
+    <div class="why-grid">
+      <div class="why-item"><h3 class="h3">Professionnalisme</h3><p>Ponctualité, fiabilité et respect des engagements.</p></div><div class="why-item"><h3 class="h3">Créativité</h3><p>Des ambiances et des mises en scène pensées pour chaque occasion.</p></div><div class="why-item"><h3 class="h3">Organisation</h3><p>Une planification rigoureuse et une coordination précise.</p></div><div class="why-item"><h3 class="h3">Respect du budget</h3><p>Des propositions claires et adaptées à vos moyens.</p></div>
+    </div>
+  </div>
+</section>
+<section class="section section-navy">
+  <div class="container founder">
+    <div class="founder-photo">
+      
+        <div class="founder-placeholder" aria-label="Photo à venir"><span>BK</span><small>Photo à venir</small></div>
+      
+    </div>
+    <div>
+      <p class="eyebrow">Le fondateur</p>
+      <h2 class="h2 light">Billy Kito</h2>
+      <p class="founder-title">Fondateur et Directeur général</p>
+      
+        <p class="muted-light">Billy Kito est le fondateur et directeur général de PRESTIGIO EVENTS. Sa présentation détaillée sera publiée prochainement.</p>
+      
+    </div>
+  </div>
+</section>
+
+
+<section class="section cta-section">
+  <div class="container cta-inner">
+    <div>
+      <h2 class="h2 light">Un projet d’événement ?</h2>
+      <p class="muted-light">Décrivez votre événement et recevez une estimation indicative immédiate. Le devis définitif vous sera transmis après vérification.</p>
+    </div>
+    <div class="btn-row">
+      <a href="#devis" class="btn btn-gold">Demander un devis</a>
+      <a href="https://wa.me/243813583732?text=Bonjour%20PRESTIGIO%20EVENTS%2C%20je%20souhaite%20organiser%20un%20%C3%A9v%C3%A9nement." class="btn btn-ghost-light" target="_blank" rel="noopener">Écrire sur WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+</section>
+<section class="pg" id="pg-contact" data-page="contact" data-title="Contact" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Contact</p>
+    <h1 class="h1">Parlons de votre événement</h1>
+  </div>
+</section>
+<section class="section">
+  <div class="container contact-grid">
+    <div>
+      <h2 class="h3">Nous joindre</h2>
+      <p>Le moyen le plus rapide de nous joindre est WhatsApp.</p>
+      <a class="btn btn-wa" href="https://wa.me/243813583732?text=Bonjour%20PRESTIGIO%20EVENTS%2C%20je%20souhaite%20des%20informations%20pour%20un%20%C3%A9v%C3%A9nement." target="_blank" rel="noopener">WhatsApp : +243 813 583 732</a>
+      <ul class="contact-list">
+        <li><strong>Ville :</strong> Kinshasa, République démocratique du Congo</li>
+        
+        
+      </ul>
+      
+      
+      <p class="mt"><a href="#devis" class="link-arrow">Vous préparez un événement ? Demandez un devis détaillé</a></p>
+    </div>
+    <div class="card">
+      <h2 class="h3">Envoyer un message</h2>
+      
+      
+      <form method="post" action="/contact" novalidate class="form" data-once>
+        <input type="hidden" name="_ft" value="contact.1792852488.tjx1_JKeV5yE4hRU.efcI9kjV8ZYuBdPPw5A8bLRXYo9dyyzkMA-P3SrWAus">
+        <div class="hp" aria-hidden="true"><label>Site web <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div class="field"><label for="c-name">Nom *</label><input id="c-name" name="name" required maxlength="120" value="" autocomplete="name"></div>
+        <div class="field"><label for="c-phone">Téléphone ou WhatsApp</label><input id="c-phone" name="phone" type="tel" maxlength="40" value="" autocomplete="tel" placeholder="+243 ..."></div>
+        <div class="field"><label for="c-email">E-mail</label><input id="c-email" name="email" type="email" maxlength="160" value="" autocomplete="email"></div>
+        <div class="field"><label for="c-msg">Message *</label><textarea id="c-msg" name="message" rows="5" maxlength="3000" required></textarea></div>
+        <p class="small muted">Vos coordonnées sont utilisées uniquement pour répondre à votre message.</p>
+        <button class="btn btn-navy" type="submit">Envoyer</button>
+      </form>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-devis" data-page="devis" data-title="Demander un devis" hidden>
+
+
+<section class="page-hero compact">
+  <div class="container">
+    <p class="eyebrow">Demande de devis</p>
+    <h1 class="h1">Parlez-nous de votre événement</h1>
+    <p class="lead">Quelques minutes suffisent. Vous obtenez une estimation indicative immédiate ; le devis définitif vous sera transmis après vérification par notre équipe.</p>
+  </div>
+</section>
+
+<section class="section quote-section">
+  <div class="container quote-layout">
+    <form method="post" action="/devis" class="form quote-form" id="quote-form" novalidate data-once>
+      
+      <div class="hp" aria-hidden="true"><label>Site web <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <script type="application/json" id="catalog-data">{"services":[{"id":6,"slug":"conception-coordination","name":"Organisation complète","is_protocol":0,"tariffs":[{"id":1,"name":"Organisation complète — honoraires de conception et coordination","method":"fixed","agent_unit":null,"included_hours":null,"optional":0,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":80000,"extra_hour_cents":null,"percent":null}]},{"id":7,"slug":"coordination-jour-j","name":"Coordination uniquement","is_protocol":0,"tariffs":[{"id":2,"name":"Coordination le jour J","method":"fixed","agent_unit":null,"included_hours":null,"optional":0,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":30000,"extra_hour_cents":null,"percent":null}]},{"id":8,"slug":"decoration","name":"Décoration","is_protocol":0,"tariffs":[{"id":3,"name":"Décoration (par invité)","method":"per_person","agent_unit":null,"included_hours":null,"optional":0,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":800,"extra_hour_cents":null,"percent":null},{"id":4,"name":"Arche ou décor de scène","method":"fixed","agent_unit":null,"included_hours":null,"optional":1,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":25000,"extra_hour_cents":null,"percent":null}]},{"id":9,"slug":"salles-lieux","name":"Salle ou lieu de réception","is_protocol":0,"tariffs":[{"id":5,"name":"Location de salle","method":"on_request","agent_unit":null,"included_hours":null,"optional":0,"min_guests":null,"conditions":"Selon le lieu, la date et la capacité.","to_confirm":true,"provisional":true,"amount_cents":null,"extra_hour_cents":null,"percent":null},{"id":6,"name":"Frais de recherche et de réservation du lieu","method":"fixed","agent_unit":null,"included_hours":null,"optional":0,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":10000,"extra_hour_cents":null,"percent":null}]},{"id":10,"slug":"catering","name":"Catering et boissons","is_protocol":0,"tariffs":[{"id":7,"name":"Repas (par invité)","method":"per_person","agent_unit":null,"included_hours":null,"optional":0,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":2000,"extra_hour_cents":null,"percent":null},{"id":8,"name":"Boissons (par invité)","method":"per_person","agent_unit":null,"included_hours":null,"optional":1,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":600,"extra_hour_cents":null,"percent":null}]},{"id":11,"slug":"sonorisation-eclairage","name":"Sonorisation et éclairage","is_protocol":0,"tariffs":[{"id":9,"name":"Location sonorisation","method":"rental","agent_unit":null,"included_hours":null,"optional":0,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":35000,"extra_hour_cents":null,"percent":null},{"id":10,"name":"Éclairage d’ambiance","method":"rental","agent_unit":null,"included_hours":null,"optional":1,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":20000,"extra_hour_cents":null,"percent":null}]},{"id":12,"slug":"dj-animation","name":"DJ, animation ou présentateur","is_protocol":0,"tariffs":[{"id":11,"name":"DJ (prestation)","method":"fixed","agent_unit":null,"included_hours":null,"optional":0,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":25000,"extra_hour_cents":null,"percent":null},{"id":12,"name":"Maître de cérémonie / présentateur","method":"fixed","agent_unit":null,"included_hours":null,"optional":1,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":20000,"extra_hour_cents":null,"percent":null}]},{"id":13,"slug":"photo-video","name":"Photo et vidéo","is_protocol":0,"tariffs":[{"id":13,"name":"Photographe","method":"fixed","agent_unit":null,"included_hours":null,"optional":0,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":30000,"extra_hour_cents":null,"percent":null},{"id":14,"name":"Vidéaste","method":"fixed","agent_unit":null,"included_hours":null,"optional":1,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":40000,"extra_hour_cents":null,"percent":null}]},{"id":14,"slug":"protocole-accueil","name":"Protocole et accueil","is_protocol":1,"tariffs":[{"id":15,"name":"Agent de protocole","method":"per_agent","agent_unit":"event","included_hours":6,"optional":0,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":3000,"extra_hour_cents":500,"percent":null},{"id":16,"name":"Repas des agents de protocole","method":"per_agent","agent_unit":"event","included_hours":null,"optional":1,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":500,"extra_hour_cents":null,"percent":null}]}],"globals":[{"id":17,"name":"Frais de déplacement et logistique (Kinshasa)","method":"fixed","agent_unit":null,"included_hours":null,"optional":0,"min_guests":null,"conditions":"","to_confirm":false,"provisional":true,"amount_cents":3000,"extra_hour_cents":null,"percent":null}]}</script>
+
+      
+
+      <ol class="stepper" aria-label="Étapes" data-stepper hidden>
+        <li data-for="1">Événement</li><li data-for="2">Informations</li><li data-for="3">Services</li><li data-for="4">Protocole</li><li data-for="5">Budget</li><li data-for="6">Coordonnées</li><li data-for="7">Résumé</li>
+      </ol>
+      <p class="step-count" data-step-count hidden></p>
+
+      <!-- Étape 1 -->
+      <fieldset class="step" data-step="1">
+        <legend class="h3">1. Type d’événement</legend>
+        <div class="choice-grid" role="radiogroup">
+          
+            <label class="choice"><input type="radio" name="event_type" value="mariage" required><span>Mariage</span></label>
+          
+            <label class="choice"><input type="radio" name="event_type" value="traditionnel" required><span>Cérémonie traditionnelle</span></label>
+          
+            <label class="choice"><input type="radio" name="event_type" value="anniversaire" required><span>Anniversaire</span></label>
+          
+            <label class="choice"><input type="radio" name="event_type" value="conference" required><span>Conférence ou séminaire</span></label>
+          
+            <label class="choice"><input type="radio" name="event_type" value="entreprise" required><span>Événement d’entreprise</span></label>
+          
+            <label class="choice"><input type="radio" name="event_type" value="concert" required><span>Concert ou soirée</span></label>
+          
+            <label class="choice"><input type="radio" name="event_type" value="deuil" required><span>Cérémonie de deuil</span></label>
+          
+            <label class="choice"><input type="radio" name="event_type" value="autre" required><span>Autre</span></label>
+          
+        </div>
+        <div class="field" data-show-if="event_type=autre">
+          <label for="q-other">Précisez le type d’événement *</label>
+          <input id="q-other" name="event_type_other" maxlength="120" value="">
+        </div>
+        <p class="err" data-err="event_type"></p>
+      </fieldset>
+
+      <!-- Étape 2 -->
+      <fieldset class="step" data-step="2">
+        <legend class="h3">2. Informations sur l’événement</legend>
+        <div class="grid-2">
+          <div class="field"><label for="q-date">Date souhaitée</label><input id="q-date" type="date" name="event_date" min="2026-10-24" value=""><p class="err" data-err="event_date"></p></div>
+          <div class="field"><label for="q-time">Heure de début</label><input id="q-time" type="time" name="start_time" value=""></div>
+          <div class="field"><label for="q-dur">Durée estimée (heures)</label><input id="q-dur" type="number" name="duration_hours" min="1" max="240" step="0.5" inputmode="decimal" value="" placeholder="ex. 6"><p class="err" data-err="duration_hours"></p></div>
+          <div class="field"><label for="q-guests">Nombre approximatif d’invités</label><input id="q-guests" type="number" name="guests" min="1" max="100000" inputmode="numeric" value="" placeholder="ex. 200"><p class="err" data-err="guests"></p></div>
+        </div>
+        <div class="field"><label for="q-area">Commune ou quartier de Kinshasa</label><input id="q-area" name="location_area" maxlength="160" value="" placeholder="ex. Gombe, Ngaliema, Limete…"></div>
+        <div class="field">
+          <span class="label">Le lieu est-il déjà réservé ?</span>
+          <div class="inline-choices">
+            <label class="choice sm"><input type="radio" name="venue_booked" value="oui"><span>Oui</span></label>
+            <label class="choice sm"><input type="radio" name="venue_booked" value="non"><span>Non</span></label>
+          </div>
+        </div>
+        <div class="field" data-show-if="venue_booked=non">
+          <span class="label">Souhaitez-vous que nous recherchions un lieu pour vous ?</span>
+          <div class="inline-choices">
+            <label class="choice sm"><input type="radio" name="wants_venue_search" value="oui"><span>Oui</span></label>
+            <label class="choice sm"><input type="radio" name="wants_venue_search" value="non"><span>Non</span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Étape 3 -->
+      <fieldset class="step" data-step="3">
+        <legend class="h3">3. Services souhaités</legend>
+        <p class="muted small">Sélectionnez une ou plusieurs prestations. Vous pourrez préciser vos besoins avec notre équipe.</p>
+        <div class="svc-choices">
+          
+            <div class="svc-choice">
+              <label class="choice wide"><input type="checkbox" name="services" value="6" data-protocol="0"><span>Organisation complète</span></label>
+              
+            </div>
+          
+            <div class="svc-choice">
+              <label class="choice wide"><input type="checkbox" name="services" value="7" data-protocol="0"><span>Coordination uniquement</span></label>
+              
+            </div>
+          
+            <div class="svc-choice">
+              <label class="choice wide"><input type="checkbox" name="services" value="8" data-protocol="0"><span>Décoration</span></label>
+              
+                <div class="svc-options" data-options-for="8">
+                  
+                    <label class="opt"><input type="checkbox" name="options" value="4"> Arche ou décor de scène <span class="muted">(option)</span></label>
+                  
+                </div>
+              
+            </div>
+          
+            <div class="svc-choice">
+              <label class="choice wide"><input type="checkbox" name="services" value="9" data-protocol="0"><span>Salle ou lieu de réception</span></label>
+              
+            </div>
+          
+            <div class="svc-choice">
+              <label class="choice wide"><input type="checkbox" name="services" value="10" data-protocol="0"><span>Catering et boissons</span></label>
+              
+                <div class="svc-options" data-options-for="10">
+                  
+                    <label class="opt"><input type="checkbox" name="options" value="8"> Boissons (par invité) <span class="muted">(option)</span></label>
+                  
+                </div>
+              
+            </div>
+          
+            <div class="svc-choice">
+              <label class="choice wide"><input type="checkbox" name="services" value="11" data-protocol="0"><span>Sonorisation et éclairage</span></label>
+              
+                <div class="svc-options" data-options-for="11">
+                  
+                    <label class="opt"><input type="checkbox" name="options" value="10"> Éclairage d’ambiance <span class="muted">(option)</span></label>
+                  
+                </div>
+              
+            </div>
+          
+            <div class="svc-choice">
+              <label class="choice wide"><input type="checkbox" name="services" value="12" data-protocol="0"><span>DJ, animation ou présentateur</span></label>
+              
+                <div class="svc-options" data-options-for="12">
+                  
+                    <label class="opt"><input type="checkbox" name="options" value="12"> Maître de cérémonie / présentateur <span class="muted">(option)</span></label>
+                  
+                </div>
+              
+            </div>
+          
+            <div class="svc-choice">
+              <label class="choice wide"><input type="checkbox" name="services" value="13" data-protocol="0"><span>Photo et vidéo</span></label>
+              
+                <div class="svc-options" data-options-for="13">
+                  
+                    <label class="opt"><input type="checkbox" name="options" value="14"> Vidéaste <span class="muted">(option)</span></label>
+                  
+                </div>
+              
+            </div>
+          
+            <div class="svc-choice">
+              <label class="choice wide"><input type="checkbox" name="services" value="14" data-protocol="1"><span>Protocole et accueil</span></label>
+              
+                <div class="svc-options" data-options-for="14">
+                  
+                    <label class="opt"><input type="checkbox" name="options" value="16"> Repas des agents de protocole <span class="muted">(option)</span></label>
+                  
+                </div>
+              
+            </div>
+          
+        </div>
+      </fieldset>
+
+      <!-- Étape 4 -->
+      <fieldset class="step" data-step="4" data-protocol-step>
+        <legend class="h3">4. Agents de protocole</legend>
+        <p class="no-protocol muted" data-no-protocol>Vous n’avez pas sélectionné le service « Protocole et accueil ». Vous pouvez passer cette étape ou revenir à l’étape 3 pour l’ajouter.</p>
+        <div data-protocol-fields>
+          <div class="field">
+            <label for="q-agents">Combien d’agents de protocole souhaitez-vous pour votre événement ?</label>
+            <div class="agents-row">
+              <button type="button" class="qty-btn" data-qty="-1" aria-label="Retirer un agent">−</button>
+              <input id="q-agents" type="number" name="protocol_agents_n" min="1" max="500" inputmode="numeric" value="" placeholder="ex. 6">
+              <button type="button" class="qty-btn" data-qty="1" aria-label="Ajouter un agent">+</button>
+            </div>
+            <label class="opt mt-s"><input type="checkbox" name="protocol_unknown_cb" value="1"> Je ne sais pas encore</label>
+            <p class="err" data-err="protocol_agents"></p>
+          </div>
+          <div class="field">
+            <span class="label">Tâches souhaitées</span>
+            <div class="choice-grid tight">
+              
+                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="accueil"><span>Accueil des invités</span></label>
+              
+                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="orientation"><span>Orientation</span></label>
+              
+                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="placement"><span>Placement des invités</span></label>
+              
+                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="entrees"><span>Gestion des entrées</span></label>
+              
+                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="vip"><span>Assistance aux VIP</span></label>
+              
+                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="autre"><span>Autre</span></label>
+              
+            </div>
+          </div>
+          <div class="field" data-show-if="protocol_tasks=autre"><label for="q-tasks-other">Autre tâche</label><input id="q-tasks-other" name="protocol_tasks_other" maxlength="200" value=""></div>
+          <p class="small muted" data-protocol-tariff></p>
+        </div>
+      </fieldset>
+
+      <!-- Étape 5 -->
+      <fieldset class="step" data-step="5">
+        <legend class="h3">5. Budget</legend>
+        <div class="choice-grid tight">
+          <label class="choice"><input type="radio" name="budget_mode" value="range"><span>Une fourchette</span></label>
+          <label class="choice"><input type="radio" name="budget_mode" value="exact"><span>Un montant précis</span></label>
+          <label class="choice"><input type="radio" name="budget_mode" value="unknown" checked><span>Je ne connais pas encore mon budget</span></label>
+        </div>
+        <div class="field" data-show-if="budget_mode=range">
+          <label for="q-range">Fourchette (USD)</label>
+          <select id="q-range" name="budget_range">
+            <option value="">Choisir…</option>
+            
+              <option value="0">Moins de 500 $</option>
+            
+              <option value="1">500 $ à 1 000 $</option>
+            
+              <option value="2">1 000 $ à 2 500 $</option>
+            
+              <option value="3">2 500 $ à 5 000 $</option>
+            
+              <option value="4">5 000 $ à 10 000 $</option>
+            
+              <option value="5">10 000 $ à 25 000 $</option>
+            
+              <option value="6">Plus de 25 000 $</option>
+            
+          </select>
+        </div>
+        <div class="field" data-show-if="budget_mode=exact">
+          <label for="q-budget">Budget (USD)</label>
+          <input id="q-budget" name="budget_amount" inputmode="decimal" value="" placeholder="ex. 3000">
+        </div>
+        <p class="err" data-err="budget"></p>
+      </fieldset>
+
+      <!-- Étape 6 -->
+      <fieldset class="step" data-step="6">
+        <legend class="h3">6. Vos coordonnées</legend>
+        <div class="field"><label for="q-name">Nom complet *</label><input id="q-name" name="client_name" maxlength="120" required autocomplete="name" value=""><p class="err" data-err="client_name"></p></div>
+        <div class="grid-2">
+          <div class="field"><label for="q-phone">Téléphone ou WhatsApp *</label><input id="q-phone" name="client_phone" type="tel" maxlength="40" required autocomplete="tel" placeholder="+243 ..." value=""><p class="err" data-err="client_phone"></p></div>
+          <div class="field"><label for="q-email">E-mail (facultatif)</label><input id="q-email" name="client_email" type="email" maxlength="160" autocomplete="email" value=""><p class="err" data-err="client_email"></p></div>
+        </div>
+        <div class="field"><label for="q-notes">Notes ou précisions</label><textarea id="q-notes" name="client_notes" rows="4" maxlength="3000" placeholder="Thème, contraintes, souhaits particuliers…"></textarea></div>
+        <label class="opt consent"><input type="checkbox" name="consent" value="oui" required> J’accepte d’être contacté(e) par PRESTIGIO EVENTS au sujet de cette demande. *</label>
+        <p class="err" data-err="consent"></p>
+      </fieldset>
+
+      <!-- Étape 7 -->
+      <fieldset class="step" data-step="7">
+        <legend class="h3">7. Résumé de votre demande</legend>
+        <div class="summary" data-summary><p class="muted">Le résumé s’affiche ici.</p></div>
+        <p class="disclaimer">Cette estimation est indicative. Le devis définitif sera confirmé par PRESTIGIO EVENTS après vérification des besoins, des disponibilités et des coûts auprès des prestataires.</p>
+        <p class="small muted">L’envoi de cette demande ne constitue pas une réservation confirmée.</p>
+      </fieldset>
+
+      <div class="step-nav">
+        <button type="button" class="btn btn-outline" data-prev hidden>Retour</button>
+        <button type="button" class="btn btn-navy" data-next hidden>Continuer</button>
+        <button type="submit" class="btn btn-gold" data-submit>Envoyer ma demande</button>
+      </div>
+    </form>
+
+    <aside class="estimate" aria-live="polite" data-estimate>
+      <div class="estimate-head" data-estimate-toggle>
+        <span>Estimation indicative</span>
+        <strong data-est-total>—</strong>
+      </div>
+      <div class="estimate-body">
+        <div data-est-lines><p class="muted small">Sélectionnez des services pour voir l’estimation.</p></div>
+        <p class="disclaimer small">Cette estimation est indicative. Le devis définitif sera confirmé par PRESTIGIO EVENTS après vérification des besoins, des disponibilités et des coûts auprès des prestataires.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-mariages-ceremonies" data-page="service-mariages-ceremonies" data-title="Mariages et cérémonies traditionnelles" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Événements</p>
+    <h1 class="h1">Mariages et cérémonies traditionnelles</h1>
+    <p class="lead">Mariage civil, religieux, coutumier ou dot : nous orchestrons chaque étape de votre union.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <img src="static/img/demo/wedding.jpg" alt="Mariages et cérémonies traditionnelles — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>Mariage civil, religieux, coutumier ou dot : nous orchestrons chaque étape de votre union.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Conception du déroulé</li><li>Coordination des prestataires</li><li>Décoration et mise en scène</li><li>Protocole et accueil des invités</li><li>Coordination le jour J</li></ul>
+      
+      
+      <div class="btn-row mt">
+        <a href="#devis" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20Mariages%20et%20c%C3%A9r%C3%A9monies%20traditionnelles" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-anniversaires-fetes-privees" data-page="service-anniversaires-fetes-privees" data-title="Anniversaires et fêtes privées" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Événements</p>
+    <h1 class="h1">Anniversaires et fêtes privées</h1>
+    <p class="lead">Des célébrations personnalisées pour marquer les moments importants de votre vie.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <img src="static/img/demo/birthday.jpg" alt="Anniversaires et fêtes privées — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>Des célébrations personnalisées pour marquer les moments importants de votre vie.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Thème et décoration</li><li>Animation et musique</li><li>Restauration</li><li>Coordination</li></ul>
+      
+      
+      <div class="btn-row mt">
+        <a href="#devis" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20Anniversaires%20et%20f%C3%AAtes%20priv%C3%A9es" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-evenements-entreprise" data-page="service-evenements-entreprise" data-title="Conférences, séminaires et événements d’entreprise" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Événements</p>
+    <h1 class="h1">Conférences, séminaires et événements d’entreprise</h1>
+    <p class="lead">Conférences, séminaires, réunions, lancements et soirées d’entreprise organisés avec rigueur.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <img src="static/img/demo/conference.jpg" alt="Conférences, séminaires et événements d’entreprise — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>Conférences, séminaires, réunions, lancements et soirées d’entreprise organisés avec rigueur.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Recherche de salle</li><li>Sonorisation et matériel technique</li><li>Accueil et enregistrement des participants</li><li>Pauses et restauration</li><li>Coordination</li></ul>
+      
+      
+      <div class="btn-row mt">
+        <a href="#devis" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20Conf%C3%A9rences%2C%20s%C3%A9minaires%20et%20%C3%A9v%C3%A9nements%20d%E2%80%99entreprise" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-concerts-soirees" data-page="service-concerts-soirees" data-title="Concerts, soirées et événements festifs" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Événements</p>
+    <h1 class="h1">Concerts, soirées et événements festifs</h1>
+    <p class="lead">Soirées, concerts et événements festifs : ambiance, technique et logistique maîtrisées.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <img src="static/img/demo/party.jpg" alt="Concerts, soirées et événements festifs — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>Soirées, concerts et événements festifs : ambiance, technique et logistique maîtrisées.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Sonorisation et éclairage</li><li>DJ et animation</li><li>Gestion des entrées</li><li>Coordination</li></ul>
+      
+      
+      <div class="btn-row mt">
+        <a href="#devis" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20Concerts%2C%20soir%C3%A9es%20et%20%C3%A9v%C3%A9nements%20festifs" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-ceremonies-deuil" data-page="service-ceremonies-deuil" data-title="Cérémonies de deuil et réceptions funéraires" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Événements</p>
+    <h1 class="h1">Cérémonies de deuil et réceptions funéraires</h1>
+    <p class="lead">Un accompagnement discret et respectueux pour organiser les cérémonies de deuil et les réceptions.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>Un accompagnement discret et respectueux pour organiser les cérémonies de deuil et les réceptions.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Organisation de la veillée et de la réception</li><li>Décoration sobre</li><li>Accueil et placement des invités</li><li>Restauration</li><li>Coordination</li></ul>
+      
+      
+      <div class="btn-row mt">
+        <a href="#devis" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20C%C3%A9r%C3%A9monies%20de%20deuil%20et%20r%C3%A9ceptions%20fun%C3%A9raires" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-conception-coordination" data-page="service-conception-coordination" data-title="Conception, planification et coordination générale" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Prestations</p>
+    <h1 class="h1">Conception, planification et coordination générale</h1>
+    <p class="lead">Nous prenons en charge l’organisation de A à Z : conception, budget, prestataires, planning et jour J.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>Nous prenons en charge l’organisation de A à Z : conception, budget, prestataires, planning et jour J.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Rendez-vous de conception</li><li>Planning et budget prévisionnel</li><li>Sélection et coordination des prestataires</li><li>Coordination le jour J</li></ul>
+      
+      
+        <h2 class="h3">Tarifs indicatifs</h2>
+        <table class="price-table">
+          
+            <tr><td>Organisation complète — honoraires de conception et coordination</td><td class="num">Sur devis</td></tr>
+          
+        </table>
+        <p class="small muted">Tarifs indicatifs en dollars américains, susceptibles de varier selon la date, le lieu et les disponibilités. Le devis définitif est confirmé par PRESTIGIO EVENTS.</p>
+      
+      <div class="btn-row mt">
+        <a href="#devis" data-service="6" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20Conception%2C%20planification%20et%20coordination%20g%C3%A9n%C3%A9rale" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-coordination-jour-j" data-page="service-coordination-jour-j" data-title="Coordination le jour de l’événement" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Prestations</p>
+    <h1 class="h1">Coordination le jour de l’événement</h1>
+    <p class="lead">Vous avez organisé votre événement ; nous coordonnons son déroulement le jour J.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>Vous avez organisé votre événement ; nous coordonnons son déroulement le jour J.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Réunion de préparation</li><li>Déroulé minute par minute</li><li>Coordination des prestataires sur place</li></ul>
+      
+      
+        <h2 class="h3">Tarifs indicatifs</h2>
+        <table class="price-table">
+          
+            <tr><td>Coordination le jour J</td><td class="num">Sur devis</td></tr>
+          
+        </table>
+        <p class="small muted">Tarifs indicatifs en dollars américains, susceptibles de varier selon la date, le lieu et les disponibilités. Le devis définitif est confirmé par PRESTIGIO EVENTS.</p>
+      
+      <div class="btn-row mt">
+        <a href="#devis" data-service="7" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20Coordination%20le%20jour%20de%20l%E2%80%99%C3%A9v%C3%A9nement" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-decoration" data-page="service-decoration" data-title="Décoration de salles et espaces" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Prestations</p>
+    <h1 class="h1">Décoration de salles et espaces</h1>
+    <p class="lead">Mise en scène, décoration florale, nappage, centres de table et ambiance lumineuse.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <img src="static/img/demo/decoration.jpg" alt="Décoration de salles et espaces — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>Mise en scène, décoration florale, nappage, centres de table et ambiance lumineuse.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Proposition de thème</li><li>Installation et démontage</li><li>Centres de table et nappage</li></ul>
+      
+      
+        <h2 class="h3">Tarifs indicatifs</h2>
+        <table class="price-table">
+          
+            <tr><td>Décoration (par invité)</td><td class="num">Sur devis</td></tr>
+          
+            <tr><td>Arche ou décor de scène <span class="tag">option</span></td><td class="num">Sur devis</td></tr>
+          
+        </table>
+        <p class="small muted">Tarifs indicatifs en dollars américains, susceptibles de varier selon la date, le lieu et les disponibilités. Le devis définitif est confirmé par PRESTIGIO EVENTS.</p>
+      
+      <div class="btn-row mt">
+        <a href="#devis" data-service="8" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20D%C3%A9coration%20de%20salles%20et%20espaces" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-salles-lieux" data-page="service-salles-lieux" data-title="Recherche et location de salles ou lieux de réception" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Prestations</p>
+    <h1 class="h1">Recherche et location de salles ou lieux de réception</h1>
+    <p class="lead">Nous identifions et réservons le lieu adapté à votre événement, à votre nombre d’invités et à votre budget.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>Nous identifions et réservons le lieu adapté à votre événement, à votre nombre d’invités et à votre budget.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Recherche selon vos critères</li><li>Visites</li><li>Négociation et réservation</li></ul>
+      
+      
+        <h2 class="h3">Tarifs indicatifs</h2>
+        <table class="price-table">
+          
+            <tr><td>Location de salle<br><small class="muted">Selon le lieu, la date et la capacité.</small></td><td class="num">Sur devis</td></tr>
+          
+            <tr><td>Frais de recherche et de réservation du lieu</td><td class="num">Sur devis</td></tr>
+          
+        </table>
+        <p class="small muted">Tarifs indicatifs en dollars américains, susceptibles de varier selon la date, le lieu et les disponibilités. Le devis définitif est confirmé par PRESTIGIO EVENTS.</p>
+      
+      <div class="btn-row mt">
+        <a href="#devis" data-service="9" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20Recherche%20et%20location%20de%20salles%20ou%20lieux%20de%20r%C3%A9ception" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-catering" data-page="service-catering" data-title="Catering, repas, boissons et service" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Prestations</p>
+    <h1 class="h1">Catering, repas, boissons et service</h1>
+    <p class="lead">Repas, buffets, cocktails, boissons et personnel de service.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <img src="static/img/demo/reception.jpg" alt="Catering, repas, boissons et service — photo d’illustration" loading="lazy">
+  <span class="illus-tag">Photo d’illustration</span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>Repas, buffets, cocktails, boissons et personnel de service.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Proposition de menu</li><li>Boissons</li><li>Personnel de service</li></ul>
+      
+      
+        <h2 class="h3">Tarifs indicatifs</h2>
+        <table class="price-table">
+          
+            <tr><td>Repas (par invité)</td><td class="num">Sur devis</td></tr>
+          
+            <tr><td>Boissons (par invité) <span class="tag">option</span></td><td class="num">Sur devis</td></tr>
+          
+        </table>
+        <p class="small muted">Tarifs indicatifs en dollars américains, susceptibles de varier selon la date, le lieu et les disponibilités. Le devis définitif est confirmé par PRESTIGIO EVENTS.</p>
+      
+      <div class="btn-row mt">
+        <a href="#devis" data-service="10" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20Catering%2C%20repas%2C%20boissons%20et%20service" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-sonorisation-eclairage" data-page="service-sonorisation-eclairage" data-title="Sonorisation, éclairage et matériel technique" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Prestations</p>
+    <h1 class="h1">Sonorisation, éclairage et matériel technique</h1>
+    <p class="lead">Matériel de sonorisation, micros, éclairage d’ambiance et technique pour conférences.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>Matériel de sonorisation, micros, éclairage d’ambiance et technique pour conférences.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Installation et réglages</li><li>Technicien sur place</li></ul>
+      
+      
+        <h2 class="h3">Tarifs indicatifs</h2>
+        <table class="price-table">
+          
+            <tr><td>Location sonorisation</td><td class="num">Sur devis</td></tr>
+          
+            <tr><td>Éclairage d’ambiance <span class="tag">option</span></td><td class="num">Sur devis</td></tr>
+          
+        </table>
+        <p class="small muted">Tarifs indicatifs en dollars américains, susceptibles de varier selon la date, le lieu et les disponibilités. Le devis définitif est confirmé par PRESTIGIO EVENTS.</p>
+      
+      <div class="btn-row mt">
+        <a href="#devis" data-service="11" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20Sonorisation%2C%20%C3%A9clairage%20et%20mat%C3%A9riel%20technique" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-dj-animation" data-page="service-dj-animation" data-title="DJ, animation et présentateur" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Prestations</p>
+    <h1 class="h1">DJ, animation et présentateur</h1>
+    <p class="lead">DJ, maître de cérémonie, présentateur et animations pour rythmer votre événement.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>DJ, maître de cérémonie, présentateur et animations pour rythmer votre événement.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Programme musical</li><li>Animation</li><li>Maître de cérémonie</li></ul>
+      
+      
+        <h2 class="h3">Tarifs indicatifs</h2>
+        <table class="price-table">
+          
+            <tr><td>DJ (prestation)</td><td class="num">Sur devis</td></tr>
+          
+            <tr><td>Maître de cérémonie / présentateur <span class="tag">option</span></td><td class="num">Sur devis</td></tr>
+          
+        </table>
+        <p class="small muted">Tarifs indicatifs en dollars américains, susceptibles de varier selon la date, le lieu et les disponibilités. Le devis définitif est confirmé par PRESTIGIO EVENTS.</p>
+      
+      <div class="btn-row mt">
+        <a href="#devis" data-service="12" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20DJ%2C%20animation%20et%20pr%C3%A9sentateur" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-photo-video" data-page="service-photo-video" data-title="Photographie et vidéo" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Prestations</p>
+    <h1 class="h1">Photographie et vidéo</h1>
+    <p class="lead">Photographes et vidéastes pour immortaliser votre événement.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>Photographes et vidéastes pour immortaliser votre événement.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Couverture photo</li><li>Vidéo (en option)</li><li>Retouche et livraison numérique</li></ul>
+      
+      
+        <h2 class="h3">Tarifs indicatifs</h2>
+        <table class="price-table">
+          
+            <tr><td>Photographe</td><td class="num">Sur devis</td></tr>
+          
+            <tr><td>Vidéaste <span class="tag">option</span></td><td class="num">Sur devis</td></tr>
+          
+        </table>
+        <p class="small muted">Tarifs indicatifs en dollars américains, susceptibles de varier selon la date, le lieu et les disponibilités. Le devis définitif est confirmé par PRESTIGIO EVENTS.</p>
+      
+      <div class="btn-row mt">
+        <a href="#devis" data-service="13" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20Photographie%20et%20vid%C3%A9o" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-service-protocole-accueil" data-page="service-protocole-accueil" data-title="Protocole, accueil des invités et coordination" hidden>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="#services">Services</a> · Prestations</p>
+    <h1 class="h1">Protocole, accueil des invités et coordination</h1>
+    <p class="lead">Agents de protocole pour l’accueil, l’orientation, le placement des invités, la gestion des entrées et l’assistance aux VIP.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container split">
+    <div class="split-media svc-detail-img">
+  <span class="img-placeholder" aria-hidden="true"><img src="static/img/logo/logo-emblem.png" alt="" width="62" height="80" loading="lazy"></span>
+
+</div>
+    <div class="split-text">
+      <div class="prose"><p>Agents de protocole pour l’accueil, l’orientation, le placement des invités, la gestion des entrées et l’assistance aux VIP.</p></div>
+      
+        <h2 class="h3">Prestations incluses</h2>
+        <ul class="check-list"><li>Accueil et orientation</li><li>Placement des invités</li><li>Gestion des entrées</li><li>Assistance aux VIP</li></ul>
+      
+      
+        <h2 class="h3">Tarifs indicatifs</h2>
+        <table class="price-table">
+          
+            <tr><td>Agent de protocole</td><td class="num">Sur devis</td></tr>
+          
+            <tr><td>Repas des agents de protocole <span class="tag">option</span></td><td class="num">Sur devis</td></tr>
+          
+        </table>
+        <p class="small muted">Tarifs indicatifs en dollars américains, susceptibles de varier selon la date, le lieu et les disponibilités. Le devis définitif est confirmé par PRESTIGIO EVENTS.</p>
+      
+      <div class="btn-row mt">
+        <a href="#devis" data-service="14" class="btn btn-gold">Demander un devis</a>
+        <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20Protocole%2C%20accueil%20des%20invit%C3%A9s%20et%20coordination" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="pg" id="pg-administration" data-page="administration" data-title="Administration" hidden>
+  <section class="page-hero"><div class="container"><p class="eyebrow">Espace privé</p><h1 class="h1">L’administration</h1>
+  <p class="lead">Réservée à l’équipe, après connexion. Captures du logiciel réel, avec une demande d’exemple (« Client Test »).</p></div></section>
+  <section class="section"><div class="container admin-shots"><figure class="shot"><img src="static/img/admin/dashboard.jpg" alt="Tableau de bord" loading="lazy"><figcaption><strong>Tableau de bord</strong><span>Nouvelles demandes, devis provisoires en attente de validation, devis à envoyer, événements à venir. Les alertes rappellent ce qu’il reste à compléter (tarifs provisoires, photo du fondateur, e-mail).</span></figcaption></figure><figure class="shot"><img src="static/img/admin/dossier-devis.jpg" alt="Devis provisoire à valider" loading="lazy"><figcaption><strong>Devis provisoire à valider</strong><span>Généré automatiquement depuis la demande. Le directeur corrige les lignes, quantités (dont les agents de protocole) et prix, enregistre sans envoyer, prévisualise le PDF, puis valide. Rien n’est transmis au client avant ce clic.</span></figcaption></figure><figure class="shot"><img src="static/img/admin/devis-1.jpg" alt="Devis PDF" loading="lazy"><figcaption><strong>Devis PDF</strong><span>PDF officiel généré à la validation, avec logo, slogan, prestations, totaux, conditions de paiement et validité. Ici en brouillon (filigrane).</span></figcaption></figure><figure class="shot"><img src="static/img/admin/tarifs.jpg" alt="Tarifs" loading="lazy"><figcaption><strong>Tarifs</strong><span>Chaque tarif a sa méthode de calcul, ses dates de validité et deux interrupteurs : « public » et « provisoire ». Le visiteur ne voit un prix que s’il est public et confirmé.</span></figcaption></figure><figure class="shot"><img src="static/img/admin/partenaire.jpg" alt="Partenaires (répertoire privé)" loading="lazy"><figcaption><strong>Partenaires (répertoire privé)</strong><span>Coordonnées, tarifs négociés, commission, documents. La publication sur le site est désactivée par défaut et se règle champ par champ.</span></figcaption></figure><figure class="shot"><img src="static/img/admin/contenu.jpg" alt="Contenu du site" loading="lazy"><figcaption><strong>Contenu du site</strong><span>Textes, logo, couleurs, coordonnées, réseaux sociaux, conditions des devis : tout se modifie sans toucher au code.</span></figcaption></figure></div></section></section>
+</main>
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <a href="#accueil" class="footer-logo" aria-label="PRESTIGIO EVENTS — accueil"><img src="static/img/logo/logo-full.png" alt="PRESTIGIO EVENTS" width="387" height="300" loading="lazy"></a>
+      <p class="footer-slogan">L’excellence au cœur de chaque événement</p>
+      <p class="muted-light">Agence événementielle — Kinshasa, République démocratique du Congo</p>
+    </div>
+    <div>
+      <h2 class="footer-h">Navigation</h2>
+      <ul class="footer-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#offres">Offres et tarifs</a></li>
+        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#a-propos">À propos</a></li>
+        <li><a href="#devis">Demander un devis</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer-h">Contact</h2>
+      <ul class="footer-links">
+        <li><a href="https://wa.me/243813583732?text=Bonjour%20PRESTIGIO%20EVENTS%2C%20je%20souhaite%20des%20informations%20pour%20un%20%C3%A9v%C3%A9nement." rel="noopener" target="_blank">WhatsApp : +243 813 583 732</a></li>
+        
+        
+      </ul>
+      
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 PRESTIGIO EVENTS. Tous droits réservés.</p>
+  </div>
+</footer>
+<a class="wa-float" href="https://wa.me/243813583732?text=Bonjour%20PRESTIGIO%20EVENTS%2C%20je%20souhaite%20des%20informations%20pour%20un%20%C3%A9v%C3%A9nement." target="_blank" rel="noopener" aria-label="Écrire sur WhatsApp">
+  <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/></svg>
+</a>
+<script src="static/js/pricing-core.js"></script>
+<script src="static/js/site.js"></script>
+<script src="static/js/quote-form.js"></script>
+<script src="static/js/demo.js"></script>
+
+</body>
+</html>
