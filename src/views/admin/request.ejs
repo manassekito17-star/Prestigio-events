@@ -33,12 +33,48 @@
       <dt>Agents de protocole</dt><dd><strong><%= r.protocol_unknown ? 'Je ne sais pas encore' : (r.protocol_agents || '—') %></strong><% if (ptasks.tasks && ptasks.tasks.length) { %>
         — tâches : <%= ptasks.tasks.map((k) => h.C.PROTOCOL_TASKS[k]).join(', ') %><%= ptasks.other ? ' (' + ptasks.other + ')' : '' %><% } %></dd>
       <% if (can('quotes.view')) { %>
-        <dt>Budget</dt><dd><%= r.budget_mode === 'unknown' || !r.budget_mode ? 'Non défini' : r.budget_mode === 'exact' ? h.fmtMoney(r.budget_min_cents) : h.fmtMoney(r.budget_min_cents) + ' – ' + (r.budget_max_cents == null ? 'plus' : h.fmtMoney(r.budget_max_cents)) %></dd>
+        <% const cur = r.budget_currency || 'USD'; %>
+        <dt>Budget</dt><dd><%= r.budget_mode === 'unknown' || !r.budget_mode ? 'Non défini' : r.budget_mode === 'exact' ? h.fmtMoney(r.budget_min_cents, cur) : h.fmtMoney(r.budget_min_cents, cur) + ' – ' + (r.budget_max_cents == null ? 'plus' : h.fmtMoney(r.budget_max_cents, cur)) %></dd>
       <% } %>
       <dt>Notes du client</dt><dd><%= r.client_notes || '—' %></dd>
       <dt>Consentement</dt><dd><%= r.consent ? 'Accepte d’être contacté au sujet de la demande' : 'Non' %></dd>
     </dl>
   </div>
+
+  <% if (discoverySections) { %>
+  <!-- Fiche de découverte mariage -->
+  <div class="a-card disc" id="decouverte">
+    <div class="a-card-h"><h2>Fiche de découverte — Mariage</h2><span class="pill pill-gold">remplie par le client</span></div>
+    <% if (!discoverySections.length) { %><p class="muted small">Le client n’a répondu à aucune question de la fiche.</p><% } %>
+    <% for (const sec of discoverySections) { %>
+      <h3 class="disc-h"><%= sec.title %></h3>
+      <dl class="kv"><% for (const it of sec.items) { %><dt><%= it.label %></dt><dd><%= it.value %></dd><% } %></dl>
+    <% } %>
+
+    <h3 class="disc-h">Observations de PRESTIGIO EVENTS <span class="private-tag">interne</span></h3>
+    <% const di = discoveryInternal || {}; %>
+    <% if (can('requests.edit')) { %>
+      <form method="post" action="/admin/demandes/<%= r.id %>/decouverte" class="a-form">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="f-row f-row-2">
+          <div class="f"><label for="d-obs">Observations du responsable commercial</label><textarea id="d-obs" name="observations"><%= di.observations || '' %></textarea></div>
+          <div class="f"><label for="d-rec">Premières recommandations</label><textarea id="d-rec" name="recommendations"><%= di.recommendations || '' %></textarea></div>
+          <div class="f"><label for="d-next">Prochaine étape</label><select id="d-next" name="next_step"><option value="">—</option><% for (const [k, v] of Object.entries(h.D.NEXT_STEPS)) { %><option value="<%= k %>"<%= di.next_step === k ? ' selected' : '' %>><%= v %></option><% } %></select></div>
+          <div class="f"><label for="d-date">Date prévue du suivi</label><input id="d-date" type="date" name="follow_up" value="<%= di.follow_up || '' %>"><p class="help">Une tâche de suivi est créée pour le responsable du dossier.</p></div>
+        </div>
+        <p class="small muted">Responsable du dossier : <strong><%= (users.find((u) => u.id === r.assigned_to) || {}).name || 'non assigné' %></strong> (voir « Responsable »).</p>
+        <button class="a-btn a-btn-sm">Enregistrer les observations</button>
+      </form>
+    <% } else { %>
+      <dl class="kv">
+        <dt>Observations</dt><dd><%= di.observations || '—' %></dd>
+        <dt>Recommandations</dt><dd><%= di.recommendations || '—' %></dd>
+        <dt>Prochaine étape</dt><dd><%= h.D.NEXT_STEPS[di.next_step] || '—' %></dd>
+        <dt>Date de suivi</dt><dd><%= di.follow_up ? h.fmtDate(di.follow_up) : '—' %></dd>
+      </dl>
+    <% } %>
+  </div>
+  <% } %>
 
 </div>
 

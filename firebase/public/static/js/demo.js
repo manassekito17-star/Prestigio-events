@@ -5,6 +5,16 @@
   var navLinks = [].slice.call(document.querySelectorAll('.nav a'));
 
   function show(id, scroll) {
+    // « Devis mariage » : même formulaire, avec l'en-tête mariage et « Mariage » présélectionné.
+    var wedding = id === 'devis-mariage';
+    if (wedding) id = 'devis';
+    var wedHero = document.querySelector('[data-wed-hero]');
+    var genHero = document.querySelector('[data-gen-hero]');
+    if (wedHero && genHero) { wedHero.hidden = !wedding; genHero.hidden = wedding; }
+    if (wedding) {
+      var r = document.querySelector('#quote-form input[name="event_type"][value="mariage"]');
+      if (r && !r.checked) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
+    }
     var target = document.getElementById('pg-' + id) || document.getElementById('pg-accueil');
     pages.forEach(function (p) { p.hidden = p !== target; });
     var page = target.getAttribute('data-page');
@@ -12,6 +22,7 @@
     navLinks.forEach(function (a) {
       var h = (a.getAttribute('href') || '').slice(1);
       var on = h === page || (page.indexOf('service-') === 0 && h === 'services');
+      if (h === 'devis' && a.classList.contains('btn')) on = false;
       if (on && !a.classList.contains('btn')) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
     document.body.classList.remove('nav-open');

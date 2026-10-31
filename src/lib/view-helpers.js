@@ -2,6 +2,7 @@
 const util = require('./util');
 const C = require('./constants');
 const settingsLib = require('./settings');
+const D = require('./discovery');
 
 const locales = { fr: require('../i18n/fr') };
 
@@ -72,6 +73,6 @@ function statusTone(st) {
 }
 
 module.exports = {
-  ...util, C, t, esc, paras, nl2br, jsonScript, mediaUrl, videoEmbed, packagePrice, tariffPrice, statusLabel, statusTone,
+  ...util, C, D, t, esc, paras, nl2br, jsonScript, mediaUrl, videoEmbed, packagePrice, tariffPrice, statusLabel, statusTone,
   eventType: (k, other) => (k === 'autre' && other ? other : C.EVENT_TYPES[k] || k || '—'),
 };

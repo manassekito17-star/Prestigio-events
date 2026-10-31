@@ -28,7 +28,7 @@
             <p class="price-hint"><%= priced.length ? 'Indication : ' + h.tariffPrice(priced[0]) : 'Tarif sur devis' %></p>
             <div class="btn-row">
               <a href="/services/<%= svc.slug %>" class="link-arrow">Détails</a>
-              <a href="/devis<%= svc.category === 'Prestations' ? '?service=' + svc.id : '' %>" class="link-arrow">Demander un devis</a>
+              <a href="<%= svc.slug === 'mariages-ceremonies' ? '/devis/mariage' : '/devis' + (svc.category === 'Prestations' ? '?service=' + svc.id : '') %>" class="link-arrow">Demander un devis</a>
             </div>
           </div>
         </article>

@@ -166,7 +166,7 @@ Langues : les libellés d’interface sont centralisés dans `src/i18n/fr.js` ; 
 
 ## 9. Tests réalisés
 
-`npm test` — 32 tests automatisés, tous réussis :
+`npm test` — 37 tests automatisés, tous réussis :
 
 - **Calcul** : prix par personne vs forfait (aucune multiplication abusive), options, agents de protocole × tarif + heures supplémentaires, « À confirmer » si nombre d’agents inconnu, prix sur demande jamais inventés, prix horaire, remise conditionnelle, frais.
 - **Workflow** : enregistrement de la demande + référence unique ; devis provisoire généré et **jamais envoyé** au client ; anti double soumission ; anti-spam ; le responsable des opérations ne peut pas valider ; validation directeur → version verrouillée + PDF + envoi uniquement après acceptation SMTP ; commentaires internes absents de l’e-mail ; version envoyée non modifiable, correction = nouvelle version ; sans e-mail : « validé » mais pas « envoyé » jusqu’à l’enregistrement manuel ; acceptation impossible avant envoi et exigeant une preuve ; **modification d’un tarif sans effet sur les devis existants** ; paiements et solde.
@@ -203,3 +203,13 @@ Firebase Hosting ne sert que des fichiers statiques : on y publie la **démonstr
 3. GitHub → onglet **Actions** → « Firebase Hosting (démonstration) » → **Run workflow**. Après 1 à 2 minutes, le site est en ligne.
 
 **Ou en ligne de commande** (ordinateur avec Node.js) : `npm install -g firebase-tools`, `firebase login`, puis `firebase deploy --only hosting` dans le dossier du projet.
+
+## 12. Questionnaire de découverte « Mariage »
+
+Lorsqu’un client choisit « Mariage » (ou arrive par la page **/devis/mariage**), le formulaire de devis ajoute les questions de la fiche de découverte PRESTIGIO EVENTS : futurs mariés, cérémonies (dot, civil, religieux, réception), lieux et invités, style et ambiance, niveau d’accompagnement, prise en charge du budget, traditions et exigences, communication, attentes. Toutes ces questions sont facultatives ; le résumé final permet de modifier chaque partie avant l’envoi.
+
+- Les définitions des questions se trouvent dans `src/lib/discovery.js` (un seul fichier pour le formulaire, la validation et l’affichage). Seules les réponses prévues sont acceptées.
+- Les réponses sont enregistrées avec la demande et apparaissent dans l’administration (dossier → « Fiche de découverte — Mariage »). Les questions liées au budget sont masquées aux collaborateurs.
+- La partie interne « Observations de PRESTIGIO EVENTS » (observations, recommandations, prochaine étape, date de suivi) se remplit dans l’administration ; fixer une date de suivi crée automatiquement une tâche pour le responsable du dossier. Elle n’est jamais visible du client.
+- Le budget peut être indiqué en USD ou en francs congolais (CDF). L’estimation automatique reste en USD.
+- Adaptations par rapport à la fiche papier : les tranches d’invités sont remplacées par des nombres (côté marié / côté mariée, total calculé automatiquement), « Plusieurs cérémonies combinées » est couvert par le choix multiple des cérémonies, et « Qui participe au rendez-vous ? » devient « Qui remplit ce formulaire ? ».

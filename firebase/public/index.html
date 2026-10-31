@@ -269,7 +269,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
             <p class="price-hint">Tarif sur devis</p>
             <div class="btn-row">
               <a href="#service-mariages-ceremonies" class="link-arrow">Détails</a>
-              <a href="#devis" class="link-arrow">Demander un devis</a>
+              <a href="#devis-mariage" class="link-arrow">Demander un devis</a>
             </div>
           </div>
         </article>
@@ -623,7 +623,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           
           <h4 class="pkg-h">Inclus</h4><ul class="check-list small"><li>Conception et planification</li><li>Décoration</li><li>Protocole et accueil</li><li>Coordination le jour J</li></ul>
           <h4 class="pkg-h">Non inclus</h4><ul class="x-list small"><li>Location de salle (sur devis)</li><li>Restauration (sur devis)</li></ul>
-          <a href="#devis" class="btn btn-gold btn-block">Demander un devis</a>
+          <a href="#devis-mariage" class="btn btn-gold btn-block">Demander un devis</a>
         </article>
       
         <article class="pkg">
@@ -890,7 +890,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       
       
       <form method="post" action="/contact" novalidate class="form" data-once>
-        <input type="hidden" name="_ft" value="contact.1792852488.tjx1_JKeV5yE4hRU.efcI9kjV8ZYuBdPPw5A8bLRXYo9dyyzkMA-P3SrWAus">
+        <input type="hidden" name="_ft" value="contact.1793447729.540tmU2Fc-la1FUv.4AWvpzGlBJsNWGYvneeTFglM4ZkH9brXFJJps6Q6DTQ">
         <div class="hp" aria-hidden="true"><label>Site web <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
         <div class="field"><label for="c-name">Nom *</label><input id="c-name" name="name" required maxlength="120" value="" autocomplete="name"></div>
         <div class="field"><label for="c-phone">Téléphone ou WhatsApp</label><input id="c-phone" name="phone" type="tel" maxlength="40" value="" autocomplete="tel" placeholder="+243 ..."></div>
@@ -903,16 +903,32 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   </div>
 </section>
 </section>
-<section class="pg" id="pg-devis" data-page="devis" data-title="Demander un devis" hidden>
+<section class="pg" id="pg-devis" data-page="devis" data-title="Demander un devis" hidden><section class="wed-hero" data-wed-hero hidden>
+  <div class="wed-hero-media" aria-hidden="true"><img src="static/img/demo/wedding.jpg" alt=""><span class="illus-tag">Photo d’illustration</span></div>
+  <div class="container wed-hero-content">
+    <img class="hero-emblem" src="static/img/logo/logo-emblem.png" alt="" width="169" height="220">
+    <p class="eyebrow">Mariage · Demande de devis</p>
+    <h1 class="h1">Votre mariage, orchestré avec excellence</h1>
+    <p class="lead">De la dot à la réception, confiez-nous votre union. Ce questionnaire reprend la fiche que nous utilisons lors de notre premier rendez-vous : vos réponses nous permettent de vous préparer une proposition sur mesure.</p>
+    <ul class="wed-points">
+      <li><strong>10 minutes environ</strong><span>Répondez à ce que vous savez déjà</span></li>
+      <li><strong>Réponses confidentielles</strong><span>Lues uniquement par notre équipe</span></li>
+      <li><strong>Proposition validée</strong><span>Vérifiée par la direction avant envoi</span></li>
+    </ul>
+  </div>
+</section>
 
 
-<section class="page-hero compact">
+
+
+<section class="page-hero compact" data-gen-hero>
   <div class="container">
     <p class="eyebrow">Demande de devis</p>
     <h1 class="h1">Parlez-nous de votre événement</h1>
     <p class="lead">Quelques minutes suffisent. Vous obtenez une estimation indicative immédiate ; le devis définitif vous sera transmis après vérification par notre équipe.</p>
   </div>
 </section>
+
 
 <section class="section quote-section">
   <div class="container quote-layout">
@@ -923,203 +939,609 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 
       
 
-      <ol class="stepper" aria-label="Étapes" data-stepper hidden>
-        <li data-for="1">Événement</li><li data-for="2">Informations</li><li data-for="3">Services</li><li data-for="4">Protocole</li><li data-for="5">Budget</li><li data-for="6">Coordonnées</li><li data-for="7">Résumé</li>
-      </ol>
-      <p class="step-count" data-step-count hidden></p>
+      <div class="progress" data-progress hidden>
+        <div class="progress-bar" aria-hidden="true"><span data-progress-fill></span></div>
+        <p class="progress-label"><span data-progress-count></span><strong data-progress-title></strong></p>
+      </div>
 
-      <!-- Étape 1 -->
-      <fieldset class="step" data-step="1">
-        <legend class="h3">1. Type d’événement</legend>
-        <div class="choice-grid" role="radiogroup">
-          
-            <label class="choice"><input type="radio" name="event_type" value="mariage" required><span>Mariage</span></label>
-          
-            <label class="choice"><input type="radio" name="event_type" value="traditionnel" required><span>Cérémonie traditionnelle</span></label>
-          
-            <label class="choice"><input type="radio" name="event_type" value="anniversaire" required><span>Anniversaire</span></label>
-          
-            <label class="choice"><input type="radio" name="event_type" value="conference" required><span>Conférence ou séminaire</span></label>
-          
-            <label class="choice"><input type="radio" name="event_type" value="entreprise" required><span>Événement d’entreprise</span></label>
-          
-            <label class="choice"><input type="radio" name="event_type" value="concert" required><span>Concert ou soirée</span></label>
-          
-            <label class="choice"><input type="radio" name="event_type" value="deuil" required><span>Cérémonie de deuil</span></label>
-          
-            <label class="choice"><input type="radio" name="event_type" value="autre" required><span>Autre</span></label>
-          
+      <!-- Type d'événement -->
+      <fieldset class="step" data-step="type">
+        <legend class="h3">Type d’événement</legend>
+        <div class="field" data-q="event_type" data-label="Type d’événement">
+          <div class="choice-grid" role="radiogroup" aria-label="Type d’événement">
+            
+              <label class="choice"><input type="radio" name="event_type" value="mariage" required><span>Mariage</span></label>
+            
+              <label class="choice"><input type="radio" name="event_type" value="traditionnel" required><span>Cérémonie traditionnelle</span></label>
+            
+              <label class="choice"><input type="radio" name="event_type" value="anniversaire" required><span>Anniversaire</span></label>
+            
+              <label class="choice"><input type="radio" name="event_type" value="conference" required><span>Conférence ou séminaire</span></label>
+            
+              <label class="choice"><input type="radio" name="event_type" value="entreprise" required><span>Événement d’entreprise</span></label>
+            
+              <label class="choice"><input type="radio" name="event_type" value="concert" required><span>Concert ou soirée</span></label>
+            
+              <label class="choice"><input type="radio" name="event_type" value="deuil" required><span>Cérémonie de deuil</span></label>
+            
+              <label class="choice"><input type="radio" name="event_type" value="autre" required><span>Autre</span></label>
+            
+          </div>
         </div>
-        <div class="field" data-show-if="event_type=autre">
+        <div class="field" data-show-if="event_type=autre" data-q="event_type_other" data-label="Précision">
           <label for="q-other">Précisez le type d’événement *</label>
           <input id="q-other" name="event_type_other" maxlength="120" value="">
         </div>
+        <p class="note-wed" data-when-block="wedding" hidden>Pour un mariage, quelques questions supplémentaires vous seront posées : elles reprennent notre fiche de découverte et nous aident à préparer une proposition sur mesure.</p>
         <p class="err" data-err="event_type"></p>
       </fieldset>
 
-      <!-- Étape 2 -->
-      <fieldset class="step" data-step="2">
-        <legend class="h3">2. Informations sur l’événement</legend>
+      <!-- Informations générales -->
+      <fieldset class="step" data-step="infos">
+        <legend class="h3">Date et lieu</legend>
         <div class="grid-2">
-          <div class="field"><label for="q-date">Date souhaitée</label><input id="q-date" type="date" name="event_date" min="2026-10-24" value=""><p class="err" data-err="event_date"></p></div>
-          <div class="field"><label for="q-time">Heure de début</label><input id="q-time" type="time" name="start_time" value=""></div>
-          <div class="field"><label for="q-dur">Durée estimée (heures)</label><input id="q-dur" type="number" name="duration_hours" min="1" max="240" step="0.5" inputmode="decimal" value="" placeholder="ex. 6"><p class="err" data-err="duration_hours"></p></div>
-          <div class="field"><label for="q-guests">Nombre approximatif d’invités</label><input id="q-guests" type="number" name="guests" min="1" max="100000" inputmode="numeric" value="" placeholder="ex. 200"><p class="err" data-err="guests"></p></div>
+          <div class="field" data-q="event_date" data-label="Date souhaitée"><label for="q-date">Date souhaitée</label><input id="q-date" type="date" name="event_date" min="2026-10-31" value=""><p class="err" data-err="event_date"></p></div>
+          <div class="field" data-q="start_time" data-label="Heure de début"><label for="q-time">Heure de début</label><input id="q-time" type="time" name="start_time" value=""></div>
+          <div class="field" data-q="duration_hours" data-label="Durée estimée (heures)"><label for="q-dur">Durée estimée (heures)</label><input id="q-dur" type="number" name="duration_hours" min="1" max="240" step="0.5" inputmode="decimal" value="" placeholder="ex. 6"><p class="err" data-err="duration_hours"></p></div>
+          <div class="field" data-q="guests" data-label="Nombre d’invités"><label for="q-guests">Nombre approximatif d’invités</label><input id="q-guests" type="number" name="guests" min="1" max="100000" inputmode="numeric" value="" placeholder="ex. 200"><p class="err" data-err="guests"></p></div>
         </div>
-        <div class="field"><label for="q-area">Commune ou quartier de Kinshasa</label><input id="q-area" name="location_area" maxlength="160" value="" placeholder="ex. Gombe, Ngaliema, Limete…"></div>
-        <div class="field">
-          <span class="label">Le lieu est-il déjà réservé ?</span>
-          <div class="inline-choices">
-            <label class="choice sm"><input type="radio" name="venue_booked" value="oui"><span>Oui</span></label>
-            <label class="choice sm"><input type="radio" name="venue_booked" value="non"><span>Non</span></label>
+        <div class="field" data-q="location_area" data-label="Commune ou quartier"><label for="q-area">Commune ou quartier de Kinshasa</label><input id="q-area" name="location_area" maxlength="160" value="" placeholder="ex. Gombe, Ngaliema, Limete…"></div>
+        <div data-unless="wedding">
+          <div class="field" data-q="venue_booked" data-label="Lieu déjà réservé">
+            <span class="label">Le lieu est-il déjà réservé ?</span>
+            <div class="inline-choices">
+              <label class="choice sm"><input type="radio" name="venue_booked" value="oui"><span>Oui</span></label>
+              <label class="choice sm"><input type="radio" name="venue_booked" value="non"><span>Non</span></label>
+            </div>
           </div>
-        </div>
-        <div class="field" data-show-if="venue_booked=non">
-          <span class="label">Souhaitez-vous que nous recherchions un lieu pour vous ?</span>
-          <div class="inline-choices">
-            <label class="choice sm"><input type="radio" name="wants_venue_search" value="oui"><span>Oui</span></label>
-            <label class="choice sm"><input type="radio" name="wants_venue_search" value="non"><span>Non</span></label>
+          <div class="field" data-show-if="venue_booked=non" data-q="wants_venue_search" data-label="Recherche de lieu par l’agence">
+            <span class="label">Souhaitez-vous que nous recherchions un lieu pour vous ?</span>
+            <div class="inline-choices">
+              <label class="choice sm"><input type="radio" name="wants_venue_search" value="oui"><span>Oui</span></label>
+              <label class="choice sm"><input type="radio" name="wants_venue_search" value="non"><span>Non</span></label>
+            </div>
           </div>
         </div>
       </fieldset>
 
-      <!-- Étape 3 -->
-      <fieldset class="step" data-step="3">
-        <legend class="h3">3. Services souhaités</legend>
-        <p class="muted small">Sélectionnez une ou plusieurs prestations. Vous pourrez préciser vos besoins avec notre équipe.</p>
-        <div class="svc-choices">
+      <!-- Mariage : fiche de découverte -->
+      
+        <fieldset class="step" data-step="maries" data-when="wedding">
+          <legend class="h3">Les futurs mariés</legend>
           
-            <div class="svc-choice">
-              <label class="choice wide"><input type="checkbox" name="services" value="6" data-protocol="0"><span>Organisation complète</span></label>
-              
+            <div class="wed-intro">
+              <img src="static/img/logo/logo-emblem.png" alt="" width="46" height="60">
+              <div><strong>Questionnaire de découverte — Mariage</strong>
+                <p>Ces questions reprennent la fiche que nous remplissons avec les futurs mariés lors du premier rendez-vous. Répondez à ce que vous savez déjà : toutes sont facultatives et vous pourrez compléter avec nous.</p></div>
             </div>
           
-            <div class="svc-choice">
-              <label class="choice wide"><input type="checkbox" name="services" value="7" data-protocol="0"><span>Coordination uniquement</span></label>
-              
-            </div>
+          <div class="q-grid">
+            
+
+<div class="field q" data-q="groom_name" data-label="Nom complet du futur marié">
+  
+    <label class="q-title" for="w-groom-name">Nom complet du futur marié</label>
+    <input id="w-groom-name" name="w_groom_name" type="text" maxlength="120" value="">
+    
+  
+</div>
+
+
+<div class="field q" data-q="bride_name" data-label="Nom complet de la future mariée">
+  
+    <label class="q-title" for="w-bride-name">Nom complet de la future mariée</label>
+    <input id="w-bride-name" name="w_bride_name" type="text" maxlength="120" value="">
+    
+  
+</div>
+
+
+<div class="field q half" data-q="groom_phone" data-label="Téléphone du marié">
+  
+    <label class="q-title" for="w-groom-phone">Téléphone du marié</label>
+    <input id="w-groom-phone" name="w_groom_phone" type="tel" maxlength="40" autocomplete="tel" placeholder="+243 …" value="">
+    
+  
+</div>
+
+
+<div class="field q half" data-q="bride_phone" data-label="Téléphone de la mariée">
+  
+    <label class="q-title" for="w-bride-phone">Téléphone de la mariée</label>
+    <input id="w-bride-phone" name="w_bride_phone" type="tel" maxlength="40" autocomplete="tel" placeholder="+243 …" value="">
+    
+  
+</div>
+
+
+<div class="field q" data-q="filled_by" data-label="Qui remplit ce formulaire ?">
+  
+    <span class="label q-title" id="w-filled-by-l">Qui remplit ce formulaire ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-filled-by-l">
+      
+        <label class="choice sm"><input type="radio" name="w_filled_by" value="groom"><span>Le futur marié</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_filled_by" value="bride"><span>La future mariée</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_filled_by" value="both"><span>Les deux futurs mariés</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_filled_by" value="groom_parents"><span>Parents du marié</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_filled_by" value="bride_parents"><span>Parents de la mariée</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_filled_by" value="family_rep"><span>Autre représentant des familles</span></label>
+      
+    </div>
+    
+  
+</div>
+
+          </div>
+        </fieldset>
+      
+        <fieldset class="step" data-step="ceremonies" data-when="wedding">
+          <legend class="h3">Vos cérémonies</legend>
           
-            <div class="svc-choice">
-              <label class="choice wide"><input type="checkbox" name="services" value="8" data-protocol="0"><span>Décoration</span></label>
-              
-                <div class="svc-options" data-options-for="8">
-                  
-                    <label class="opt"><input type="checkbox" name="options" value="4"> Arche ou décor de scène <span class="muted">(option)</span></label>
-                  
-                </div>
-              
-            </div>
+            <p class="step-intro">Dot, mariage civil, religieux, réception : dites-nous comment vous imaginez votre union.</p>
           
-            <div class="svc-choice">
-              <label class="choice wide"><input type="checkbox" name="services" value="9" data-protocol="0"><span>Salle ou lieu de réception</span></label>
-              
-            </div>
+          <div class="q-grid">
+            
+
+<div class="field q" data-q="ceremonies" data-label="Quelles cérémonies prévoyez-vous ?">
+  
+    <span class="label q-title" id="w-ceremonies-l">Quelles cérémonies prévoyez-vous ?</span>
+    <p class="q-help">Plusieurs choix possibles.</p>
+    <div class="choice-grid tight" role="group" aria-labelledby="w-ceremonies-l">
+      
+        <label class="choice sm"><input type="checkbox" name="w_ceremonies" value="dot"><span>Mariage coutumier (dot)</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_ceremonies" value="civil"><span>Mariage civil</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_ceremonies" value="religious"><span>Mariage religieux</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_ceremonies" value="reception"><span>Réception festive</span></label>
+      
+    </div>
+    
+  
+</div>
+
+
+<div class="field q" data-q="schedule" data-label="Comment souhaitez-vous organiser ces cérémonies ?">
+  
+    <span class="label q-title" id="w-schedule-l">Comment souhaitez-vous organiser ces cérémonies ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-schedule-l">
+      
+        <label class="choice sm"><input type="radio" name="w_schedule" value="same_day"><span>Toutes le même jour</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_schedule" value="several_days"><span>Sur plusieurs jours</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_schedule" value="several_weeks"><span>Sur plusieurs semaines</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_schedule" value="undecided"><span>Pas encore décidé</span></label>
+      
+    </div>
+    
+  
+</div>
+
+
+<div class="field q" data-q="date_status" data-label="Avez-vous déjà fixé la date du mariage ?">
+  
+    <span class="label q-title" id="w-date-status-l">Avez-vous déjà fixé la date du mariage ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-date-status-l">
+      
+        <label class="choice sm"><input type="radio" name="w_date_status" value="yes"><span>Oui</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_date_status" value="provisional"><span>Date provisoire</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_date_status" value="no"><span>Non</span></label>
+      
+    </div>
+    
+  
+</div>
+
+
+<div class="field q" data-q="progress" data-label="Où en êtes-vous dans les préparatifs ?">
+  
+    <span class="label q-title" id="w-progress-l">Où en êtes-vous dans les préparatifs ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-progress-l">
+      
+        <label class="choice sm"><input type="radio" name="w_progress" value="none"><span>Aucun préparatif commencé</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_progress" value="some_vendors"><span>Quelques prestataires déjà sélectionnés</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_progress" value="some_bookings"><span>Plusieurs réservations déjà effectuées</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_progress" value="almost_done"><span>Organisation presque terminée</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_progress" value="restructure"><span>Besoin de reprendre et restructurer l’organisation</span></label>
+      
+    </div>
+    
+  
+</div>
+
+          </div>
+        </fieldset>
+      
+        <fieldset class="step" data-step="lieux" data-when="wedding">
+          <legend class="h3">Lieux et invités</legend>
           
-            <div class="svc-choice">
-              <label class="choice wide"><input type="checkbox" name="services" value="10" data-protocol="0"><span>Catering et boissons</span></label>
-              
-                <div class="svc-options" data-options-for="10">
-                  
-                    <label class="opt"><input type="checkbox" name="options" value="8"> Boissons (par invité) <span class="muted">(option)</span></label>
-                  
-                </div>
-              
-            </div>
+            <p class="step-intro">Les lieux et le nombre d’invités déterminent une grande partie de l’organisation.</p>
           
-            <div class="svc-choice">
-              <label class="choice wide"><input type="checkbox" name="services" value="11" data-protocol="0"><span>Sonorisation et éclairage</span></label>
-              
-                <div class="svc-options" data-options-for="11">
-                  
-                    <label class="opt"><input type="checkbox" name="options" value="10"> Éclairage d’ambiance <span class="muted">(option)</span></label>
-                  
-                </div>
-              
-            </div>
+          <div class="q-grid">
+            
+
+<div class="field q" data-q="venues" data-label="Avez-vous déjà choisi les lieux ?">
+  
+    <span class="label q-title" id="w-venues-l">Avez-vous déjà choisi les lieux ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-venues-l">
+      
+        <label class="choice sm"><input type="radio" name="w_venues" value="all_booked"><span>Oui, tous les lieux sont réservés</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_venues" value="some_booked"><span>Certains lieux sont réservés</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_venues" value="none"><span>Aucun lieu n’est encore choisi</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_venues" value="agency"><span>Nous souhaitons que PRESTIGIO EVENTS s’en charge</span></label>
+      
+    </div>
+    
+  
+</div>
+
+
+<div class="field q" data-q="venues_text" data-label="Lieux envisagés">
+  
+    <label class="q-title" for="w-venues-text">Lieux envisagés</label>
+    <input id="w-venues-text" name="w_venues_text" type="text" maxlength="300" placeholder="Salle, église, résidence familiale…" value="">
+    
+  
+</div>
+
+
+<div class="field q half" data-q="guests_groom" data-label="Invités côté marié (estimation)">
+  
+    <label class="q-title" for="w-guests-groom">Invités côté marié (estimation)</label>
+    <input id="w-guests-groom" name="w_guests_groom" type="number" min="0" max="50000" inputmode="numeric" value="">
+    <p class="err" data-err="w_guests_groom"></p>
+  
+</div>
+
+
+<div class="field q half" data-q="guests_bride" data-label="Invités côté mariée (estimation)">
+  
+    <label class="q-title" for="w-guests-bride">Invités côté mariée (estimation)</label>
+    <input id="w-guests-bride" name="w_guests_bride" type="number" min="0" max="50000" inputmode="numeric" value="">
+    <p class="err" data-err="w_guests_bride"></p>
+  
+</div>
+
+
+<div class="field q" data-q="special_guests" data-label="Aurez-vous des invités particuliers ?">
+  
+    <span class="label q-title" id="w-special-guests-l">Aurez-vous des invités particuliers ?</span>
+    
+    <div class="choice-grid tight" role="group" aria-labelledby="w-special-guests-l">
+      
+        <label class="choice sm"><input type="checkbox" name="w_special_guests" value="authorities"><span>Autorités politiques ou administratives</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_special_guests" value="public_figures"><span>Personnalités publiques</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_special_guests" value="family_vip"><span>Membres importants des familles</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_special_guests" value="abroad"><span>Invités venant de l’étranger</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_special_guests" value="none"><span>Aucun besoin particulier</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_special_guests" value="autre"><span>Autres</span></label>
+      
+    </div>
+    
+      <div class="field q-other" data-show-if="w_special_guests=autre">
+        <label for="w-special-guests-o">Précisez</label>
+        <input id="w-special-guests-o" name="w_special_guests_other" maxlength="200" value="">
+      </div>
+    
+  
+</div>
+
+          </div>
+        </fieldset>
+      
+        <fieldset class="step" data-step="style" data-when="wedding">
+          <legend class="h3">Style et ambiance</legend>
           
-            <div class="svc-choice">
-              <label class="choice wide"><input type="checkbox" name="services" value="12" data-protocol="0"><span>DJ, animation ou présentateur</span></label>
-              
-                <div class="svc-options" data-options-for="12">
-                  
-                    <label class="opt"><input type="checkbox" name="options" value="12"> Maître de cérémonie / présentateur <span class="muted">(option)</span></label>
-                  
-                </div>
-              
-            </div>
+            <p class="step-intro">Votre vision guide nos propositions de décoration et de mise en scène.</p>
           
-            <div class="svc-choice">
-              <label class="choice wide"><input type="checkbox" name="services" value="13" data-protocol="0"><span>Photo et vidéo</span></label>
-              
-                <div class="svc-options" data-options-for="13">
-                  
-                    <label class="opt"><input type="checkbox" name="options" value="14"> Vidéaste <span class="muted">(option)</span></label>
-                  
-                </div>
-              
-            </div>
-          
-            <div class="svc-choice">
-              <label class="choice wide"><input type="checkbox" name="services" value="14" data-protocol="1"><span>Protocole et accueil</span></label>
-              
-                <div class="svc-options" data-options-for="14">
-                  
-                    <label class="opt"><input type="checkbox" name="options" value="16"> Repas des agents de protocole <span class="muted">(option)</span></label>
-                  
-                </div>
-              
-            </div>
-          
+          <div class="q-grid">
+            
+
+<div class="field q" data-q="style" data-label="Quel style de mariage souhaitez-vous ?">
+  
+    <span class="label q-title" id="w-style-l">Quel style de mariage souhaitez-vous ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-style-l">
+      
+        <label class="choice sm"><input type="radio" name="w_style" value="classic"><span>Classique et élégant</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_style" value="modern"><span>Moderne et sophistiqué</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_style" value="luxury"><span>Luxueux et prestigieux</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_style" value="traditional"><span>Traditionnel et culturel</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_style" value="intimate"><span>Intimiste et familial</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_style" value="country"><span>Champêtre et naturel</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_style" value="autre"><span>Autre</span></label>
+      
+    </div>
+    
+      <div class="field q-other" data-show-if="w_style=autre">
+        <label for="w-style-o">Précisez</label>
+        <input id="w-style-o" name="w_style_other" maxlength="200" value="">
+      </div>
+    
+  
+</div>
+
+
+<div class="field q" data-q="theme" data-label="Avez-vous déjà choisi un thème ou des couleurs ?">
+  
+    <span class="label q-title" id="w-theme-l">Avez-vous déjà choisi un thème ou des couleurs ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-theme-l">
+      
+        <label class="choice sm"><input type="radio" name="w_theme" value="yes"><span>Oui</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_theme" value="no"><span>Non</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_theme" value="proposals"><span>Nous souhaitons des propositions</span></label>
+      
+    </div>
+    
+  
+</div>
+
+
+<div class="field q" data-q="colors" data-label="Couleurs ou thème souhaités">
+  
+    <label class="q-title" for="w-colors">Couleurs ou thème souhaités</label>
+    <input id="w-colors" name="w_colors" type="text" maxlength="200" placeholder="ex. or et ivoire, bleu nuit…" value="">
+    
+  
+</div>
+
+
+<div class="field q" data-q="ambiance" data-label="Quelle ambiance souhaitez-vous offrir à vos invités ?">
+  
+    <span class="label q-title" id="w-ambiance-l">Quelle ambiance souhaitez-vous offrir à vos invités ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-ambiance-l">
+      
+        <label class="choice sm"><input type="radio" name="w_ambiance" value="refined"><span>Élégante et raffinée</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_ambiance" value="festive"><span>Festive et animée</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_ambiance" value="solemn"><span>Religieuse et solennelle</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_ambiance" value="family"><span>Familiale et chaleureuse</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_ambiance" value="mix"><span>Un mélange de plusieurs ambiances</span></label>
+      
+    </div>
+    
+  
+</div>
+
+          </div>
+        </fieldset>
+      
+
+      <!-- Services -->
+      <fieldset class="step" data-step="services">
+        <legend class="h3">Services souhaités</legend>
+        <p class="step-intro">Sélectionnez une ou plusieurs prestations. L’estimation se met à jour au fur et à mesure.</p>
+        <div data-when-block="wedding" hidden>
+          <div class="q-grid">
+
+<div class="field q" data-q="support_level" data-label="Quel niveau d’accompagnement souhaitez-vous de PRESTIGIO EVENTS ?">
+  
+    <span class="label q-title" id="w-support-level-l">Quel niveau d’accompagnement souhaitez-vous de PRESTIGIO EVENTS ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-support-level-l">
+      
+        <label class="choice sm"><input type="radio" name="w_support_level" value="full"><span>Organisation complète de A à Z</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_support_level" value="partial"><span>Organisation partielle</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_support_level" value="day_of"><span>Coordination uniquement le jour J</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_support_level" value="advice"><span>Conseil et accompagnement</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_support_level" value="some_services"><span>Gestion de certains services uniquement</span></label>
+      
+    </div>
+    
+  
+</div>
+</div>
+        </div>
+        <div class="field" data-q="services" data-label="Prestations">
+          <span class="label">Prestations</span>
+          <div class="svc-choices">
+            
+              <div class="svc-choice">
+                <label class="choice wide"><input type="checkbox" name="services" value="6" data-slug="conception-coordination" data-protocol="0"><span>Organisation complète</span></label>
+                
+              </div>
+            
+              <div class="svc-choice">
+                <label class="choice wide"><input type="checkbox" name="services" value="7" data-slug="coordination-jour-j" data-protocol="0"><span>Coordination uniquement</span></label>
+                
+              </div>
+            
+              <div class="svc-choice">
+                <label class="choice wide"><input type="checkbox" name="services" value="8" data-slug="decoration" data-protocol="0"><span>Décoration</span></label>
+                
+                  <div class="svc-options" data-options-for="8">
+                    
+                      <label class="opt"><input type="checkbox" name="options" value="4"> <span>Arche ou décor de scène</span> <span class="muted">(option)</span></label>
+                    
+                  </div>
+                
+              </div>
+            
+              <div class="svc-choice">
+                <label class="choice wide"><input type="checkbox" name="services" value="9" data-slug="salles-lieux" data-protocol="0"><span>Salle ou lieu de réception</span></label>
+                
+              </div>
+            
+              <div class="svc-choice">
+                <label class="choice wide"><input type="checkbox" name="services" value="10" data-slug="catering" data-protocol="0"><span>Catering et boissons</span></label>
+                
+                  <div class="svc-options" data-options-for="10">
+                    
+                      <label class="opt"><input type="checkbox" name="options" value="8"> <span>Boissons (par invité)</span> <span class="muted">(option)</span></label>
+                    
+                  </div>
+                
+              </div>
+            
+              <div class="svc-choice">
+                <label class="choice wide"><input type="checkbox" name="services" value="11" data-slug="sonorisation-eclairage" data-protocol="0"><span>Sonorisation et éclairage</span></label>
+                
+                  <div class="svc-options" data-options-for="11">
+                    
+                      <label class="opt"><input type="checkbox" name="options" value="10"> <span>Éclairage d’ambiance</span> <span class="muted">(option)</span></label>
+                    
+                  </div>
+                
+              </div>
+            
+              <div class="svc-choice">
+                <label class="choice wide"><input type="checkbox" name="services" value="12" data-slug="dj-animation" data-protocol="0"><span>DJ, animation ou présentateur</span></label>
+                
+                  <div class="svc-options" data-options-for="12">
+                    
+                      <label class="opt"><input type="checkbox" name="options" value="12"> <span>Maître de cérémonie / présentateur</span> <span class="muted">(option)</span></label>
+                    
+                  </div>
+                
+              </div>
+            
+              <div class="svc-choice">
+                <label class="choice wide"><input type="checkbox" name="services" value="13" data-slug="photo-video" data-protocol="0"><span>Photo et vidéo</span></label>
+                
+                  <div class="svc-options" data-options-for="13">
+                    
+                      <label class="opt"><input type="checkbox" name="options" value="14"> <span>Vidéaste</span> <span class="muted">(option)</span></label>
+                    
+                  </div>
+                
+              </div>
+            
+              <div class="svc-choice">
+                <label class="choice wide"><input type="checkbox" name="services" value="14" data-slug="protocole-accueil" data-protocol="1"><span>Protocole et accueil</span></label>
+                
+                  <div class="svc-options" data-options-for="14">
+                    
+                      <label class="opt"><input type="checkbox" name="options" value="16"> <span>Repas des agents de protocole</span> <span class="muted">(option)</span></label>
+                    
+                  </div>
+                
+              </div>
+            
+          </div>
+        </div>
+        <div data-when-block="wedding" hidden>
+          <div class="q-grid">
+
+<div class="field q" data-q="extra_needs" data-label="Autres besoins à nous confier">
+  
+    <span class="label q-title" id="w-extra-needs-l">Autres besoins à nous confier</span>
+    <p class="q-help">En complément des prestations cochées ci-dessus.</p>
+    <div class="choice-grid tight" role="group" aria-labelledby="w-extra-needs-l">
+      
+        <label class="choice sm"><input type="checkbox" name="w_extra_needs" value="vendors"><span>Recherche et gestion des fournisseurs</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_extra_needs" value="transport"><span>Transport et logistique</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_extra_needs" value="guest_mgmt"><span>Gestion des invités et placement à table</span></label>
+      
+    </div>
+    
+  
+</div>
+</div>
         </div>
       </fieldset>
 
-      <!-- Étape 4 -->
-      <fieldset class="step" data-step="4" data-protocol-step>
-        <legend class="h3">4. Agents de protocole</legend>
-        <p class="no-protocol muted" data-no-protocol>Vous n’avez pas sélectionné le service « Protocole et accueil ». Vous pouvez passer cette étape ou revenir à l’étape 3 pour l’ajouter.</p>
-        <div data-protocol-fields>
-          <div class="field">
-            <label for="q-agents">Combien d’agents de protocole souhaitez-vous pour votre événement ?</label>
-            <div class="agents-row">
-              <button type="button" class="qty-btn" data-qty="-1" aria-label="Retirer un agent">−</button>
-              <input id="q-agents" type="number" name="protocol_agents_n" min="1" max="500" inputmode="numeric" value="" placeholder="ex. 6">
-              <button type="button" class="qty-btn" data-qty="1" aria-label="Ajouter un agent">+</button>
-            </div>
-            <label class="opt mt-s"><input type="checkbox" name="protocol_unknown_cb" value="1"> Je ne sais pas encore</label>
-            <p class="err" data-err="protocol_agents"></p>
+      <!-- Protocole -->
+      <fieldset class="step" data-step="protocol" data-when="protocol">
+        <legend class="h3">Agents de protocole</legend>
+        <p class="step-intro">Accueil, orientation et placement de vos invités : indiquez le nombre d’agents souhaités.</p>
+        <div class="field" data-q="protocol_agents" data-label="Agents de protocole" data-sum-kind="agents">
+          <label for="q-agents">Combien d’agents de protocole souhaitez-vous pour votre événement ?</label>
+          <div class="agents-row">
+            <button type="button" class="qty-btn" data-qty="-1" aria-label="Retirer un agent">−</button>
+            <input id="q-agents" type="number" name="protocol_agents_n" min="1" max="500" inputmode="numeric" value="" placeholder="ex. 6">
+            <button type="button" class="qty-btn" data-qty="1" aria-label="Ajouter un agent">+</button>
           </div>
-          <div class="field">
-            <span class="label">Tâches souhaitées</span>
-            <div class="choice-grid tight">
-              
-                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="accueil"><span>Accueil des invités</span></label>
-              
-                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="orientation"><span>Orientation</span></label>
-              
-                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="placement"><span>Placement des invités</span></label>
-              
-                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="entrees"><span>Gestion des entrées</span></label>
-              
-                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="vip"><span>Assistance aux VIP</span></label>
-              
-                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="autre"><span>Autre</span></label>
-              
-            </div>
-          </div>
-          <div class="field" data-show-if="protocol_tasks=autre"><label for="q-tasks-other">Autre tâche</label><input id="q-tasks-other" name="protocol_tasks_other" maxlength="200" value=""></div>
-          <p class="small muted" data-protocol-tariff></p>
+          <label class="opt mt-s"><input type="checkbox" name="protocol_unknown_cb" value="1"> <span>Je ne sais pas encore</span></label>
+          <p class="err" data-err="protocol_agents"></p>
         </div>
+        <div class="field" data-q="protocol_tasks" data-label="Tâches du protocole">
+          <span class="label">Tâches souhaitées</span>
+          <div class="choice-grid tight">
+            
+              <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="accueil"><span>Accueil des invités</span></label>
+            
+              <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="orientation"><span>Orientation</span></label>
+            
+              <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="placement"><span>Placement des invités</span></label>
+            
+              <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="entrees"><span>Gestion des entrées</span></label>
+            
+              <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="vip"><span>Assistance aux VIP</span></label>
+            
+              <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="autre"><span>Autre</span></label>
+            
+          </div>
+        </div>
+        <div class="field" data-show-if="protocol_tasks=autre" data-q="protocol_tasks_other" data-label="Autre tâche"><label for="q-tasks-other">Autre tâche</label><input id="q-tasks-other" name="protocol_tasks_other" maxlength="200" value=""></div>
+        <p class="small muted" data-protocol-tariff></p>
       </fieldset>
 
-      <!-- Étape 5 -->
-      <fieldset class="step" data-step="5">
-        <legend class="h3">5. Budget</legend>
-        <div class="choice-grid tight">
-          <label class="choice"><input type="radio" name="budget_mode" value="range"><span>Une fourchette</span></label>
-          <label class="choice"><input type="radio" name="budget_mode" value="exact"><span>Un montant précis</span></label>
-          <label class="choice"><input type="radio" name="budget_mode" value="unknown" checked><span>Je ne connais pas encore mon budget</span></label>
+      <!-- Budget -->
+      <fieldset class="step" data-step="budget">
+        <legend class="h3">Budget</legend>
+        <p class="step-intro">Votre budget nous aide à proposer les solutions les plus adaptées. Il reste confidentiel.</p>
+        <div class="field" data-q="budget_mode" data-label="Budget">
+          <span class="label">Avez-vous déjà défini un budget global ?</span>
+          <div class="choice-grid tight">
+            <label class="choice sm" data-range-choice><input type="radio" name="budget_mode" value="range"><span>Oui, une fourchette</span></label>
+            <label class="choice sm"><input type="radio" name="budget_mode" value="exact"><span>Oui, un montant précis</span></label>
+            <label class="choice sm"><input type="radio" name="budget_mode" value="unknown" checked><span>Pas encore / en cours de discussion</span></label>
+          </div>
         </div>
-        <div class="field" data-show-if="budget_mode=range">
+        <div class="field" data-q="budget_currency" data-label="Devise">
+          <label for="q-cur">Devise de votre budget</label>
+          <select id="q-cur" name="budget_currency">
+            <option value="USD" selected>Dollar américain (USD)</option>
+            <option value="CDF">Franc congolais (CDF)</option>
+          </select>
+        </div>
+        <div class="field" data-show-if="budget_mode=range" data-q="budget_range" data-label="Fourchette">
           <label for="q-range">Fourchette (USD)</label>
           <select id="q-range" name="budget_range">
             <option value="">Choisir…</option>
@@ -1140,29 +1562,291 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
             
           </select>
         </div>
-        <div class="field" data-show-if="budget_mode=exact">
-          <label for="q-budget">Budget (USD)</label>
+        <div class="field" data-show-if="budget_mode=exact" data-q="budget_amount" data-label="Montant">
+          <label for="q-budget">Budget (<span data-cur-label>USD</span>)</label>
           <input id="q-budget" name="budget_amount" inputmode="decimal" value="" placeholder="ex. 3000">
         </div>
         <p class="err" data-err="budget"></p>
+        <div data-when-block="wedding" hidden>
+          <div class="q-grid">
+
+<div class="field q" data-q="payer" data-label="Qui prend principalement en charge les dépenses ?">
+  
+    <span class="label q-title" id="w-payer-l">Qui prend principalement en charge les dépenses ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-payer-l">
+      
+        <label class="choice sm"><input type="radio" name="w_payer" value="groom"><span>Le futur marié</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_payer" value="bride"><span>La future mariée</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_payer" value="both"><span>Les deux futurs mariés</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_payer" value="families"><span>Les deux familles</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_payer" value="several"><span>Plusieurs personnes contribuent</span></label>
+      
+    </div>
+    
+  
+</div>
+
+
+<div class="field q" data-q="reserve" data-label="Avez-vous prévu une réserve pour les imprévus ?">
+  
+    <span class="label q-title" id="w-reserve-l">Avez-vous prévu une réserve pour les imprévus ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-reserve-l">
+      
+        <label class="choice sm"><input type="radio" name="w_reserve" value="yes"><span>Oui</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_reserve" value="no"><span>Non</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_reserve" value="tbd"><span>À déterminer</span></label>
+      
+    </div>
+    
+  
+</div>
+</div>
+        </div>
       </fieldset>
 
-      <!-- Étape 6 -->
-      <fieldset class="step" data-step="6">
-        <legend class="h3">6. Vos coordonnées</legend>
-        <div class="field"><label for="q-name">Nom complet *</label><input id="q-name" name="client_name" maxlength="120" required autocomplete="name" value=""><p class="err" data-err="client_name"></p></div>
+      <!-- Mariage : traditions, communication, attentes -->
+      
+        <fieldset class="step" data-step="exigences" data-when="wedding">
+          <legend class="h3">Traditions et communication</legend>
+          <p class="step-intro">Les traditions familiales, vos exigences et la façon dont nous travaillerons ensemble.</p>
+          <div class="q-grid">
+            
+
+<div class="field q" data-q="traditions" data-label="Existe-t-il des traditions familiales à respecter ?">
+  
+    <span class="label q-title" id="w-traditions-l">Existe-t-il des traditions familiales à respecter ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-traditions-l">
+      
+        <label class="choice sm"><input type="radio" name="w_traditions" value="yes"><span>Oui</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_traditions" value="no"><span>Non</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_traditions" value="tbd"><span>À préciser avec les familles</span></label>
+      
+    </div>
+    
+  
+</div>
+
+
+<div class="field q" data-q="traditions_text" data-label="Précisions sur les traditions">
+  
+    <label class="q-title" for="w-traditions-text">Précisions sur les traditions</label>
+    <textarea id="w-traditions-text" name="w_traditions_text" rows="3" maxlength="1000"></textarea>
+  
+</div>
+
+
+<div class="field q" data-q="requirements" data-label="Avez-vous des exigences particulières ?">
+  
+    <span class="label q-title" id="w-requirements-l">Avez-vous des exigences particulières ?</span>
+    
+    <div class="choice-grid tight" role="group" aria-labelledby="w-requirements-l">
+      
+        <label class="choice sm"><input type="checkbox" name="w_requirements" value="family_protocol"><span>Respect d’un protocole familial</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_requirements" value="vip"><span>Accueil spécial des VIP</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_requirements" value="religious"><span>Contraintes religieuses</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_requirements" value="dietary"><span>Contraintes alimentaires</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_requirements" value="accessibility"><span>Accessibilité pour certains invités</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_requirements" value="autre"><span>Autres</span></label>
+      
+    </div>
+    
+      <div class="field q-other" data-show-if="w_requirements=autre">
+        <label for="w-requirements-o">Précisez</label>
+        <input id="w-requirements-o" name="w_requirements_other" maxlength="200" value="">
+      </div>
+    
+  
+</div>
+
+
+<div class="field q" data-q="refusals" data-label="Y a-t-il des choses que vous refusez absolument dans votre mariage ?">
+  
+    <label class="q-title" for="w-refusals">Y a-t-il des choses que vous refusez absolument dans votre mariage ?</label>
+    <textarea id="w-refusals" name="w_refusals" rows="3" maxlength="1000"></textarea>
+  
+</div>
+
+
+<div class="field q" data-q="main_contact" data-label="Qui sera notre interlocuteur principal pendant l’organisation ?">
+  
+    <span class="label q-title" id="w-main-contact-l">Qui sera notre interlocuteur principal pendant l’organisation ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-main-contact-l">
+      
+        <label class="choice sm"><input type="radio" name="w_main_contact" value="groom"><span>Le futur marié</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_main_contact" value="bride"><span>La future mariée</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_main_contact" value="both"><span>Les deux futurs mariés</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_main_contact" value="family_reps"><span>Un représentant de chaque famille</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_main_contact" value="other_person"><span>Une autre personne désignée</span></label>
+      
+    </div>
+    
+  
+</div>
+
+
+<div class="field q" data-q="main_contact_details" data-label="Nom et contact de l’interlocuteur">
+  
+    <label class="q-title" for="w-main-contact-details">Nom et contact de l’interlocuteur</label>
+    <input id="w-main-contact-details" name="w_main_contact_details" type="text" maxlength="200" value="">
+    
+  
+</div>
+
+
+<div class="field q" data-q="decision_maker" data-label="Qui validera les décisions financières et organisationnelles ?">
+  
+    <span class="label q-title" id="w-decision-maker-l">Qui validera les décisions financières et organisationnelles ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-decision-maker-l">
+      
+        <label class="choice sm"><input type="radio" name="w_decision_maker" value="groom"><span>Le futur marié</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_decision_maker" value="bride"><span>La future mariée</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_decision_maker" value="both"><span>Les deux futurs mariés</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_decision_maker" value="parents"><span>Les parents</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_decision_maker" value="collective"><span>Décision collective</span></label>
+      
+    </div>
+    
+  
+</div>
+
+
+<div class="field q" data-q="channels" data-label="Quels moyens de communication préférez-vous ?">
+  
+    <span class="label q-title" id="w-channels-l">Quels moyens de communication préférez-vous ?</span>
+    
+    <div class="choice-grid tight" role="group" aria-labelledby="w-channels-l">
+      
+        <label class="choice sm"><input type="checkbox" name="w_channels" value="whatsapp"><span>WhatsApp</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_channels" value="calls"><span>Appels téléphoniques</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_channels" value="email"><span>E-mail</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_channels" value="meetings"><span>Réunions physiques</span></label>
+      
+        <label class="choice sm"><input type="checkbox" name="w_channels" value="whatsapp_group"><span>Groupe WhatsApp dédié au projet</span></label>
+      
+    </div>
+    
+  
+</div>
+
+          </div>
+        </fieldset>
+      
+        <fieldset class="step" data-step="attentes" data-when="wedding">
+          <legend class="h3">Vos attentes</legend>
+          <p class="step-intro">Pour finir, ce qui compte le plus pour vous.</p>
+          <div class="q-grid">
+            
+
+<div class="field q" data-q="main_expectation" data-label="Quelle est votre principale attente envers PRESTIGIO EVENTS ?">
+  
+    <span class="label q-title" id="w-main-expectation-l">Quelle est votre principale attente envers PRESTIGIO EVENTS ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-main-expectation-l">
+      
+        <label class="choice sm"><input type="radio" name="w_main_expectation" value="stress_free"><span>Une organisation sans stress</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_main_expectation" value="budget_control"><span>Une maîtrise rigoureuse du budget</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_main_expectation" value="decoration"><span>Une décoration exceptionnelle</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_main_expectation" value="coordination"><span>Une coordination professionnelle</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_main_expectation" value="guests"><span>Une excellente gestion des invités</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_main_expectation" value="full_care"><span>Une prise en charge complète</span></label>
+      
+    </div>
+    
+  
+</div>
+
+
+<div class="field q" data-q="success" data-label="Qu’est-ce qui fera de votre mariage une réussite à vos yeux ?">
+  
+    <label class="q-title" for="w-success">Qu’est-ce qui fera de votre mariage une réussite à vos yeux ?</label>
+    <textarea id="w-success" name="w_success" rows="3" maxlength="1500"></textarea>
+  
+</div>
+
+
+<div class="field q" data-q="concerns" data-label="Avez-vous des préoccupations ou des difficultés particulières concernant l’organisation ?">
+  
+    <label class="q-title" for="w-concerns">Avez-vous des préoccupations ou des difficultés particulières concernant l’organisation ?</label>
+    <textarea id="w-concerns" name="w_concerns" rows="3" maxlength="1500"></textarea>
+  
+</div>
+
+
+<div class="field q" data-q="readiness" data-label="Êtes-vous prêts à avancer avec une proposition professionnelle de PRESTIGIO EVENTS ?">
+  
+    <span class="label q-title" id="w-readiness-l">Êtes-vous prêts à avancer avec une proposition professionnelle de PRESTIGIO EVENTS ?</span>
+    
+    <div class="choice-grid tight" role="radiogroup" aria-labelledby="w-readiness-l">
+      
+        <label class="choice sm"><input type="radio" name="w_readiness" value="yes"><span>Oui</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_readiness" value="study"><span>Nous souhaitons d’abord étudier la proposition</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_readiness" value="families"><span>Nous devons consulter les familles</span></label>
+      
+        <label class="choice sm"><input type="radio" name="w_readiness" value="undecided"><span>Nous ne sommes pas encore décidés</span></label>
+      
+    </div>
+    
+  
+</div>
+
+          </div>
+        </fieldset>
+      
+
+      <!-- Coordonnées -->
+      <fieldset class="step" data-step="contact">
+        <legend class="h3">Vos coordonnées</legend>
+        <p class="step-intro">Pour vous transmettre notre proposition.</p>
+        <div class="field" data-q="client_name" data-label="Nom"><label for="q-name">Nom complet *</label><input id="q-name" name="client_name" maxlength="120" required autocomplete="name" value=""><p class="err" data-err="client_name"></p></div>
         <div class="grid-2">
-          <div class="field"><label for="q-phone">Téléphone ou WhatsApp *</label><input id="q-phone" name="client_phone" type="tel" maxlength="40" required autocomplete="tel" placeholder="+243 ..." value=""><p class="err" data-err="client_phone"></p></div>
-          <div class="field"><label for="q-email">E-mail (facultatif)</label><input id="q-email" name="client_email" type="email" maxlength="160" autocomplete="email" value=""><p class="err" data-err="client_email"></p></div>
+          <div class="field" data-q="client_phone" data-label="Téléphone / WhatsApp"><label for="q-phone">Téléphone ou WhatsApp *</label><input id="q-phone" name="client_phone" type="tel" maxlength="40" required autocomplete="tel" placeholder="+243 ..." value=""><p class="err" data-err="client_phone"></p></div>
+          <div class="field" data-q="client_email" data-label="E-mail"><label for="q-email">E-mail (facultatif)</label><input id="q-email" name="client_email" type="email" maxlength="160" autocomplete="email" value=""><p class="err" data-err="client_email"></p></div>
         </div>
-        <div class="field"><label for="q-notes">Notes ou précisions</label><textarea id="q-notes" name="client_notes" rows="4" maxlength="3000" placeholder="Thème, contraintes, souhaits particuliers…"></textarea></div>
-        <label class="opt consent"><input type="checkbox" name="consent" value="oui" required> J’accepte d’être contacté(e) par PRESTIGIO EVENTS au sujet de cette demande. *</label>
+        <div class="field" data-q="client_notes" data-label="Notes"><label for="q-notes">Notes ou précisions</label><textarea id="q-notes" name="client_notes" rows="4" maxlength="3000" placeholder="Thème, contraintes, souhaits particuliers…"></textarea></div>
+        <label class="opt consent"><input type="checkbox" name="consent" value="oui" required> <span>J’accepte d’être contacté(e) par PRESTIGIO EVENTS au sujet de cette demande. *</span></label>
         <p class="err" data-err="consent"></p>
       </fieldset>
 
-      <!-- Étape 7 -->
-      <fieldset class="step" data-step="7">
-        <legend class="h3">7. Résumé de votre demande</legend>
+      <!-- Résumé -->
+      <fieldset class="step" data-step="summary">
+        <legend class="h3">Résumé de votre demande</legend>
+        <p class="step-intro">Vérifiez vos réponses. Vous pouvez modifier chaque partie avant l’envoi.</p>
         <div class="summary" data-summary><p class="muted">Le résumé s’affiche ici.</p></div>
         <p class="disclaimer">Cette estimation est indicative. Le devis définitif sera confirmé par PRESTIGIO EVENTS après vérification des besoins, des disponibilités et des coûts auprès des prestataires.</p>
         <p class="small muted">L’envoi de cette demande ne constitue pas une réservation confirmée.</p>
@@ -1212,7 +1896,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       
       
       <div class="btn-row mt">
-        <a href="#devis" class="btn btn-gold">Demander un devis</a>
+        <a href="#devis-mariage" class="btn btn-gold">Demander un devis</a>
         <a href="https://wa.me/243813583732?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20%3A%20Mariages%20et%20c%C3%A9r%C3%A9monies%20traditionnelles" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
@@ -1720,6 +2404,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <li><a href="#galerie">Galerie</a></li>
         <li><a href="#a-propos">À propos</a></li>
         <li><a href="#devis">Demander un devis</a></li>
+        <li><a href="#devis-mariage">Devis mariage</a></li>
       </ul>
     </div>
     <div>

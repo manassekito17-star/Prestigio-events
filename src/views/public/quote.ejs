@@ -7,7 +7,27 @@
    const selServices = arr(P.services).concat(preselect ? [String(preselect)] : []);
    const selOptions = arr(P.options);
    const selTasks = arr(P.protocol_tasks);
-   const evType = P.event_type || eventPreselect || ''; %>
+   const evType = P.event_type || eventPreselect || '';
+   const D = h.D;
+   const wedPage = typeof weddingPage !== 'undefined' && weddingPage;
+   const qs = (step) => D.questionsFor(step); %>
+
+<% if (wedPage) { %>
+<section class="wed-hero">
+  <div class="wed-hero-media" aria-hidden="true"><img src="/static/img/demo/wedding.jpg" alt=""><span class="illus-tag">Photo d’illustration</span></div>
+  <div class="container wed-hero-content">
+    <img class="hero-emblem" src="/static/img/logo/logo-emblem.png" alt="" width="169" height="220">
+    <p class="eyebrow">Mariage · Demande de devis</p>
+    <h1 class="h1">Votre mariage, orchestré avec excellence</h1>
+    <p class="lead">De la dot à la réception, confiez-nous votre union. Ce questionnaire reprend la fiche que nous utilisons lors de notre premier rendez-vous : vos réponses nous permettent de vous préparer une proposition sur mesure.</p>
+    <ul class="wed-points">
+      <li><strong>10 minutes environ</strong><span>Répondez à ce que vous savez déjà</span></li>
+      <li><strong>Réponses confidentielles</strong><span>Lues uniquement par notre équipe</span></li>
+      <li><strong>Proposition validée</strong><span>Vérifiée par la direction avant envoi</span></li>
+    </ul>
+  </div>
+</section>
+<% } else { %>
 <section class="page-hero compact">
   <div class="container">
     <p class="eyebrow">Demande de devis</p>
@@ -15,6 +35,7 @@
     <p class="lead">Quelques minutes suffisent. Vous obtenez une estimation indicative immédiate ; le devis définitif vous sera transmis après vérification par notre équipe.</p>
   </div>
 </section>
+<% } %>
 
 <section class="section quote-section">
   <div class="container quote-layout">
@@ -30,109 +51,151 @@
         </div>
       <% } %>
 
-      <ol class="stepper" aria-label="Étapes" data-stepper hidden>
-        <li data-for="1">Événement</li><li data-for="2">Informations</li><li data-for="3">Services</li><li data-for="4">Protocole</li><li data-for="5">Budget</li><li data-for="6">Coordonnées</li><li data-for="7">Résumé</li>
-      </ol>
-      <p class="step-count" data-step-count hidden></p>
+      <div class="progress" data-progress hidden>
+        <div class="progress-bar" aria-hidden="true"><span data-progress-fill></span></div>
+        <p class="progress-label"><span data-progress-count></span><strong data-progress-title></strong></p>
+      </div>
 
-      <!-- Étape 1 -->
-      <fieldset class="step" data-step="1">
-        <legend class="h3">1. Type d’événement</legend>
-        <div class="choice-grid" role="radiogroup">
-          <% for (const [k, label] of Object.entries(h.C.EVENT_TYPES)) { %>
-            <label class="choice"><input type="radio" name="event_type" value="<%= k %>" required<%= evType === k ? ' checked' : '' %>><span><%= label %></span></label>
-          <% } %>
+      <!-- Type d'événement -->
+      <fieldset class="step" data-step="type">
+        <legend class="h3">Type d’événement</legend>
+        <div class="field" data-q="event_type" data-label="Type d’événement">
+          <div class="choice-grid" role="radiogroup" aria-label="Type d’événement">
+            <% for (const [k, label] of Object.entries(h.C.EVENT_TYPES)) { %>
+              <label class="choice"><input type="radio" name="event_type" value="<%= k %>" required<%= evType === k ? ' checked' : '' %>><span><%= label %></span></label>
+            <% } %>
+          </div>
         </div>
-        <div class="field" data-show-if="event_type=autre">
+        <div class="field" data-show-if="event_type=autre" data-q="event_type_other" data-label="Précision">
           <label for="q-other">Précisez le type d’événement *</label>
           <input id="q-other" name="event_type_other" maxlength="120" value="<%= val('event_type_other') %>">
         </div>
+        <p class="note-wed" data-when-block="wedding" hidden>Pour un mariage, quelques questions supplémentaires vous seront posées : elles reprennent notre fiche de découverte et nous aident à préparer une proposition sur mesure.</p>
         <p class="err" data-err="event_type"></p>
       </fieldset>
 
-      <!-- Étape 2 -->
-      <fieldset class="step" data-step="2">
-        <legend class="h3">2. Informations sur l’événement</legend>
+      <!-- Informations générales -->
+      <fieldset class="step" data-step="infos">
+        <legend class="h3">Date et lieu</legend>
         <div class="grid-2">
-          <div class="field"><label for="q-date">Date souhaitée</label><input id="q-date" type="date" name="event_date" min="<%= h.today() %>" value="<%= val('event_date') %>"><p class="err" data-err="event_date"></p></div>
-          <div class="field"><label for="q-time">Heure de début</label><input id="q-time" type="time" name="start_time" value="<%= val('start_time') %>"></div>
-          <div class="field"><label for="q-dur">Durée estimée (heures)</label><input id="q-dur" type="number" name="duration_hours" min="1" max="240" step="0.5" inputmode="decimal" value="<%= val('duration_hours') %>" placeholder="ex. 6"><p class="err" data-err="duration_hours"></p></div>
-          <div class="field"><label for="q-guests">Nombre approximatif d’invités</label><input id="q-guests" type="number" name="guests" min="1" max="100000" inputmode="numeric" value="<%= val('guests') %>" placeholder="ex. 200"><p class="err" data-err="guests"></p></div>
+          <div class="field" data-q="event_date" data-label="Date souhaitée"><label for="q-date">Date souhaitée</label><input id="q-date" type="date" name="event_date" min="<%= h.today() %>" value="<%= val('event_date') %>"><p class="err" data-err="event_date"></p></div>
+          <div class="field" data-q="start_time" data-label="Heure de début"><label for="q-time">Heure de début</label><input id="q-time" type="time" name="start_time" value="<%= val('start_time') %>"></div>
+          <div class="field" data-q="duration_hours" data-label="Durée estimée (heures)"><label for="q-dur">Durée estimée (heures)</label><input id="q-dur" type="number" name="duration_hours" min="1" max="240" step="0.5" inputmode="decimal" value="<%= val('duration_hours') %>" placeholder="ex. 6"><p class="err" data-err="duration_hours"></p></div>
+          <div class="field" data-q="guests" data-label="Nombre d’invités"><label for="q-guests">Nombre approximatif d’invités</label><input id="q-guests" type="number" name="guests" min="1" max="100000" inputmode="numeric" value="<%= val('guests') %>" placeholder="ex. 200"><p class="err" data-err="guests"></p></div>
         </div>
-        <div class="field"><label for="q-area">Commune ou quartier de Kinshasa</label><input id="q-area" name="location_area" maxlength="160" value="<%= val('location_area') %>" placeholder="ex. Gombe, Ngaliema, Limete…"></div>
-        <div class="field">
-          <span class="label">Le lieu est-il déjà réservé ?</span>
-          <div class="inline-choices">
-            <label class="choice sm"><input type="radio" name="venue_booked" value="oui"<%= P.venue_booked === 'oui' ? ' checked' : '' %>><span>Oui</span></label>
-            <label class="choice sm"><input type="radio" name="venue_booked" value="non"<%= P.venue_booked === 'non' ? ' checked' : '' %>><span>Non</span></label>
+        <div class="field" data-q="location_area" data-label="Commune ou quartier"><label for="q-area">Commune ou quartier de Kinshasa</label><input id="q-area" name="location_area" maxlength="160" value="<%= val('location_area') %>" placeholder="ex. Gombe, Ngaliema, Limete…"></div>
+        <div data-unless="wedding">
+          <div class="field" data-q="venue_booked" data-label="Lieu déjà réservé">
+            <span class="label">Le lieu est-il déjà réservé ?</span>
+            <div class="inline-choices">
+              <label class="choice sm"><input type="radio" name="venue_booked" value="oui"<%= P.venue_booked === 'oui' ? ' checked' : '' %>><span>Oui</span></label>
+              <label class="choice sm"><input type="radio" name="venue_booked" value="non"<%= P.venue_booked === 'non' ? ' checked' : '' %>><span>Non</span></label>
+            </div>
           </div>
-        </div>
-        <div class="field" data-show-if="venue_booked=non">
-          <span class="label">Souhaitez-vous que nous recherchions un lieu pour vous ?</span>
-          <div class="inline-choices">
-            <label class="choice sm"><input type="radio" name="wants_venue_search" value="oui"<%= P.wants_venue_search === 'oui' ? ' checked' : '' %>><span>Oui</span></label>
-            <label class="choice sm"><input type="radio" name="wants_venue_search" value="non"<%= P.wants_venue_search === 'non' ? ' checked' : '' %>><span>Non</span></label>
+          <div class="field" data-show-if="venue_booked=non" data-q="wants_venue_search" data-label="Recherche de lieu par l’agence">
+            <span class="label">Souhaitez-vous que nous recherchions un lieu pour vous ?</span>
+            <div class="inline-choices">
+              <label class="choice sm"><input type="radio" name="wants_venue_search" value="oui"<%= P.wants_venue_search === 'oui' ? ' checked' : '' %>><span>Oui</span></label>
+              <label class="choice sm"><input type="radio" name="wants_venue_search" value="non"<%= P.wants_venue_search === 'non' ? ' checked' : '' %>><span>Non</span></label>
+            </div>
           </div>
         </div>
       </fieldset>
 
-      <!-- Étape 3 -->
-      <fieldset class="step" data-step="3">
-        <legend class="h3">3. Services souhaités</legend>
-        <p class="muted small">Sélectionnez une ou plusieurs prestations. Vous pourrez préciser vos besoins avec notre équipe.</p>
-        <div class="svc-choices">
-          <% for (const svc of cat.services) { %>
-            <div class="svc-choice">
-              <label class="choice wide"><input type="checkbox" name="services" value="<%= svc.id %>" data-protocol="<%= svc.is_protocol ? 1 : 0 %>"<%= selServices.includes(String(svc.id)) ? ' checked' : '' %>><span><%= svc.name %></span></label>
-              <% const opts = svc.tariffs.filter((t) => t.optional); if (opts.length) { %>
-                <div class="svc-options" data-options-for="<%= svc.id %>">
-                  <% for (const o of opts) { %>
-                    <label class="opt"><input type="checkbox" name="options" value="<%= o.id %>"<%= selOptions.includes(String(o.id)) ? ' checked' : '' %>> <%= o.name %> <span class="muted">(option)</span></label>
-                  <% } %>
-                </div>
-              <% } %>
+      <!-- Mariage : fiche de découverte -->
+      <% for (const stepKey of ['maries', 'ceremonies', 'lieux', 'style']) { const st = D.STEPS[stepKey]; %>
+        <fieldset class="step" data-step="<%= stepKey %>" data-when="wedding">
+          <legend class="h3"><%= st.title %></legend>
+          <% if (stepKey === 'maries') { %>
+            <div class="wed-intro">
+              <img src="/static/img/logo/logo-emblem.png" alt="" width="46" height="60">
+              <div><strong>Questionnaire de découverte — Mariage</strong>
+                <p>Ces questions reprennent la fiche que nous remplissons avec les futurs mariés lors du premier rendez-vous. Répondez à ce que vous savez déjà : toutes sont facultatives et vous pourrez compléter avec nous.</p></div>
             </div>
+          <% } else { %>
+            <p class="step-intro"><%= st.intro %></p>
           <% } %>
+          <div class="q-grid">
+            <% for (const q of qs(stepKey)) { %><%- include('../partials/discovery-q', { q, P }) %><% } %>
+          </div>
+        </fieldset>
+      <% } %>
+
+      <!-- Services -->
+      <fieldset class="step" data-step="services">
+        <legend class="h3">Services souhaités</legend>
+        <p class="step-intro">Sélectionnez une ou plusieurs prestations. L’estimation se met à jour au fur et à mesure.</p>
+        <div data-when-block="wedding" hidden>
+          <div class="q-grid"><% for (const q of qs('services').filter((x) => x.key === 'support_level')) { %><%- include('../partials/discovery-q', { q, P }) %><% } %></div>
+        </div>
+        <div class="field" data-q="services" data-label="Prestations">
+          <span class="label">Prestations</span>
+          <div class="svc-choices">
+            <% for (const svc of cat.services) { %>
+              <div class="svc-choice">
+                <label class="choice wide"><input type="checkbox" name="services" value="<%= svc.id %>" data-slug="<%= svc.slug %>" data-protocol="<%= svc.is_protocol ? 1 : 0 %>"<%= selServices.includes(String(svc.id)) ? ' checked' : '' %>><span><%= svc.name %></span></label>
+                <% const opts = svc.tariffs.filter((t) => t.optional); if (opts.length) { %>
+                  <div class="svc-options" data-options-for="<%= svc.id %>">
+                    <% for (const o of opts) { %>
+                      <label class="opt"><input type="checkbox" name="options" value="<%= o.id %>"<%= selOptions.includes(String(o.id)) ? ' checked' : '' %>> <span><%= o.name %></span> <span class="muted">(option)</span></label>
+                    <% } %>
+                  </div>
+                <% } %>
+              </div>
+            <% } %>
+          </div>
+        </div>
+        <div data-when-block="wedding" hidden>
+          <div class="q-grid"><% for (const q of qs('services').filter((x) => x.key !== 'support_level')) { %><%- include('../partials/discovery-q', { q, P }) %><% } %></div>
         </div>
       </fieldset>
 
-      <!-- Étape 4 -->
-      <fieldset class="step" data-step="4" data-protocol-step>
-        <legend class="h3">4. Agents de protocole</legend>
-        <p class="no-protocol muted" data-no-protocol>Vous n’avez pas sélectionné le service « Protocole et accueil ». Vous pouvez passer cette étape ou revenir à l’étape 3 pour l’ajouter.</p>
-        <div data-protocol-fields>
-          <div class="field">
-            <label for="q-agents">Combien d’agents de protocole souhaitez-vous pour votre événement ?</label>
-            <div class="agents-row">
-              <button type="button" class="qty-btn" data-qty="-1" aria-label="Retirer un agent">−</button>
-              <input id="q-agents" type="number" name="protocol_agents_n" min="1" max="500" inputmode="numeric" value="<%= val('protocol_agents_n') %>" placeholder="ex. 6">
-              <button type="button" class="qty-btn" data-qty="1" aria-label="Ajouter un agent">+</button>
-            </div>
-            <label class="opt mt-s"><input type="checkbox" name="protocol_unknown_cb" value="1"<%= P.protocol_unknown_cb ? ' checked' : '' %>> Je ne sais pas encore</label>
-            <p class="err" data-err="protocol_agents"></p>
+      <!-- Protocole -->
+      <fieldset class="step" data-step="protocol" data-when="protocol">
+        <legend class="h3">Agents de protocole</legend>
+        <p class="step-intro">Accueil, orientation et placement de vos invités : indiquez le nombre d’agents souhaités.</p>
+        <div class="field" data-q="protocol_agents" data-label="Agents de protocole" data-sum-kind="agents">
+          <label for="q-agents">Combien d’agents de protocole souhaitez-vous pour votre événement ?</label>
+          <div class="agents-row">
+            <button type="button" class="qty-btn" data-qty="-1" aria-label="Retirer un agent">−</button>
+            <input id="q-agents" type="number" name="protocol_agents_n" min="1" max="500" inputmode="numeric" value="<%= val('protocol_agents_n') %>" placeholder="ex. 6">
+            <button type="button" class="qty-btn" data-qty="1" aria-label="Ajouter un agent">+</button>
           </div>
-          <div class="field">
-            <span class="label">Tâches souhaitées</span>
-            <div class="choice-grid tight">
-              <% for (const [k, label] of Object.entries(h.C.PROTOCOL_TASKS)) { %>
-                <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="<%= k %>"<%= selTasks.includes(k) ? ' checked' : '' %>><span><%= label %></span></label>
-              <% } %>
-            </div>
-          </div>
-          <div class="field" data-show-if="protocol_tasks=autre"><label for="q-tasks-other">Autre tâche</label><input id="q-tasks-other" name="protocol_tasks_other" maxlength="200" value="<%= val('protocol_tasks_other') %>"></div>
-          <p class="small muted" data-protocol-tariff></p>
+          <label class="opt mt-s"><input type="checkbox" name="protocol_unknown_cb" value="1"<%= P.protocol_unknown_cb ? ' checked' : '' %>> <span>Je ne sais pas encore</span></label>
+          <p class="err" data-err="protocol_agents"></p>
         </div>
+        <div class="field" data-q="protocol_tasks" data-label="Tâches du protocole">
+          <span class="label">Tâches souhaitées</span>
+          <div class="choice-grid tight">
+            <% for (const [k, label] of Object.entries(h.C.PROTOCOL_TASKS)) { %>
+              <label class="choice sm"><input type="checkbox" name="protocol_tasks" value="<%= k %>"<%= selTasks.includes(k) ? ' checked' : '' %>><span><%= label %></span></label>
+            <% } %>
+          </div>
+        </div>
+        <div class="field" data-show-if="protocol_tasks=autre" data-q="protocol_tasks_other" data-label="Autre tâche"><label for="q-tasks-other">Autre tâche</label><input id="q-tasks-other" name="protocol_tasks_other" maxlength="200" value="<%= val('protocol_tasks_other') %>"></div>
+        <p class="small muted" data-protocol-tariff></p>
       </fieldset>
 
-      <!-- Étape 5 -->
-      <fieldset class="step" data-step="5">
-        <legend class="h3">5. Budget</legend>
-        <div class="choice-grid tight">
-          <label class="choice"><input type="radio" name="budget_mode" value="range"<%= P.budget_mode === 'range' ? ' checked' : '' %>><span>Une fourchette</span></label>
-          <label class="choice"><input type="radio" name="budget_mode" value="exact"<%= P.budget_mode === 'exact' ? ' checked' : '' %>><span>Un montant précis</span></label>
-          <label class="choice"><input type="radio" name="budget_mode" value="unknown"<%= !P.budget_mode || P.budget_mode === 'unknown' ? ' checked' : '' %>><span>Je ne connais pas encore mon budget</span></label>
+      <!-- Budget -->
+      <fieldset class="step" data-step="budget">
+        <legend class="h3">Budget</legend>
+        <p class="step-intro">Votre budget nous aide à proposer les solutions les plus adaptées. Il reste confidentiel.</p>
+        <div class="field" data-q="budget_mode" data-label="Budget">
+          <span class="label">Avez-vous déjà défini un budget global ?</span>
+          <div class="choice-grid tight">
+            <label class="choice sm" data-range-choice><input type="radio" name="budget_mode" value="range"<%= P.budget_mode === 'range' ? ' checked' : '' %>><span>Oui, une fourchette</span></label>
+            <label class="choice sm"><input type="radio" name="budget_mode" value="exact"<%= P.budget_mode === 'exact' ? ' checked' : '' %>><span>Oui, un montant précis</span></label>
+            <label class="choice sm"><input type="radio" name="budget_mode" value="unknown"<%= !P.budget_mode || P.budget_mode === 'unknown' ? ' checked' : '' %>><span>Pas encore / en cours de discussion</span></label>
+          </div>
         </div>
-        <div class="field" data-show-if="budget_mode=range">
+        <div class="field" data-q="budget_currency" data-label="Devise">
+          <label for="q-cur">Devise de votre budget</label>
+          <select id="q-cur" name="budget_currency">
+            <option value="USD"<%= P.budget_currency !== 'CDF' ? ' selected' : '' %>>Dollar américain (USD)</option>
+            <option value="CDF"<%= P.budget_currency === 'CDF' ? ' selected' : '' %>>Franc congolais (CDF)</option>
+          </select>
+        </div>
+        <div class="field" data-show-if="budget_mode=range" data-q="budget_range" data-label="Fourchette">
           <label for="q-range">Fourchette (USD)</label>
           <select id="q-range" name="budget_range">
             <option value="">Choisir…</option>
@@ -141,29 +204,45 @@
             <% }) %>
           </select>
         </div>
-        <div class="field" data-show-if="budget_mode=exact">
-          <label for="q-budget">Budget (USD)</label>
+        <div class="field" data-show-if="budget_mode=exact" data-q="budget_amount" data-label="Montant">
+          <label for="q-budget">Budget (<span data-cur-label>USD</span>)</label>
           <input id="q-budget" name="budget_amount" inputmode="decimal" value="<%= val('budget_amount') %>" placeholder="ex. 3000">
         </div>
         <p class="err" data-err="budget"></p>
+        <div data-when-block="wedding" hidden>
+          <div class="q-grid"><% for (const q of qs('budget')) { %><%- include('../partials/discovery-q', { q, P }) %><% } %></div>
+        </div>
       </fieldset>
 
-      <!-- Étape 6 -->
-      <fieldset class="step" data-step="6">
-        <legend class="h3">6. Vos coordonnées</legend>
-        <div class="field"><label for="q-name">Nom complet *</label><input id="q-name" name="client_name" maxlength="120" required autocomplete="name" value="<%= val('client_name') %>"><p class="err" data-err="client_name"></p></div>
+      <!-- Mariage : traditions, communication, attentes -->
+      <% for (const stepKey of ['exigences', 'attentes']) { const st = D.STEPS[stepKey]; %>
+        <fieldset class="step" data-step="<%= stepKey %>" data-when="wedding">
+          <legend class="h3"><%= st.title %></legend>
+          <p class="step-intro"><%= st.intro %></p>
+          <div class="q-grid">
+            <% for (const q of qs(stepKey)) { %><%- include('../partials/discovery-q', { q, P }) %><% } %>
+          </div>
+        </fieldset>
+      <% } %>
+
+      <!-- Coordonnées -->
+      <fieldset class="step" data-step="contact">
+        <legend class="h3">Vos coordonnées</legend>
+        <p class="step-intro">Pour vous transmettre notre proposition.</p>
+        <div class="field" data-q="client_name" data-label="Nom"><label for="q-name">Nom complet *</label><input id="q-name" name="client_name" maxlength="120" required autocomplete="name" value="<%= val('client_name') %>"><p class="err" data-err="client_name"></p></div>
         <div class="grid-2">
-          <div class="field"><label for="q-phone">Téléphone ou WhatsApp *</label><input id="q-phone" name="client_phone" type="tel" maxlength="40" required autocomplete="tel" placeholder="+243 ..." value="<%= val('client_phone') %>"><p class="err" data-err="client_phone"></p></div>
-          <div class="field"><label for="q-email">E-mail (facultatif)</label><input id="q-email" name="client_email" type="email" maxlength="160" autocomplete="email" value="<%= val('client_email') %>"><p class="err" data-err="client_email"></p></div>
+          <div class="field" data-q="client_phone" data-label="Téléphone / WhatsApp"><label for="q-phone">Téléphone ou WhatsApp *</label><input id="q-phone" name="client_phone" type="tel" maxlength="40" required autocomplete="tel" placeholder="+243 ..." value="<%= val('client_phone') %>"><p class="err" data-err="client_phone"></p></div>
+          <div class="field" data-q="client_email" data-label="E-mail"><label for="q-email">E-mail (facultatif)</label><input id="q-email" name="client_email" type="email" maxlength="160" autocomplete="email" value="<%= val('client_email') %>"><p class="err" data-err="client_email"></p></div>
         </div>
-        <div class="field"><label for="q-notes">Notes ou précisions</label><textarea id="q-notes" name="client_notes" rows="4" maxlength="3000" placeholder="Thème, contraintes, souhaits particuliers…"><%= val('client_notes') %></textarea></div>
-        <label class="opt consent"><input type="checkbox" name="consent" value="oui" required<%= P.consent === 'oui' ? ' checked' : '' %>> J’accepte d’être contacté(e) par <%= s.agency_name %> au sujet de cette demande. *</label>
+        <div class="field" data-q="client_notes" data-label="Notes"><label for="q-notes">Notes ou précisions</label><textarea id="q-notes" name="client_notes" rows="4" maxlength="3000" placeholder="Thème, contraintes, souhaits particuliers…"><%= val('client_notes') %></textarea></div>
+        <label class="opt consent"><input type="checkbox" name="consent" value="oui" required<%= P.consent === 'oui' ? ' checked' : '' %>> <span>J’accepte d’être contacté(e) par <%= s.agency_name %> au sujet de cette demande. *</span></label>
         <p class="err" data-err="consent"></p>
       </fieldset>
 
-      <!-- Étape 7 -->
-      <fieldset class="step" data-step="7">
-        <legend class="h3">7. Résumé de votre demande</legend>
+      <!-- Résumé -->
+      <fieldset class="step" data-step="summary">
+        <legend class="h3">Résumé de votre demande</legend>
+        <p class="step-intro">Vérifiez vos réponses. Vous pouvez modifier chaque partie avant l’envoi.</p>
         <div class="summary" data-summary><p class="muted">Le résumé s’affiche ici.</p></div>
         <p class="disclaimer"><%= h.t('estimate.disclaimer') %></p>
         <p class="small muted">L’envoi de cette demande ne constitue pas une réservation confirmée.</p>

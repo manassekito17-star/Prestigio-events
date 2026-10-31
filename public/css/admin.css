@@ -164,3 +164,5 @@ code { background: #F1EEE6; padding: 1px 5px; border-radius: 3px; font-size: .85
 h1, .stat strong, .login-brand { font-variant-numeric: lining-nums; }
 .auth-page .login-brand small { color: rgba(255,255,255,.7); }
 .auth-page .a-auth > p.small a { color: rgba(255,255,255,.8); }
+.disc-h { font-size: .74rem; text-transform: uppercase; letter-spacing: .12em; color: var(--gold-d); margin: 20px 0 6px; padding-top: 14px; border-top: 1px solid var(--line); }
+.disc .a-card-h + .disc-h { border-top: 0; padding-top: 0; margin-top: 6px; }

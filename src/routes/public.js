@@ -15,6 +15,7 @@ const config = require('../config');
 const PricingCore = require('../../public/js/pricing-core');
 const C = require('../lib/constants');
 const U = require('../lib/util');
+const discovery = require('../lib/discovery');
 
 const router = express.Router();
 
@@ -172,6 +173,14 @@ router.get('/devis', (req, res) => {
   });
 });
 
+router.get('/devis/mariage', (req, res) => {
+  res.render('public/quote', {
+    title: 'Devis mariage',
+    description: 'Organisation de mariage à Kinshasa : dot, mariage civil, religieux et réception. Décrivez votre projet et recevez une proposition sur mesure de PRESTIGIO EVENTS.',
+    cat: catalog.publicCatalog(), token: formguard.issue('quote'), preselect: null, eventPreselect: 'mariage', weddingPage: true,
+  });
+});
+
 router.get('/api/catalogue', (req, res) => {
   res.set('Cache-Control', 'no-cache').json(catalog.publicCatalog());
 });
@@ -202,6 +211,7 @@ function parseQuoteForm(b, cat) {
     protocol_tasks: hasProtocol ? arr(b.protocol_tasks).filter((k) => C.PROTOCOL_TASKS[k]) : [],
     protocol_tasks_other: hasProtocol ? U.str(b.protocol_tasks_other, 200) : '',
     budget_mode: ['exact', 'range', 'unknown'].includes(b.budget_mode) ? b.budget_mode : 'unknown',
+    budget_currency: b.budget_currency === 'CDF' ? 'CDF' : 'USD',
     budget_min_cents: null, budget_max_cents: null,
     client_name: U.str(b.client_name, 120),
     client_phone: U.str(b.client_phone, 40),
@@ -210,12 +220,23 @@ function parseQuoteForm(b, cat) {
     consent: b.consent === 'oui' ? 1 : 0,
   };
   if (d.budget_mode === 'exact') {
-    d.budget_min_cents = d.budget_max_cents = U.parseMoney(b.budget_amount);
+    d.budget_min_cents = d.budget_max_cents = U.parseMoney(b.budget_amount, d.budget_currency === 'CDF' ? 100_000_000_000 : 10_000_000);
     if (d.budget_min_cents == null) errors.budget = 'Indiquez un budget valide ou choisissez une autre option.';
   } else if (d.budget_mode === 'range') {
+    // Les fourchettes proposées sont en USD.
+    d.budget_currency = 'USD';
     const r = C.BUDGET_RANGES[Number(b.budget_range)];
     if (!r) errors.budget = 'Choisissez une fourchette budgétaire.';
     else { d.budget_min_cents = r[0] * 100; d.budget_max_cents = r[1] == null ? null : r[1] * 100; }
+  }
+  // Fiche de découverte : seulement pour un mariage, réponses filtrées par liste blanche.
+  d.discovery = null;
+  if (discovery.isWedding(d.event_type)) {
+    const w = discovery.parse(b);
+    if (Object.keys(w).length) d.discovery = w;
+    const flags = discovery.venueFlags(w);
+    if (flags) Object.assign(d, flags);
+    if (d.guests == null && (w.guests_groom || w.guests_bride)) d.guests = (w.guests_groom || 0) + (w.guests_bride || 0) || null;
   }
   if (!d.event_type) errors.event_type = 'Choisissez un type d’événement.';
   if (d.event_type === 'autre' && !d.event_type_other) errors.event_type = 'Précisez le type d’événement.';
@@ -238,7 +259,7 @@ router.post('/devis', submitLimiter, (req, res) => {
   const cat = catalog.publicCatalog();
   const fail = (status, errors) => {
     if (wantsJson) return res.status(status).json({ ok: false, errors });
-    return res.status(status).render('public/quote', { title: 'Demander un devis', cat, token: formguard.issue('quote'), preselect: null, eventPreselect: null, serverErrors: errors, prev: b });
+    return res.status(status).render('public/quote', { title: 'Demander un devis', cat, token: formguard.issue('quote'), preselect: null, eventPreselect: null, serverErrors: errors, prev: b, weddingPage: discovery.isWedding(b.event_type) });
   };
   if (!g.ok) {
     return fail(400, { _form: g.reason === 'too_fast' ? 'Envoi trop rapide. Merci de vérifier vos informations puis de réessayer.' : 'Le formulaire a expiré. Merci de recharger la page.' });
@@ -258,16 +279,17 @@ router.post('/devis', submitLimiter, (req, res) => {
   db.tx(() => {
     reference = quotes.newRequestReference();
     requestId = Number(db.get().prepare(`INSERT INTO requests (reference, status, event_type, event_type_other, event_date, start_time, duration_hours, guests,
-        location_area, venue_booked, wants_venue_search, selections, protocol_agents, protocol_unknown, protocol_tasks, budget_mode, budget_min_cents,
-        budget_max_cents, client_name, client_phone, client_email, client_notes, consent, client_estimate, submit_token)
+        location_area, venue_booked, wants_venue_search, selections, protocol_agents, protocol_unknown, protocol_tasks, budget_mode, budget_currency, budget_min_cents,
+        budget_max_cents, client_name, client_phone, client_email, client_notes, consent, client_estimate, discovery, submit_token)
       VALUES (@reference, 'new', @event_type, @event_type_other, @event_date, @start_time, @duration_hours, @guests, @location_area, @venue_booked,
-        @wants_venue_search, @selections, @protocol_agents, @protocol_unknown, @protocol_tasks, @budget_mode, @budget_min_cents, @budget_max_cents,
-        @client_name, @client_phone, @client_email, @client_notes, @consent, @client_estimate, @submit_token)`).run({
+        @wants_venue_search, @selections, @protocol_agents, @protocol_unknown, @protocol_tasks, @budget_mode, @budget_currency, @budget_min_cents, @budget_max_cents,
+        @client_name, @client_phone, @client_email, @client_notes, @consent, @client_estimate, @discovery, @submit_token)`).run({
       ...d,
       reference,
       selections: JSON.stringify({ services: d.services, options: d.options }),
       protocol_tasks: JSON.stringify({ tasks: d.protocol_tasks, other: d.protocol_tasks_other }),
       client_estimate: JSON.stringify({ total_cents: est.total_cents, has_unconfirmed: est.has_unconfirmed }),
+      discovery: d.discovery ? JSON.stringify(d.discovery) : null,
       submit_token: g.nonce,
     }).lastInsertRowid);
     quotes.addHistory(requestId, 'new', null, 'Demande reçue depuis le site.');
@@ -302,7 +324,7 @@ router.get('/robots.txt', (req, res) => {
 });
 
 router.get('/sitemap.xml', (req, res) => {
-  const pages = ['/', '/services', '/offres', '/galerie', '/a-propos', '/contact', '/devis'];
+  const pages = ['/', '/services', '/offres', '/galerie', '/a-propos', '/contact', '/devis', '/devis/mariage'];
   if (res.locals.showPartnersNav) pages.push('/partenaires');
   for (const s of publicServices(false)) pages.push(`/services/${s.slug}`);
   res.type('application/xml').send(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map((p) => `  <url><loc>${config.baseUrl}${p}</loc></url>`).join('\n')}\n</urlset>`);

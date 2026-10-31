@@ -221,6 +221,7 @@ CREATE TABLE IF NOT EXISTS requests (
   protocol_unknown INTEGER NOT NULL DEFAULT 0,
   protocol_tasks TEXT,                     -- JSON
   budget_mode TEXT,                        -- exact | range | unknown
+  budget_currency TEXT NOT NULL DEFAULT 'USD',  -- USD | CDF
   budget_min_cents INTEGER,
   budget_max_cents INTEGER,
   client_name TEXT NOT NULL,
@@ -229,6 +230,8 @@ CREATE TABLE IF NOT EXISTS requests (
   client_notes TEXT,
   consent INTEGER NOT NULL DEFAULT 0,
   client_estimate TEXT,                    -- JSON : estimation affichée au client
+  discovery TEXT,                          -- JSON : fiche de découverte (mariage) remplie par le client
+  discovery_internal TEXT,                 -- JSON : observations internes de PRESTIGIO EVENTS
   assigned_to INTEGER REFERENCES users(id) ON DELETE SET NULL,
   submit_token TEXT UNIQUE,                -- anti double soumission
   seen_at TEXT,

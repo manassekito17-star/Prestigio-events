@@ -25,7 +25,7 @@
         <p class="small muted">Tarifs indicatifs en dollars américains, susceptibles de varier selon la date, le lieu et les disponibilités. Le devis définitif est confirmé par PRESTIGIO EVENTS.</p>
       <% } %>
       <div class="btn-row mt">
-        <a href="/devis<%= svc.category === 'Prestations' ? '?service=' + svc.id : '' %>" class="btn btn-gold"><%= h.t('cta.quote') %></a>
+        <a href="<%= svc.slug === 'mariages-ceremonies' ? '/devis/mariage' : '/devis' + (svc.category === 'Prestations' ? '?service=' + svc.id : '') %>" class="btn btn-gold"><%= h.t('cta.quote') %></a>
         <a href="<%= h.waLink(s.whatsapp, 'Bonjour, je souhaite des informations sur : ' + svc.name) %>" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>

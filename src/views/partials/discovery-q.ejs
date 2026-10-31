@@ -1,0 +1,29 @@
+<%# Une question de la fiche de découverte mariage (champ « w_<clé> »). Variables : q, P %>
+<% const name = 'w_' + q.key;
+   const cur = P[name];
+   const picked = Array.isArray(cur) ? cur.map(String) : cur == null || cur === '' ? [] : [String(cur)];
+   const id = 'w-' + q.key.replace(/_/g, '-'); %>
+<div class="field q<%= q.half ? ' half' : '' %>" data-q="<%= q.key %>" data-label="<%= q.label %>">
+  <% if (q.type === 'radio' || q.type === 'checkbox') { %>
+    <span class="label q-title" id="<%= id %>-l"><%= q.label %></span>
+    <% if (q.help) { %><p class="q-help"><%= q.help %></p><% } %>
+    <div class="choice-grid tight" role="<%= q.type === 'radio' ? 'radiogroup' : 'group' %>" aria-labelledby="<%= id %>-l">
+      <% for (const [k, label] of Object.entries(q.options)) { %>
+        <label class="choice sm"><input type="<%= q.type %>" name="<%= name %>" value="<%= k %>"<%= picked.includes(k) ? ' checked' : '' %>><span><%= label %></span></label>
+      <% } %>
+    </div>
+    <% if (q.other) { %>
+      <div class="field q-other" data-show-if="<%= name %>=autre">
+        <label for="<%= id %>-o">Précisez</label>
+        <input id="<%= id %>-o" name="<%= name %>_other" maxlength="200" value="<%= P[name + '_other'] || '' %>">
+      </div>
+    <% } %>
+  <% } else if (q.type === 'textarea') { %>
+    <label class="q-title" for="<%= id %>"><%= q.label %></label>
+    <textarea id="<%= id %>" name="<%= name %>" rows="3" maxlength="<%= q.max || 1000 %>"><%= cur || '' %></textarea>
+  <% } else { %>
+    <label class="q-title" for="<%= id %>"><%= q.label %></label>
+    <input id="<%= id %>" name="<%= name %>" type="<%= q.type === 'number' ? 'number' : q.type === 'tel' ? 'tel' : 'text' %>"<%- q.type === 'number' ? ` min="${q.min || 0}" max="${q.max}" inputmode="numeric"` : ` maxlength="${q.max || 200}"` %><%- q.placeholder ? ` placeholder="${h.esc(q.placeholder)}"` : '' %><%- q.type === 'tel' ? ' autocomplete="tel" placeholder="+243 …"' : '' %> value="<%= cur == null ? '' : cur %>">
+    <% if (q.type === 'number') { %><p class="err" data-err="<%= name %>"></p><% } %>
+  <% } %>
+</div>

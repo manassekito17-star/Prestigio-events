@@ -1,13 +1,13 @@
 'use strict';
 const crypto = require('crypto');
 
-function parseMoney(v) {
+function parseMoney(v, max = 10_000_000) {
   // « 1 250,50 » ou « 1250.5 » → centimes ; vide → null
   if (v == null) return null;
   const s = String(v).replace(/[\s $]/g, '').replace(',', '.');
   if (s === '') return null;
   const n = Number(s);
-  if (!isFinite(n) || n < 0 || n > 10_000_000) return null;
+  if (!isFinite(n) || n < 0 || n > max) return null;
   return Math.round(n * 100);
 }
 

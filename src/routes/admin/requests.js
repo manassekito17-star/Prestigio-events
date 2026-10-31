@@ -8,6 +8,7 @@ const quotes = require('../../lib/quotes');
 const media = require('../../lib/media');
 const C = require('../../lib/constants');
 const U = require('../../lib/util');
+const discovery = require('../../lib/discovery');
 
 const router = express.Router();
 const wrap = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
@@ -113,6 +114,11 @@ router.get('/demandes/:id', auth.requirePerm('requests.view_all', 'requests.view
     data.paidUsd = data.payments.filter((p) => p.currency === 'USD').reduce((a, p) => a + p.amount_cents, 0);
     data.paidCdf = data.payments.filter((p) => p.currency === 'CDF').reduce((a, p) => a + p.amount_cents, 0);
   }
+  // Fiche de découverte mariage (le budget est masqué aux comptes sans accès aux devis)
+  const parseJson = (s) => { try { return s ? JSON.parse(s) : null; } catch { return null; } };
+  data.discoverySections = discovery.isWedding(r.event_type) || r.discovery
+    ? discovery.display(parseJson(r.discovery) || {}, { hideBudget: !auth.can(u, 'quotes.view') }) : null;
+  data.discoveryInternal = parseJson(r.discovery_internal);
   res.render('admin/request', data);
 });
 
@@ -141,6 +147,29 @@ router.post('/demandes/:id/notes', auth.requirePerm('requests.notes'), loadReque
   const body = U.str(req.body.body, 5000);
   if (body) db.get().prepare('INSERT INTO request_notes (request_id, user_id, body) VALUES (?,?,?)').run(req.request.id, req.user.id, body);
   res.redirect(`/admin/demandes/${req.request.id}#notes`);
+});
+
+router.post('/demandes/:id/decouverte', auth.requirePerm('requests.edit'), loadRequest, (req, res) => {
+  const b = req.body;
+  let before = {};
+  try { before = JSON.parse(req.request.discovery_internal || '{}') || {}; } catch { before = {}; }
+  const v = {
+    observations: U.str(b.observations, 4000) || null,
+    recommendations: U.str(b.recommendations, 4000) || null,
+    next_step: discovery.NEXT_STEPS[b.next_step] ? b.next_step : null,
+    follow_up: /^\d{4}-\d{2}-\d{2}$/.test(b.follow_up || '') ? b.follow_up : null,
+    updated_by: req.user.id,
+  };
+  db.get().prepare("UPDATE requests SET discovery_internal = ?, updated_at = datetime('now') WHERE id = ?").run(JSON.stringify(v), req.request.id);
+  // Tâche de suivi lorsqu'une nouvelle date ou étape est fixée
+  const planTask = v.follow_up && (v.follow_up !== before.follow_up || v.next_step !== before.next_step);
+  if (planTask) {
+    const title = 'Suivi découverte : ' + (discovery.NEXT_STEPS[v.next_step] || 'recontacter le client');
+    db.get().prepare('INSERT INTO tasks (request_id, title, due_date, assignee_id) VALUES (?,?,?,?)').run(req.request.id, title, v.follow_up, req.request.assigned_to || null);
+  }
+  audit.log(req, 'discovery_internal_update', 'request', req.request.id);
+  req.flash('ok', 'Observations enregistrées.' + (planTask ? ' Une tâche de suivi a été planifiée.' : ''));
+  res.redirect(`/admin/demandes/${req.request.id}#decouverte`);
 });
 
 router.post('/demandes/:id/supprimer', auth.requirePerm('requests.delete'), loadRequest, (req, res) => {

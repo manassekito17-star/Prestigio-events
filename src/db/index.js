@@ -16,7 +16,17 @@ function open(file = config.dbFile) {
     db.prepare('INSERT INTO schema_version (version) VALUES (1)').run();
     require('./seed').seed(db);
   }
+  migrate(db);
   return db;
+}
+
+// Ajoute les colonnes apparues après la première installation (bases existantes).
+function migrate(d) {
+  const has = (table, col) => d.prepare(`PRAGMA table_info(${table})`).all().some((c) => c.name === col);
+  const add = (table, col, def) => { if (!has(table, col)) d.exec(`ALTER TABLE ${table} ADD COLUMN ${col} ${def}`); };
+  add('requests', 'budget_currency', "TEXT NOT NULL DEFAULT 'USD'");
+  add('requests', 'discovery', 'TEXT');
+  add('requests', 'discovery_internal', 'TEXT');
 }
 
 function get() {

@@ -24,7 +24,7 @@
           <% const inc = h.lines(p.includes), exc = h.lines(p.excludes); %>
           <% if (inc.length) { %><h4 class="pkg-h">Inclus</h4><ul class="check-list small"><% for (const i of inc) { %><li><%= i %></li><% } %></ul><% } %>
           <% if (exc.length) { %><h4 class="pkg-h">Non inclus</h4><ul class="x-list small"><% for (const i of exc) { %><li><%= i %></li><% } %></ul><% } %>
-          <a href="/devis" class="btn <%= p.featured ? 'btn-gold' : 'btn-navy' %> btn-block"><%= h.t('cta.quote') %></a>
+          <a href="<%= /mariage/i.test(p.event_type || '') ? '/devis/mariage' : '/devis' %>" class="btn <%= p.featured ? 'btn-gold' : 'btn-navy' %> btn-block"><%= h.t('cta.quote') %></a>
         </article>
       <% } %>
     </div>
