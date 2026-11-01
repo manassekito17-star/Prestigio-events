@@ -10,6 +10,7 @@ const media = require('../../lib/media');
 const mailer = require('../../lib/mailer');
 const config = require('../../config');
 const U = require('../../lib/util');
+const setup = require('../../lib/setup');
 
 const router = express.Router();
 
@@ -109,6 +110,48 @@ router.post('/reinitialiser/:token', loginLimiter, ensureSession, csrf.verify, (
   audit.log(req, 'password_reset_done', 'user', u.id);
   req.flash('ok', 'Mot de passe modifié. Vous pouvez vous connecter.');
   res.redirect('/admin/connexion');
+});
+
+// ------------------------------------------------------------ Installation (lien à usage unique)
+function setupGuard(req, res, next) {
+  if (setup.checkToken(req.params.token)) return next();
+  res.status(404);
+  return res.render('admin/setup-closed', { title: 'Lien non valide' });
+}
+
+router.get('/installation/:token(*)', loginLimiter, setupGuard, ensureSession, (req, res) => {
+  res.render('admin/setup', { title: 'Création du compte propriétaire', error: null, form: {}, token: req.params.token });
+});
+
+router.post('/installation/:token(*)', loginLimiter, setupGuard, ensureSession, csrf.verify, (req, res, next) => {
+  const b = req.body;
+  const form = { name: U.str(b.name, 120), email: U.str(b.email, 160).toLowerCase() };
+  const error = !form.name ? 'Indiquez votre nom.'
+    : !U.isEmail(form.email) ? 'Adresse e-mail invalide.'
+      : auth.passwordProblem(b.password) || (b.password !== b.password2 ? 'Les deux mots de passe ne correspondent pas.' : null);
+  if (error) return res.status(400).render('admin/setup', { title: 'Création du compte propriétaire', error, form, token: req.params.token });
+  let userId;
+  try {
+    db.tx(() => {
+      // Vérification dans la transaction : un seul compte peut être créé par ce lien.
+      if (!setup.isOpen()) throw Object.assign(new Error('closed'), { closed: true });
+      userId = Number(db.get().prepare("INSERT INTO users (email, name, password_hash, role) VALUES (?, ?, ?, 'owner')")
+        .run(form.email, form.name, auth.hashPassword(b.password)).lastInsertRowid);
+      setup.complete();
+    });
+  } catch (e) {
+    if (e.closed) return res.status(404).render('admin/setup-closed', { title: 'Lien non valide' });
+    return next(e);
+  }
+  req.user = { id: userId };
+  audit.log(req, 'owner_created_via_setup_link', 'user', userId, { email: form.email });
+  req.session.regenerate((err) => {
+    if (err) return next(err);
+    req.session.userId = userId;
+    csrf.token(req);
+    req.flash('ok', 'Votre compte propriétaire est créé. Le lien d’installation est désormais désactivé.');
+    res.redirect('/admin');
+  });
 });
 
 // ------------------------------------------------------------ Zone protégée

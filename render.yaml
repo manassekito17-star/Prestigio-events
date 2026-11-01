@@ -20,10 +20,9 @@ services:
         value: /var/data
       - key: SESSION_SECRET
         generateValue: true
-      - key: ADMIN_EMAIL
-        sync: false
-      - key: ADMIN_INITIAL_PASSWORD
-        sync: false
+      # Jeton du lien d'installation à usage unique : /admin/installation/<SETUP_TOKEN>
+      - key: SETUP_TOKEN
+        generateValue: true
       - key: BASE_URL
         sync: false
     disk:
